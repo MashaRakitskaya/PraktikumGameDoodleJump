@@ -1,6 +1,10 @@
 @import-normalize;
+@import url(./styles/variables.css);
 
 body {
   margin: 0;
   box-sizing: border-box;
+  font-family: var(--main-font-family);
 }
+
+@import url(./styles/sidenav-link/sidenav-link.css);
