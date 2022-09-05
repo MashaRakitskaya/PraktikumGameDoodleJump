@@ -7,7 +7,6 @@ export const Button = styled.button`
   border-radius: 2px;
   background: var(--third-bg-color);
   cursor: pointer;
-  margin-top: 24px;
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
