@@ -47,7 +47,7 @@ function Sidebar() {
       >
         Presentation of the game
       </NavLink>
-      <ButtonComponent buttonText="Play" />
+      <ButtonComponent notPriority={true} buttonText="Play" />
     </SideNav>
   );
 }
