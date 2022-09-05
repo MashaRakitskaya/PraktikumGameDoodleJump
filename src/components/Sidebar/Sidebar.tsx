@@ -4,8 +4,10 @@ import { NavLink } from 'react-router-dom';
 import {
   LEADERBOARD_PATH,
   PROFILE_SETTING_PATH,
-  FORUM_PATH
+  FORUM_PATH,
+  PRESENTATION_PATH
 } from '../../utils/constants';
+import ButtonComponent from '../Button/Button';
 import { SideNav } from './Sidebar.styles';
 
 function Sidebar() {
@@ -37,6 +39,15 @@ function Sidebar() {
       >
         Leaderboard
       </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? 'sidenav-link-active' : 'sidenav-link'
+        }
+        to={PRESENTATION_PATH}
+      >
+        Presentation of the game
+      </NavLink>
+      <ButtonComponent buttonText="Play" />
     </SideNav>
   );
 }
