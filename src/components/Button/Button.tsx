@@ -3,6 +3,7 @@ import { Button } from './Button.styles';
 interface ButtonProps {
   buttonText: string;
   notPriority?: boolean;
+  onClick?: () => void;
 }
 
 const ButtonComponent = ({ buttonText, notPriority = false }: ButtonProps) => {
