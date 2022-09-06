@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import {
   LEADERBOARD_PATH,
@@ -11,6 +11,21 @@ import ButtonComponent from '../Button/Button';
 import { SideNav } from './Sidebar.styles';
 
 function Sidebar() {
+  const [isButtonAddTopic, setButtonAddTopic] = useState(false);
+  const location = useLocation();
+
+  const showButtonAddChat = (isPathForum: boolean) => {
+    if (isPathForum) {
+      setButtonAddTopic(true);
+    } else {
+      setButtonAddTopic(false);
+    }
+  };
+
+  useEffect(() => {
+    showButtonAddChat(location.pathname === FORUM_PATH);
+  }, [location.pathname]);
+
   return (
     <SideNav>
       <NavLink
@@ -47,6 +62,9 @@ function Sidebar() {
       >
         Presentation of the game
       </NavLink>
+      {isButtonAddTopic && (
+        <ButtonComponent onClick={() => {}} buttonText="Add topic" />
+      )}
       <ButtonComponent notPriority={true} buttonText="Play" />
     </SideNav>
   );
