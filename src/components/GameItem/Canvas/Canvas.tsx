@@ -1,15 +1,16 @@
 import React from 'react';
 
-const Canvas = ({ draw, height, width }: any) => {
-  const canvas = React.createRef();
+// @ts-ignore
+const Canvas = ({ draw, height, width }) => {
+  const canvas = React.useRef();
   React.useEffect(() => {
     // @ts-ignore
     const context = canvas.current.getContext('2d');
     draw(context);
-  }, [draw]);
+  }, []);
 
   // @ts-ignore
-  return <canvas ref={canvas} height={height} width={width} />;
+  return <canvas ref={canvas} height={height} width={width}></canvas>;
 };
 
-export { Canvas };
+export default Canvas;
