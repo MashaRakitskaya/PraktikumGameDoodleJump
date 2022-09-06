@@ -2,10 +2,13 @@
   --main-font-family: 'Play', sans-serif;
   --main-bg-color: #fceed1;
   --secondary-bg-color: #f2d53c;
-  --third-bg-color: #e42a9a;
-  --fourth-bg-color: #7d3cff;
+  --third-bg-color: #ffffff;
+  --secondary-button-color: #e42a9a;
+  --main-button-color: #7d3cff;
   --main-font-color: #24006b;
   --third-font-color: #ffffff;
+  --fourth-font-color: #c80e13;
+  --placeholder-font-color: #6d6d6d;
   --secondary-font-color: #000000;
   --border: 1px solid #000;
   --main-opacity: 0.8;
