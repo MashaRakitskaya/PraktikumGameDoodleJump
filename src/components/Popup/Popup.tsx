@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button/Button';
 import './popup.css';
 import { ModalWindowContent, ModalWindowTitle } from './Popup.styles';
 
@@ -20,6 +21,7 @@ const Popup = ({
     >
       <ModalWindowContent>
         <ModalWindowTitle>{title}</ModalWindowTitle>
+        <Button onClick={() => {}} buttonText="Create" type="submit" />
       </ModalWindowContent>
     </div>
   );
