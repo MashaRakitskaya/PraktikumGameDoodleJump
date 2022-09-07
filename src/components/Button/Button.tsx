@@ -6,8 +6,16 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-const ButtonComponent = ({ buttonText, notPriority = false }: ButtonProps) => {
-  return <Button notPriority={notPriority}>{buttonText}</Button>;
+const ButtonComponent = ({
+  buttonText,
+  notPriority = false,
+  onClick
+}: ButtonProps) => {
+  return (
+    <Button onClick={onClick} notPriority={notPriority}>
+      {buttonText}
+    </Button>
+  );
 };
 
 export default ButtonComponent;

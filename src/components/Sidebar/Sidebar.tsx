@@ -9,8 +9,11 @@ import {
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
 import { SideNav } from './Sidebar.styles';
+interface SidebarProps {
+  showPopup: () => void;
+}
 
-function Sidebar() {
+function Sidebar({ showPopup }: SidebarProps) {
   const [isButtonAddTopic, setButtonAddTopic] = useState(false);
   const location = useLocation();
 
@@ -63,7 +66,12 @@ function Sidebar() {
         Presentation of the game
       </NavLink>
       {isButtonAddTopic && (
-        <ButtonComponent onClick={() => {}} buttonText="Add topic" />
+        <ButtonComponent
+          onClick={() => {
+            showPopup();
+          }}
+          buttonText="Add topic"
+        />
       )}
       <ButtonComponent notPriority={true} buttonText="Play" />
     </SideNav>
