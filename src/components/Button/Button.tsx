@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from './Button.styles';
 interface ButtonProps {
+  type: 'button' | 'submit';
   buttonText: string;
   notPriority?: boolean;
   onClick?: () => void;
@@ -9,10 +10,11 @@ interface ButtonProps {
 const ButtonComponent = ({
   buttonText,
   notPriority = false,
-  onClick
+  onClick,
+  type
 }: ButtonProps) => {
   return (
-    <Button onClick={onClick} notPriority={notPriority}>
+    <Button type={type} onClick={onClick} notPriority={notPriority}>
       {buttonText}
     </Button>
   );

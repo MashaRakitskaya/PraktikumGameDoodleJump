@@ -71,9 +71,10 @@ function Sidebar({ showPopup }: SidebarProps) {
             showPopup();
           }}
           buttonText="Add topic"
+          type="button"
         />
       )}
-      <ButtonComponent notPriority={true} buttonText="Play" />
+      <ButtonComponent type="button" notPriority={true} buttonText="Play" />
     </SideNav>
   );
 }
