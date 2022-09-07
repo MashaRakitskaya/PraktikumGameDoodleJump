@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const ModalWindowContent = styled.div`
   background: var(--main-bg-color);
-  border-radius: 5px;
+  border-radius: 2px;
   width: 100%;
   max-width: 450px;
   position: relative;
