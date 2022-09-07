@@ -1,4 +1,5 @@
 import React from 'react';
+import './popup.css';
 import { ModalWindowContent, ModalWindowTitle } from './Popup.styles';
 
 interface PopupProps {
