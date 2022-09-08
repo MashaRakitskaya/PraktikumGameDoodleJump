@@ -1,7 +1,12 @@
 import React from 'react';
 
-// @ts-ignore
-const Canvas = ({ draw, height, width }) => {
+interface CanvasInitParam {
+  draw: Function;
+  height: number;
+  width: number;
+}
+
+const Canvas = ({ draw, height, width }: CanvasInitParam) => {
   const canvas = React.useRef();
   React.useEffect(() => {
     // @ts-ignore
