@@ -12,7 +12,7 @@ function GameItem() {
     let platformCount = 25; // Общее оличество платформ на сцену
     let platforms: any = [];
     let stepPlatformsDown: number = 3; // Шаг передвижения платформ вниз (Имитация цикличности)
-    let speedGame = 1; // общая скорость игры
+    let speedGame = 4; // общая скорость игры
 
     if (!isGameOver) {
       platforms = createPlatforms(context, platformCount, platforms);

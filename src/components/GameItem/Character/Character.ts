@@ -124,7 +124,7 @@ class Character {
   gameOver() {
     clearInterval(this.upTime);
     clearInterval(this.downTime);
-    alert('Game Over!');
+    alert('Game Over! Congrats!');
     alert('Your score: ' + this.score);
   }
 }
