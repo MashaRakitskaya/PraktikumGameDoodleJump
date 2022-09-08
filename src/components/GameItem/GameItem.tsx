@@ -10,22 +10,25 @@ function GameItem() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
     let isGameOver = false;
-    let platformCount = 20;
+    let platformCount = 25; // Общее оличество платформ на сцену
     let platforms: any = [];
+    let stepPlatformsDown: number = 3; // Шаг передвижения платформ вниз (Имитация цикличности)
+    let speedGame = 1; // общая скорость игры
 
     if (!isGameOver) {
       platforms = createPlatforms(context, platformCount, platforms);
 
       const person = new Character(
         context,
-        platforms[0].bottom - 60,
-        platforms[0].left + 40
+        platforms[1].bottom - 60,
+        speedGame,
+        platforms[1].left + 40
       );
       person.draw();
       // @ts-ignore
       setInterval(() => {
-        movePlatforms(context, platforms, person);
-      }, 30);
+        movePlatforms(context, platforms, person, stepPlatformsDown);
+      }, speedGame);
       person.jump(platforms);
 
       document.addEventListener('keydown', (event) => {

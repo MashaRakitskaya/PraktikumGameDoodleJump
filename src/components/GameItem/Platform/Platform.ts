@@ -1,11 +1,11 @@
 import Character from '../Character/Character';
 
 class Platform {
-  public bottom: number;
-  public left: number;
-  public ref: any;
-  public width: number;
-  public height: number;
+  bottom: number;
+  left: number;
+  ref: any;
+  width: number;
+  height: number;
 
   constructor(
     context: any,
@@ -66,9 +66,14 @@ function createPlatforms(
 function movePlatforms(
   context: { canvas: { height: number } },
   platforms: Platform[],
-  Character: Character
+  Character: Character,
+  stepDown: number
 ) {
-  if (Character.posY < 300) {
+  if (Character.posY < 400) {
+    Character.clear();
+    Character.posY += stepDown;
+    Character.draw();
+
     platforms.forEach(
       (platform: {
         bottom: number;
@@ -80,7 +85,7 @@ function movePlatforms(
         clear: Function;
       }) => {
         platform.clear();
-        platform.bottom += 20;
+        platform.bottom += stepDown;
         platform.draw();
 
         if (platform.bottom > context.canvas.height) {
@@ -97,7 +102,9 @@ function movePlatforms(
         }
       }
     );
+    return stepDown;
   }
+  return 0;
 }
 
 export { createPlatforms, movePlatforms };

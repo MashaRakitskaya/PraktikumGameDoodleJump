@@ -1,17 +1,23 @@
 class Character {
-  width: number;
-  height: number;
-  posX: number;
-  posY: number;
-  ref: any;
-  upTime: any;
-  downTime: any;
-  characterGap: number = 500;
-  currentPoint: number;
+  width: number; // Ширина персонажа
+  height: number; // Высота персонажа
+  posX: number; // Позиция верхнего левого угла персонажа по X
+  posY: number; // Позиция верхнего левого угла персонажа по Y
+  ref: any; // локальный контекст канваса для отрисовки
+  upTime: any; // id счетчика setInterval при Jump
+  downTime: any; // id счетчика setInterval при Down
+  characterGap: number = 300; // Максимально возможная высота прыжка персонажа
+  score: number = 0; // Текущая Score игрока
+  currentPosition: number = 0; // Текущая позиция персонажа
+  isJumpimg: boolean = true;
+  stepY: number = 10; // Шаг первонажа при прыжке и падении
+  stepX: number = 40; // Шаг первонажа при перемещении влево/вправо
+  speedGame: number; // Скорость отрисовки и дествий в игре
 
   constructor(
     context: any,
     posY: number,
+    speedGame: number,
     posX?: number,
     width?: number,
     height?: number
@@ -19,9 +25,9 @@ class Character {
     this.width = width || 40;
     this.height = height || 60;
     this.posX = posX || (context.canvas.width + this.width) / 2;
-    this.currentPoint = this.posX;
     this.posY = posY;
     this.ref = context;
+    this.speedGame = speedGame;
   }
 
   draw() {
@@ -30,55 +36,79 @@ class Character {
   }
 
   clear() {
-    this.ref.clearRect(this.posX - 1, this.posY, this.width + 2, this.height);
+    this.ref.clearRect(
+      this.posX - 1,
+      this.posY - 1,
+      this.width + 2,
+      this.height + 2
+    );
   }
 
   jump(platforms: any[]) {
     let currentGap = 0;
+    this.isJumpimg = true;
+
     clearInterval(this.downTime);
+
     this.upTime = setInterval(() => {
-      this.clear();
-      this.posY -= 20;
-      currentGap += 30;
-      this.draw();
+      this.redrawY(-this.stepY);
+
+      currentGap += this.stepY;
+
+      platforms.forEach((platform) => {
+        platform.draw();
+      });
+
       if (this.characterGap < currentGap) {
         this.down(platforms);
       }
-    }, 20);
+    }, this.speedGame);
   }
 
   down(platforms: any[]) {
+    this.isJumpimg = false;
+
     clearInterval(this.upTime);
+
     this.downTime = setInterval(() => {
-      this.clear();
-      this.posY += 15;
+      this.redrawY(+this.stepY);
+
       if (this.posY > this.ref.canvas.height) {
         this.gameOver();
       }
+
       platforms.forEach((platform) => {
         if (
-          this.posY + this.height >= platform.bottom - 20 &&
-          this.posY + this.height <= platform.bottom + platform.height &&
-          this.posX >= platform.left - this.width / 2 &&
-          this.posX <= platform.left + platform.width + this.width / 2
+          this.posY + this.height >= platform.bottom &&
+          this.posY + this.height <= platform.bottom + 10 &&
+          this.posX + this.width / 2 >= platform.left &&
+          this.posX + this.width / 2 <= platform.left + platform.width &&
+          !this.isJumpimg
         ) {
-          this.currentPoint = this.posY;
           this.jump(platforms);
+          this.score = this.currentPosition;
         }
+
+        platform.draw();
       });
-      this.draw();
-    }, 30);
+    }, this.speedGame + 10);
   }
 
   moveLeft() {
     this.clear();
-    this.posX -= 40;
+    this.posX -= this.stepX;
     this.draw();
   }
 
   moveRight() {
     this.clear();
-    this.posX += 40;
+    this.posX += this.stepX;
+    this.draw();
+  }
+
+  redrawY(step: number) {
+    this.clear();
+    this.posY += step;
     this.draw();
   }
 
@@ -93,7 +123,8 @@ class Character {
   gameOver() {
     clearInterval(this.upTime);
     clearInterval(this.downTime);
-    console.log('Game Over!');
+    alert('Game Over!');
+    alert('Your score: ' + this.score);
   }
 }
 
