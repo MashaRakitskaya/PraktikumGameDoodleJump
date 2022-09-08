@@ -8,15 +8,15 @@ class Platform {
   height: number;
 
   constructor(
-    context: any,
+    context: CanvasRenderingContext2D,
     widthPlatform: number,
     heightPlatform: number,
     newPlatformBottom: number
   ) {
     this.bottom = context.canvas.height - newPlatformBottom;
     this.left = Math.random() * context.canvas.width;
-    this.width = widthPlatform;
-    this.height = heightPlatform;
+    this.width = widthPlatform || 120;
+    this.height = heightPlatform || 20;
 
     if (this.left + this.width > context.canvas.width) {
       this.left -= this.width;
@@ -41,9 +41,9 @@ class Platform {
 }
 
 function createPlatforms(
-  context: { canvas: { height: number } },
+  context: CanvasRenderingContext2D,
   platformCount: number,
-  platforms: any
+  platforms: Platform[]
 ) {
   const widthPlatform = 120;
   const heightPlatform = 20;
@@ -64,7 +64,7 @@ function createPlatforms(
 }
 
 function movePlatforms(
-  context: { canvas: { height: number } },
+  context: CanvasRenderingContext2D,
   platforms: Platform[],
   Character: Character,
   stepDown: number
@@ -77,7 +77,7 @@ function movePlatforms(
     platforms.forEach(
       (platform: {
         bottom: number;
-        ref: any;
+        ref: CanvasRenderingContext2D;
         width: number;
         height: number;
         left: number;

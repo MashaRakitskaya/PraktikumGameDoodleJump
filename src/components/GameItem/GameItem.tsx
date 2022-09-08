@@ -5,8 +5,7 @@ import Character from './Character/Character';
 import { createPlatforms, movePlatforms } from './Platform/Platform';
 
 function GameItem() {
-  // @ts-ignore
-  function draw(context) {
+  function draw(context: CanvasRenderingContext2D) {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
     let isGameOver = false;
@@ -25,10 +24,11 @@ function GameItem() {
         platforms[1].left + 40
       );
       person.draw();
-      // @ts-ignore
+
       setInterval(() => {
         movePlatforms(context, platforms, person, stepPlatformsDown);
       }, speedGame);
+
       person.jump(platforms);
 
       document.addEventListener('keydown', (event) => {

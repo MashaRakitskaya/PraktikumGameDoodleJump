@@ -15,7 +15,7 @@ class Character {
   speedGame: number; // Скорость отрисовки и дествий в игре
 
   constructor(
-    context: any,
+    context: CanvasRenderingContext2D,
     posY: number,
     speedGame: number,
     posX?: number,
@@ -81,8 +81,8 @@ class Character {
         if (
           this.posY + this.height >= platform.bottom &&
           this.posY + this.height <= platform.bottom + 10 &&
-          this.posX + this.width / 2 >= platform.left &&
-          this.posX + this.width / 2 <= platform.left + platform.width &&
+          this.posX + this.width / 3 >= platform.left &&
+          this.posX + this.width / 3 <= platform.left + platform.width &&
           !this.isJumpimg
         ) {
           this.jump(platforms);
@@ -91,6 +91,7 @@ class Character {
 
         platform.draw();
       });
+      // За счет прибавления 10 мс замедляем падение, чтобы было проще играть
     }, this.speedGame + 10);
   }
 
@@ -112,7 +113,7 @@ class Character {
     this.draw();
   }
 
-  controller(event: any) {
+  controller(event: KeyboardEvent) {
     if (event.key === 'ArrowLeft') {
       this.moveLeft();
     } else if (event.key === 'ArrowRight') {
