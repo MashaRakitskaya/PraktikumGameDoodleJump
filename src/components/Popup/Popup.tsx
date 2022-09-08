@@ -4,24 +4,31 @@ import './popup.css';
 import { ModalWindowContent, ModalWindowTitle } from './Popup.styles';
 
 interface PopupProps {
-  isCreateTopicPopupOpen: boolean;
+  isOpen: boolean;
   closeByOverlay: (event: any) => void;
   title: string;
+  buttonText: string;
+  buttonType: 'button' | 'submit';
+  children: React.ReactNode;
 }
 
 const Popup = ({
-  isCreateTopicPopupOpen,
+  isOpen,
   closeByOverlay,
-  title
+  title,
+  buttonText,
+  children,
+  buttonType
 }: PopupProps) => {
   return (
     <div
-      className={`popup ${isCreateTopicPopupOpen && 'popup_opened'}`}
+      className={`popup ${isOpen && 'popup_opened'}`}
       onClick={(event) => closeByOverlay(event)}
     >
       <ModalWindowContent>
         <ModalWindowTitle>{title}</ModalWindowTitle>
-        <Button onClick={() => {}} buttonText="Create" type="submit" />
+        {children}
+        <Button onClick={() => {}} buttonText={buttonText} type={buttonType} />
       </ModalWindowContent>
     </div>
   );

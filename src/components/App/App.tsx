@@ -39,11 +39,16 @@ function App() {
           <Route path={FORUM_PATH} element={<Forum />} />
           <Route path={FORUM_CHAT_ID_PATH} element={<ForumChat />} />
         </Routes>
+
         <Popup
-          isCreateTopicPopupOpen={isCreateTopicPopupOpen}
+          isOpen={isCreateTopicPopupOpen}
           closeByOverlay={closeByOverlay}
           title={'Create topic'}
-        />
+          buttonText={'Create'}
+          buttonType={'submit'}
+        >
+          <input></input>
+        </Popup>
       </AppWrapperContainer>
     </AppWrapper>
   );
