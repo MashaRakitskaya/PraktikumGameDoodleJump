@@ -5,16 +5,23 @@ interface ButtonProps {
   buttonText: string;
   notPriority?: boolean;
   onClick?: () => void;
+  marginTop?: string;
 }
 
 const ButtonComponent = ({
   buttonText,
   notPriority = false,
   onClick,
-  type
+  type,
+  marginTop
 }: ButtonProps) => {
   return (
-    <Button type={type} onClick={onClick} notPriority={notPriority}>
+    <Button
+      type={type}
+      onClick={onClick}
+      notPriority={notPriority}
+      marginTop={marginTop}
+    >
       {buttonText}
     </Button>
   );

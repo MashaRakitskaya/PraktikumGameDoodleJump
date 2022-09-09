@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 interface ButtonProps {
   notPriority?: boolean;
+  marginTop?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -18,6 +19,7 @@ export const Button = styled.button<ButtonProps>`
   font-size: ${(props: any) => (props.notPriority ? '20px' : '14px')};
   line-height: ${(props: any) => (props.notPriority ? '23px' : '16px')};
   border: none;
+  margin-top: ${(props: any) => (props.marginTop ? props.marginTop : '40px')};
   color: var(--third-font-color);
   &:hover {
     opacity: var(--main-opacity);

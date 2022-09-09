@@ -67,6 +67,7 @@ function Sidebar({ showPopup }: SidebarProps) {
       </NavLink>
       {isButtonAddTopic && (
         <ButtonComponent
+          marginTop="0px"
           onClick={() => {
             showPopup();
           }}
@@ -74,7 +75,12 @@ function Sidebar({ showPopup }: SidebarProps) {
           type="button"
         />
       )}
-      <ButtonComponent type="button" notPriority={true} buttonText="Play" />
+      <ButtonComponent
+        marginTop="0px"
+        type="button"
+        notPriority={true}
+        buttonText="Play"
+      />
     </SideNav>
   );
 }

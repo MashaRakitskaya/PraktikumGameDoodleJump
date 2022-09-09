@@ -12,6 +12,7 @@ import {
 import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
 import Popup from '../Popup/Popup';
+import Field from '../Field/Field';
 
 function App() {
   const [isCreateTopicPopupOpen, setCreateTopicPopupOpen] = useState(false);
@@ -47,7 +48,7 @@ function App() {
           buttonText={'Create'}
           buttonType={'submit'}
         >
-          <input></input>
+          <Field label="title" name="title" type="title" />
         </Popup>
       </AppWrapperContainer>
     </AppWrapper>
