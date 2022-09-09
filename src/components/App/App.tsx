@@ -48,8 +48,10 @@ function App() {
           title={'Create topic'}
           closePopup={closePopup}
         >
-          <Field label="title" name="title" type="title" />
-          <Button onClick={() => {}} buttonText={'Create'} type={'submit'} />
+          <form>
+            <Field label="title" name="title" type="title" />
+            <Button onClick={() => {}} buttonText={'Create'} type={'submit'} />
+          </form>
         </Popup>
       </AppWrapperContainer>
     </AppWrapper>
