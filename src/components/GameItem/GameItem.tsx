@@ -6,13 +6,11 @@ import { createPlatforms, movePlatforms } from './Platform/Platform';
 
 function GameItem() {
   function draw(context: CanvasRenderingContext2D) {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
     let isGameOver = false;
-    let platformCount = 25; // Общее оличество платформ на сцену
+    let platformCount = 20; // Общее оличество платформ на сцену
     let platforms: any = [];
-    let stepPlatformsDown: number = 3; // Шаг передвижения платформ вниз (Имитация цикличности)
-    let speedGame = 4; // общая скорость игры
+    let stepPlatformsDown: number = 5; // Шаг передвижения платформ вниз (Имитация цикличности)
+    let speedGame = 5; // общая скорость игры
 
     if (!isGameOver) {
       platforms = createPlatforms(context, platformCount, platforms);
@@ -23,9 +21,13 @@ function GameItem() {
         speedGame,
         platforms[1].left + 40
       );
-      person.draw();
 
       setInterval(() => {
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        platforms.forEach((platform: { draw: () => void }) => {
+          platform.draw();
+        });
+        person.draw();
         movePlatforms(context, platforms, person, stepPlatformsDown);
       }, speedGame);
 
@@ -41,7 +43,7 @@ function GameItem() {
       <Canvas
         draw={draw}
         height={document.documentElement.clientHeight}
-        width={document.documentElement.clientWidth - 223}
+        width={document.documentElement.clientWidth - 500}
       />
     </GameWrapper>
   );

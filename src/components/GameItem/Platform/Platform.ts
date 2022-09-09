@@ -29,15 +29,6 @@ class Platform {
     this.ref.fillStyle = 'green';
     this.ref.fillRect(this.left, this.bottom, this.width, this.height);
   }
-
-  clear() {
-    this.ref.clearRect(
-      this.left - 5,
-      this.bottom - 5,
-      this.width + 10,
-      this.height + 10
-    );
-  }
 }
 
 function createPlatforms(
@@ -69,11 +60,8 @@ function movePlatforms(
   Character: Character,
   stepDown: number
 ) {
-  if (Character.posY < 400) {
-    Character.clear();
+  if (Character.posY < context.canvas.height / 3) {
     Character.posY += stepDown;
-    Character.draw();
-
     platforms.forEach(
       (platform: {
         bottom: number;
@@ -81,12 +69,8 @@ function movePlatforms(
         width: number;
         height: number;
         left: number;
-        draw: Function;
-        clear: Function;
       }) => {
-        platform.clear();
         platform.bottom += stepDown;
-        platform.draw();
 
         if (platform.bottom > context.canvas.height) {
           platforms.shift();

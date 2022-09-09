@@ -35,15 +35,6 @@ class Character {
     this.ref.fillRect(this.posX, this.posY, this.width, this.height);
   }
 
-  clear() {
-    this.ref.clearRect(
-      this.posX - 1,
-      this.posY - 1,
-      this.width + 2,
-      this.height + 2
-    );
-  }
-
   jump(platforms: any[]) {
     let currentGap = 0;
     this.isJumpimg = true;
@@ -51,13 +42,9 @@ class Character {
     clearInterval(this.downTime);
 
     this.upTime = setInterval(() => {
-      this.redrawY(-this.stepY);
+      this.posY -= this.stepY;
 
       currentGap += this.stepY;
-
-      platforms.forEach((platform) => {
-        platform.draw();
-      });
 
       if (this.characterGap < currentGap) {
         this.down(platforms);
@@ -71,46 +58,37 @@ class Character {
     clearInterval(this.upTime);
 
     this.downTime = setInterval(() => {
-      this.redrawY(+this.stepY);
+      this.checkPlatformsUnder(platforms);
+      this.posY += this.stepY;
 
       if (this.posY > this.ref.canvas.height) {
         this.gameOver();
       }
-
-      platforms.forEach((platform) => {
-        if (
-          this.posY + this.height >= platform.bottom &&
-          this.posY + this.height <= platform.bottom + 10 &&
-          this.posX + this.width / 3 >= platform.left &&
-          this.posX + this.width / 3 <= platform.left + platform.width &&
-          !this.isJumpimg
-        ) {
-          this.jump(platforms);
-          this.score = this.currentPosition;
-        }
-
-        platform.draw();
-      });
-      // За счет прибавления 10 мс замедляем падение, чтобы было проще играть
-    }, this.speedGame + 10);
+      // За счет прибавления 15 мс замедляем падение, чтобы было проще играть
+    }, this.speedGame + 15);
   }
 
   moveLeft() {
-    this.clear();
     this.posX -= this.stepX;
-    this.draw();
   }
 
   moveRight() {
-    this.clear();
     this.posX += this.stepX;
-    this.draw();
   }
 
-  redrawY(step: number) {
-    this.clear();
-    this.posY += step;
-    this.draw();
+  checkPlatformsUnder(platforms: any[]) {
+    platforms.forEach((platform) => {
+      if (
+        this.posY + this.height >= platform.bottom - 10 &&
+        this.posY + this.height <= platform.bottom &&
+        this.posX + this.width / 3 >= platform.left &&
+        this.posX + this.width / 3 <= platform.left + platform.width &&
+        !this.isJumpimg
+      ) {
+        this.jump(platforms);
+        this.score = this.currentPosition;
+      }
+    });
   }
 
   controller(event: KeyboardEvent) {
