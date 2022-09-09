@@ -13,6 +13,7 @@ import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
 import Popup from '../Popup/Popup';
 import Field from '../Field/Field';
+import Button from '../Button/Button';
 
 function App() {
   const [isCreateTopicPopupOpen, setCreateTopicPopupOpen] = useState(false);
@@ -26,7 +27,7 @@ function App() {
   };
 
   function closeByOverlay(event: any): void {
-    if (event.target.classList.contains('popup')) {
+    if (event.target.id === 'popup') {
       closePopup();
     }
   }
@@ -45,10 +46,10 @@ function App() {
           isOpen={isCreateTopicPopupOpen}
           closeByOverlay={closeByOverlay}
           title={'Create topic'}
-          buttonText={'Create'}
-          buttonType={'submit'}
+          closePopup={closePopup}
         >
           <Field label="title" name="title" type="title" />
+          <Button onClick={() => {}} buttonText={'Create'} type={'submit'} />
         </Popup>
       </AppWrapperContainer>
     </AppWrapper>
