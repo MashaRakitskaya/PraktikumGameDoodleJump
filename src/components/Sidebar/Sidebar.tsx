@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import {
   LEADERBOARD_PATH,
@@ -8,18 +8,14 @@ import {
   PRESENTATION_PATH
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
-import { SideNav } from './Sidebar.styles';
+import { SideNav, SideNavLink } from './Sidebar.styles';
 
 function Sidebar() {
   const [isButtonAddTopic, setButtonAddTopic] = useState(false);
   const location = useLocation();
 
   const showButtonAddChat = (isPathForum: boolean) => {
-    if (isPathForum) {
-      setButtonAddTopic(true);
-    } else {
-      setButtonAddTopic(false);
-    }
+    setButtonAddTopic(isPathForum);
   };
 
   useEffect(() => {
@@ -28,40 +24,10 @@ function Sidebar() {
 
   return (
     <SideNav>
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? 'sidenav-link-active' : 'sidenav-link'
-        }
-        to={PROFILE_SETTING_PATH}
-      >
-        User
-      </NavLink>
-
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? 'sidenav-link-active' : 'sidenav-link'
-        }
-        to={FORUM_PATH}
-      >
-        Forum
-      </NavLink>
-
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? 'sidenav-link-active' : 'sidenav-link'
-        }
-        to={LEADERBOARD_PATH}
-      >
-        Leaderboard
-      </NavLink>
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? 'sidenav-link-active' : 'sidenav-link'
-        }
-        to={PRESENTATION_PATH}
-      >
-        Presentation of the game
-      </NavLink>
+      <SideNavLink to={PROFILE_SETTING_PATH}>User</SideNavLink>
+      <SideNavLink to={FORUM_PATH}>Forum</SideNavLink>
+      <SideNavLink to={LEADERBOARD_PATH}>Leaderboard</SideNavLink>
+      <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
       {isButtonAddTopic && (
         <ButtonComponent onClick={() => {}} buttonText="Add topic" />
       )}
