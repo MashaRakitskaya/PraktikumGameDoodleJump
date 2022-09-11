@@ -9,12 +9,8 @@ export const AuthPagesWrapper = styled.div`
   align-items: center;
 `;
 
-export const Header = styled.h2`
-  font-family: 'Play';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  text-align: center;
-  color: #24006b;
+export const AuthWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 `;

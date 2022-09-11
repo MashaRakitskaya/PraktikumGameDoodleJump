@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '../../../components/TextField/index';
 import { ReactComponent as UserIcon } from '../../../assest/svg/user-icon.svg';
-import { Wrapper } from '../styles';
+import { Wrapper } from '../CommonChangeDataStyles';
 import { Button } from '../../../components/Button';
 
 const ChangetData = () => {

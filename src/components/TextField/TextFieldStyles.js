@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 export const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
-  color: #696969;
-  font-family: 'Play';
+  color: var(--primary-font-color);
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -14,11 +13,14 @@ export const StyledInput = styled.input`
   background: none;
   font-size: 13px;
   border: none;
-  border-bottom: 2px solid;
+  border-bottom: var(--border);
   width: 360px;
   outline: none;
+  &:focus {
+    border-bottom: var(--border-focus);
+  }
 `;
 
 export const ErrorTextTextField = styled.span`
-  color: red;
+  color: var(--error-color);
 `;

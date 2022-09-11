@@ -3,7 +3,7 @@ import {
   ErrorTextTextField,
   StyledInput,
   StyledLabel
-} from './text-field.styles';
+} from './TextFieldStyles';
 
 interface IPropsInput extends InputHTMLAttributes<HTMLInputElement> {
   name?: string;

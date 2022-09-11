@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ChangePassword from '../ChangeData/ChangePassword/ChangePassword';
 import ChangetData from '../ChangeData/ChangePersonData/ChangetData';
-import { Wrapper, Changet } from './create-user.styles';
+import { Wrapper, Changet } from './CreateUserStyles';
 
 const CreateUser = () => {
   const [flag, setFlag] = useState<string>('Сhange user data');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../../../components/Button';
 import { TextField } from '../../../components/TextField/index';
-import { Wrapper } from '../styles';
+import { Wrapper } from '../CommonChangeDataStyles';
 
 const ChangePassword = () => {
   return (

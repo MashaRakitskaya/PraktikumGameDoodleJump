@@ -1,113 +1,127 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField } from '../../../components/TextField/index';
-import { SignInWrapper } from '../SignIn/sign-in.styles';
-import { AuthPagesWrapper, Header } from '../styles';
+import { AuthPagesWrapper, AuthWrapper } from '../CommonAuthStyles';
 import { useNavigate } from 'react-router-dom';
 import { PROFILE_SETTING_PATH, SIGNIN_PATH } from '../../../utils/constants';
 import { useFormik } from 'formik';
 import { signUpSchema } from '../../../utils/validationSchema/schemaAuthPages';
 import { Button } from '../../../components/Button';
+import { useFetchSignUpMutation } from '../../../services/auth';
+import { InputLabel, InputNames, InputType } from '../../../contans/constans';
+import { ISignUpParams } from '../../../models/ISignUpParams';
+import Header from '../../../components/Header/Header';
 
 const SignUp = () => {
   let navigate = useNavigate();
-  const formik = useFormik({
+  const formik = useFormik<ISignUpParams>({
     initialValues: {
-      email: '',
-      login: '',
-      firstName: '',
-      secondName: '',
-      phoneNumber: '',
-      password: '',
-      passwordAgaing: ''
+      [InputNames.email]: '',
+      [InputNames.login]: '',
+      [InputNames.firstName]: '',
+      [InputNames.secondName]: '',
+      [InputNames.phone]: '',
+      [InputNames.password]: '',
+      [InputNames.passwordAgain]: ''
     },
     validationSchema: signUpSchema,
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: () => {
-      navigate(PROFILE_SETTING_PATH);
+    onSubmit: (values) => {
+      fetchSignUp(values);
     }
   });
+  const [fetchSignUp, { isSuccess, data }] = useFetchSignUpMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(PROFILE_SETTING_PATH);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   return (
     <AuthPagesWrapper>
-      <SignInWrapper>
-        <Header>Sign up</Header>
-        <TextField
-          labelName={'email'}
-          type={'email'}
-          name="email"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-          errorText={formik.touched.email && formik.errors.email}
-        />
-        <TextField
-          name="login"
-          type={'text'}
-          labelName={'login'}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.login}
-          errorText={formik.touched.login && formik.errors.login}
-        />
-        <TextField
-          name="firstName"
-          labelName={'first name'}
-          type={'text'}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.firstName}
-          errorText={formik.touched.firstName && formik.errors.firstName}
-        />
-        <TextField
-          name="secondName"
-          labelName={'second name'}
-          type={'text'}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.secondName}
-          errorText={formik.touched.secondName && formik.errors.secondName}
-        />
-        <TextField
-          name="phoneNumber"
-          type={'number'}
-          labelName={'phone number'}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.phoneNumber}
-          errorText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-        />
-        <TextField
-          name="password"
-          labelName={'Password'}
-          type={'password'}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          errorText={formik.touched.password && formik.errors.password}
-        />
-        <TextField
-          name="passwordAgaing"
-          labelName={'password againg'}
-          type={'password'}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.passwordAgaing}
-          errorText={
-            formik.touched.passwordAgaing && formik.errors.passwordAgaing
-          }
-        />
-        <Button
-          onClick={() => formik.handleSubmit()}
-          type="submit"
-          color={'#ffff'}
-          content={'Create user'}
-        />
-        <Button
-          onClick={() => navigate(SIGNIN_PATH)}
-          style={{ background: 'none', border: 'none' }}
-          content={'Sign in'}
-        />
-      </SignInWrapper>
+      <form onSubmit={formik.handleSubmit}>
+        <Header title={'Sign up'} />
+        <AuthWrapper>
+          <TextField
+            labelName={InputLabel.email}
+            type={InputType.email}
+            name={InputNames.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+            errorText={formik.touched.email && formik.errors.email}
+          />
+          <TextField
+            name={InputNames.login}
+            type={InputType.text}
+            labelName={InputLabel.login}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.login}
+            errorText={formik.touched.login && formik.errors.login}
+          />
+          <TextField
+            name={InputNames.firstName}
+            labelName={InputLabel.firstName}
+            type={InputType.text}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.first_name}
+            errorText={formik.touched.first_name && formik.errors.first_name}
+          />
+          <TextField
+            name={InputNames.secondName}
+            labelName={InputLabel.secondName}
+            type={InputType.text}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.second_name}
+            errorText={formik.touched.second_name && formik.errors.second_name}
+          />
+          <TextField
+            name={InputNames.phone}
+            type={InputType.text}
+            labelName={InputLabel.phone}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.phone}
+            errorText={formik.touched.phone && formik.errors.phone}
+          />
+          <TextField
+            name={InputNames.password}
+            labelName={InputLabel.password}
+            type={InputType.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+            errorText={formik.touched.password && formik.errors.password}
+          />
+          <TextField
+            name={InputNames.passwordAgain}
+            labelName={InputLabel.passwordAgain}
+            type={InputType.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password_again}
+            errorText={
+              formik.touched.password_again && formik.errors.password_again
+            }
+          />
+          <Button
+            onClick={() => formik.handleSubmit()}
+            type="submit"
+            color={'#ffff'}
+            content={'Create user'}
+          />
+          <Button
+            onClick={() => navigate(SIGNIN_PATH)}
+            style={{ background: 'none', border: 'none' }}
+            content={'Sign in'}
+          />
+        </AuthWrapper>
+      </form>
     </AuthPagesWrapper>
   );
 };
