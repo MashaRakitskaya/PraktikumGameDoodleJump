@@ -8,7 +8,7 @@ import {
 
 interface PopupProps {
   isOpen: boolean;
-  closeByOverlay: (event: any) => void;
+  closeByOverlay: (event: React.MouseEvent<Element, MouseEvent>) => void;
   closePopup: () => void;
   title: string;
   children: React.ReactNode;

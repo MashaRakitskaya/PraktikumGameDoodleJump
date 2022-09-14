@@ -36,8 +36,8 @@ export const ModalWindow = styled.div<ModalWindowProps>`
   bottom: 0;
   right: 0;
   display: flex;
-  visibility: ${(props: any) => (props.isOpen ? 'visible' : 'hidden')};
-  opacity: ${(props: any) => (props.isOpen ? '1' : '0')};
+  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
+  opacity: ${(props) => (props.isOpen ? '1' : '0')};
   transition: visibility 0.6s, opacity 0.5s linear;
 `;
 

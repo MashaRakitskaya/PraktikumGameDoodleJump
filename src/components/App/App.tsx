@@ -27,7 +27,8 @@ function App() {
   };
 
   function closeByOverlay(event: any): void {
-    if (event.target.id === 'popup') {
+    const id = (event.target as HTMLDivElement).id;
+    if (id === 'popup') {
       closePopup();
     }
   }
