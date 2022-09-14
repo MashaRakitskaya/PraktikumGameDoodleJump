@@ -12,7 +12,7 @@ import {
 import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
 
-function App() {
+const App = () => {
   return (
     <AppWrapper>
       <AppWrapperContainer>
@@ -25,6 +25,6 @@ function App() {
       </AppWrapperContainer>
     </AppWrapper>
   );
-}
+};
 
 export default App;
