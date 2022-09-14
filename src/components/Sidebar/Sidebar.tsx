@@ -10,7 +10,7 @@ import {
 import ButtonComponent from '../Button/Button';
 import { SideNav, SideNavLink } from './Sidebar.styles';
 
-function Sidebar() {
+const Sidebar = () => {
   const [isButtonAddTopic, setButtonAddTopic] = useState(false);
   const location = useLocation();
 
@@ -28,11 +28,9 @@ function Sidebar() {
       <SideNavLink to={FORUM_PATH}>Forum</SideNavLink>
       <SideNavLink to={LEADERBOARD_PATH}>Leaderboard</SideNavLink>
       <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
-      {isButtonAddTopic && (
-        <ButtonComponent onClick={() => {}} buttonText="Add topic" />
-      )}
+      {isButtonAddTopic && <ButtonComponent buttonText="Add topic" />}
       <ButtonComponent notPriority={true} buttonText="Play" />
     </SideNav>
   );
-}
+};
 export default Sidebar;
