@@ -9,8 +9,15 @@ import {
   Time,
   NumberMessages
 } from './ForumTopicItem.styles';
+
 interface ForumTopicItemProps {
-  forumTopicsItem: any;
+  forumTopicsItem: {
+    title: string;
+    lastMessage: string;
+    numberMessages: number;
+    time: string;
+    urlImg: string;
+  };
   onTopicClick: () => void;
 }
 

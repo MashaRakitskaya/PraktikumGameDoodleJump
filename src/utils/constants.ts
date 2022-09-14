@@ -17,6 +17,15 @@ interface LeaderboardListProps {
   urlImg: string;
 }
 
+interface ForumTopicsListProps {
+  id: string;
+  title: string;
+  lastMessage: string;
+  numberMessages: number;
+  time: string;
+  urlImg: string;
+}
+
 export const leaderboardList: LeaderboardListProps[] = [
   {
     id: '1',
@@ -146,7 +155,7 @@ export const leaderboardList: LeaderboardListProps[] = [
   }
 ];
 
-export const forumTopicsList = [
+export const forumTopicsList: ForumTopicsListProps[] = [
   {
     id: '23515667',
     title: 'Elena List',
