@@ -4,12 +4,10 @@ import { leaderboardList } from '../../utils/constants';
 import { LeaderboardContainer, LeaderboardList } from './Leaderboard.styles';
 
 const Leaderboard = () => {
-  const sortLeaderboardList = leaderboardList.sort(function (
-    currentItem,
-    nextItem
-  ) {
-    return nextItem.points - currentItem.points;
-  });
+  const sortLeaderboardList = leaderboardList.sort(
+    (currentItem, nextItem) => nextItem.points - currentItem.points
+  );
+
   return (
     <LeaderboardContainer>
       <LeaderboardList>
