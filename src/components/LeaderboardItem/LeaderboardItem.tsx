@@ -7,7 +7,7 @@ import {
   Points
 } from './LeaderboardItem.styles';
 interface LeaderboardItemProps {
-  leaderboardItem: any;
+  leaderboardItem: { title: string; points: number; urlImg: string };
   index: number;
 }
 
