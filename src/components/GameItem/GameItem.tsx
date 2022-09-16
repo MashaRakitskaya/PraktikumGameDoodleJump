@@ -9,7 +9,7 @@ import {
 } from './Platform/Platform';
 
 function GameItem() {
-  let intervalGameTimer = 0;
+  let intervalGameTimer: NodeJS.Timeout | undefined;
   useEffect(() => {
     return () => {
       clearInterval(intervalGameTimer);
@@ -34,7 +34,7 @@ function GameItem() {
         platforms[1].left
       );
 
-      setInterval(() => {
+      intervalGameTimer = setInterval(() => {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         platforms.forEach((platform: PlatformInterface) => {
           platform.draw();

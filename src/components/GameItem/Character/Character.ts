@@ -1,19 +1,19 @@
 class Character {
-  width: number = 40; // Ширина персонажа
-  height: number = 60; // Высота персонажа
-  posX: number; // Позиция верхнего левого угла персонажа по X
-  posY: number; // Позиция верхнего левого угла персонажа по Y
-  ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
-  upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
-  downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
-  characterGap: number = 300; // Максимально возможная высота прыжка персонажа
-  score: number = 0; // Текущая Score игрока
-  currentPosition: number = 0; // Текущая позиция персонажа
-  isJumpimg: boolean = true;
-  stepY: number = 10; // Шаг первонажа при прыжке и падении
-  stepX: number = 40; // Шаг первонажа при перемещении влево/вправо
-  speedGame: number; // Скорость отрисовки и дествий в игре
-  decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
+  private width: number = 40; // Ширина персонажа
+  private height: number = 60; // Высота персонажа
+  private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
+  private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
+  private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
+  private currentPosition: number = 0; // Текущая позиция персонажа
+  private isJumpimg: boolean = true;
+  private stepY: number = 10; // Шаг первонажа при прыжке и падении
+  private stepX: number = 40; // Шаг первонажа при перемещении влево/вправо
+  private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
+  public posX: number; // Позиция верхнего левого угла персонажа по X
+  public posY: number; // Позиция верхнего левого угла персонажа по Y
+  public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
+  public score: number = 0; // Текущая Score игрока
+  public speedGame: number; // Скорость отрисовки и дествий в игре
 
   constructor(
     context: CanvasRenderingContext2D,
