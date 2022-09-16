@@ -1,6 +1,6 @@
 class Character {
-  private width: number = 40; // Ширина персонажа
-  private height: number = 60; // Высота персонажа
+  private width: number = 80; // Ширина персонажа
+  private height: number = 110; // Высота персонажа
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
   private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
@@ -9,6 +9,8 @@ class Character {
   private stepY: number = 10; // Шаг первонажа при прыжке и падении
   private stepX: number = 40; // Шаг первонажа при перемещении влево/вправо
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
+  private imgUrl: string = 'character.png';
+  private imgObj: HTMLImageElement = new Image();
   public posX: number; // Позиция верхнего левого угла персонажа по X
   public posY: number; // Позиция верхнего левого угла персонажа по Y
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
@@ -21,6 +23,7 @@ class Character {
     speedGame: number,
     posX?: number
   ) {
+    this.imgObj.src = this.imgUrl;
     this.posX = posX || (context.canvas.width + this.width) / 2;
     this.posY = posY;
     this.ref = context;
@@ -28,8 +31,13 @@ class Character {
   }
 
   draw = () => {
-    this.ref.fillStyle = 'rgb(0, 0, 0)';
-    this.ref.fillRect(this.posX, this.posY, this.width, this.height);
+    this.ref.drawImage(
+      this.imgObj,
+      this.posX,
+      this.posY,
+      this.width,
+      this.height
+    );
   };
 
   jump = (platforms: any[]) => {
