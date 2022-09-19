@@ -2,12 +2,20 @@ import React from 'react';
 import { Button } from './Button.styles';
 interface ButtonProps {
   buttonText: string;
-  onCLickFunc?: Function;
+  onCLickFunc?: () => void;
+  notPriority?: boolean;
 }
 
-const ButtonComponent = ({ buttonText, onCLickFunc }: ButtonProps) => {
-  // @ts-ignore
-  return <Button onClick={onCLickFunc}>{buttonText}</Button>;
+const ButtonComponent = ({
+  onCLickFunc,
+  buttonText,
+  notPriority = false
+}: ButtonProps) => {
+  return (
+    <Button onClick={onCLickFunc} notPriority={notPriority}>
+      {buttonText}
+    </Button>
+  );
 };
 
 export default ButtonComponent;
