@@ -5,12 +5,18 @@ import {
   LEADERBOARD_PATH,
   PROFILE_SETTING_PATH,
   FORUM_PATH,
-  PRESENTATION_PATH
+  PRESENTATION_PATH,
+  GAME_PATH
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
 import { SideNav } from './Sidebar.styles';
 
 function Sidebar() {
+  function playGame() {
+    //в будущем сделаю анимацю сдвига сайдбара и инициалищацию игры
+    window.location.href = GAME_PATH;
+  }
+
   return (
     <SideNav>
       <NavLink
@@ -47,7 +53,11 @@ function Sidebar() {
       >
         Presentation of the game
       </NavLink>
-      <ButtonComponent notPriority={true} buttonText="Play" />
+      <ButtonComponent
+        onCLickFunc={playGame}
+        notPriority={true}
+        buttonText="Play"
+      />
     </SideNav>
   );
 }
