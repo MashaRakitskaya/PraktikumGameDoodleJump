@@ -26,12 +26,14 @@ function App() {
     setCreateTopicPopupOpen(true);
   };
 
-  function closeByOverlay(event: any): void {
+  const closeByOverlay = (
+    event: React.MouseEvent<Element, MouseEvent>
+  ): void => {
     const id = (event.target as HTMLDivElement).id;
     if (id === 'popup') {
       closePopup();
     }
-  }
+  };
 
   return (
     <AppWrapper>
