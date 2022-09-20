@@ -10,6 +10,11 @@
   --fourth-font-color: #c80e13;
   --placeholder-font-color: #6d6d6d;
   --secondary-font-color: #000000;
+  --label-font-color: #696969;
+  --input-font-color: #696969;
   --border: 1px solid #000;
   --main-opacity: 0.8;
+  --bg-opacity: rgb(0 0 0 / 50%);
+  --border: 1px solid #000;
+  --border-focus: 2px solid #000;
 }

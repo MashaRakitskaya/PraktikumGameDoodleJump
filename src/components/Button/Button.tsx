@@ -1,12 +1,30 @@
 import React from 'react';
 import { Button } from './Button.styles';
 interface ButtonProps {
+  type: 'button' | 'submit';
   buttonText: string;
+  onCLickFunc?: () => void;
   notPriority?: boolean;
+  marginTop?: string;
 }
 
-const ButtonComponent = ({ buttonText, notPriority = false }: ButtonProps) => {
-  return <Button notPriority={notPriority}>{buttonText}</Button>;
+const ButtonComponent = ({
+  buttonText,
+  notPriority = false,
+  onCLickFunc,
+  type,
+  marginTop
+}: ButtonProps) => {
+  return (
+    <Button
+      marginTop={marginTop}
+      type={type}
+      onClick={onCLickFunc}
+      notPriority={notPriority}
+    >
+      {buttonText}
+    </Button>
+  );
 };
 
 export default ButtonComponent;

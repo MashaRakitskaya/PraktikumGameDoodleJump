@@ -22,7 +22,7 @@ const ForumChat = () => {
   return (
     <ForumChatContainer>
       <Header>
-        <Back onClick={() => navigate(-1)} />
+        <Back type="button" onClick={() => navigate(-1)} />
         <ImgTitleContainer>
           <Img src="https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"></Img>
           <Title>Elena List</Title>
@@ -49,7 +49,8 @@ const ForumChat = () => {
           placeholder="Write a message..."
           autoComplete="off"
         ></Input>
-        <SubmitButton />
+
+        <SubmitButton type="submit"></SubmitButton>
       </MessageForm>
     </ForumChatContainer>
   );
