@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { GameWrapper } from './GameItem.styles';
 import Canvas from './Canvas/Canvas';
 import Character, { CharacterInterface } from './Character/Character';
+import { Score, ScoreInterface } from '../GameItem/utils/Score';
 import {
   createPlatforms,
   movePlatforms,
@@ -17,6 +18,8 @@ function GameItem() {
   let platforms: PlatformInterface[] = [];
   let person: CharacterInterface;
   let contextLocal: CanvasRenderingContext2D;
+  let currentScroll: number = 0;
+  let score: ScoreInterface;
 
   useEffect(() => {
     return () => {
@@ -35,24 +38,28 @@ function GameItem() {
       platform.draw();
     });
     person.draw();
-    movePlatforms(contextLocal, platforms, person, stepPlatformsDown);
-
+    currentScroll =
+      currentScroll +
+      movePlatforms(contextLocal, platforms, person, stepPlatformsDown);
+    score.currentScroll = currentScroll;
+    person.currentScroll = currentScroll;
+    score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
   };
 
   const draw = (context: CanvasRenderingContext2D) => {
     contextLocal = context;
     if (!isGameOver) {
-      platforms = createPlatforms(context, platformCount);
+      platforms = createPlatforms(contextLocal, platformCount);
       //Изначальная высота по x, y для персонажа берется относительно 2-ой созданной платформы
       //Обходимся без проверки т.к. платформ меньше 10 изначально быть не может
       person = new Character(
-        context,
+        contextLocal,
         platforms[1].bottom,
         speedGame,
         platforms[1].left
       );
-
+      score = new Score(contextLocal, 40, 40);
       animation();
 
       person.jump(platforms);

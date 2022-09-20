@@ -1,4 +1,5 @@
 interface CharacterInterface {
+  currentScroll: number;
   ref: CanvasRenderingContext2D;
   posX: number;
   posY: number;
@@ -14,7 +15,6 @@ class Character {
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
   private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
-  private currentPosition: number = 0; // Текущая позиция персонажа
   private isJumpimg: boolean = true;
   private stepY: number = 10; // Шаг первонажа при прыжке и падении
   private stepX: number = 60; // Шаг первонажа при перемещении влево/вправо
@@ -26,6 +26,7 @@ class Character {
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
   public score: number = 0; // Текущая Score игрока
   public speedGame: number; // Скорость отрисовки и дествий в игре
+  public currentScroll: number = 0; // Текущая позиция персонажа
 
   constructor(
     context: CanvasRenderingContext2D,
@@ -49,11 +50,12 @@ class Character {
       this.height
     );
   };
+  private jumpAnumation = () => {};
+  private downAnumation = () => {};
 
   jump = (platforms: any[]) => {
     let currentGap = 0;
     this.isJumpimg = true;
-
     clearInterval(this.downTime);
 
     this.upTime = setInterval(() => {
@@ -102,7 +104,6 @@ class Character {
         !this.isJumpimg
       ) {
         this.jump(platforms);
-        this.score = this.currentPosition;
       }
     });
   };
@@ -119,7 +120,7 @@ class Character {
     clearInterval(this.upTime);
     clearInterval(this.downTime);
     alert('Game Over! Congrats!');
-    alert('Your score: ' + this.score);
+    alert('Your score: ' + this.currentScroll);
   };
 }
 
