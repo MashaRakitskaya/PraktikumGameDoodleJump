@@ -1,3 +1,13 @@
+interface CharacterInterface {
+  ref: CanvasRenderingContext2D;
+  posX: number;
+  posY: number;
+  score: number;
+  draw: Function;
+  jump: Function;
+  controller(event: KeyboardEvent): void;
+}
+
 class Character {
   private width: number = 80; // Ширина персонажа
   private height: number = 110; // Высота персонажа
@@ -7,7 +17,7 @@ class Character {
   private currentPosition: number = 0; // Текущая позиция персонажа
   private isJumpimg: boolean = true;
   private stepY: number = 10; // Шаг первонажа при прыжке и падении
-  private stepX: number = 40; // Шаг первонажа при перемещении влево/вправо
+  private stepX: number = 60; // Шаг первонажа при перемещении влево/вправо
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
   private imgUrl: string = 'character.png';
   private imgObj: HTMLImageElement = new Image();
@@ -114,3 +124,4 @@ class Character {
 }
 
 export default Character;
+export type { CharacterInterface };

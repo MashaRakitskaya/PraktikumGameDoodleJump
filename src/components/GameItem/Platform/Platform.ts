@@ -1,4 +1,4 @@
-import Character from '../Character/Character';
+import Character, { CharacterInterface } from '../Character/Character';
 
 interface PlatformInterface {
   bottom: number;
@@ -58,7 +58,7 @@ function createPlatforms(
 function movePlatforms(
   context: CanvasRenderingContext2D,
   platforms: PlatformInterface[],
-  Character: Character,
+  Character: CharacterInterface,
   stepDown: number
 ) {
   const INDENTATION_NEW_PLATFORM_TOP = 50;
