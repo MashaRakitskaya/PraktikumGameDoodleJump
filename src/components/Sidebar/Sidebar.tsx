@@ -5,7 +5,8 @@ import {
   LEADERBOARD_PATH,
   PROFILE_SETTING_PATH,
   FORUM_PATH,
-  PRESENTATION_PATH
+  PRESENTATION_PATH,
+  GAME_PATH
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
 import { SideNav } from './Sidebar.styles';
@@ -28,6 +29,11 @@ function Sidebar({ showPopup }: SidebarProps) {
   useEffect(() => {
     showButtonAddChat(location.pathname === FORUM_PATH);
   }, [location.pathname]);
+
+  function playGame() {
+    //в будущем сделаю анимацю сдвига сайдбара и инициалищацию игры
+    window.location.href = GAME_PATH;
+  }
 
   return (
     <SideNav>
@@ -65,21 +71,24 @@ function Sidebar({ showPopup }: SidebarProps) {
       >
         Presentation of the game
       </NavLink>
+
       {isButtonAddTopic && (
         <ButtonComponent
           marginTop="0px"
-          onClick={() => {
+          onCLickFunc={() => {
             showPopup();
           }}
           buttonText="Add topic"
           type="button"
         />
       )}
+
       <ButtonComponent
         marginTop="0px"
-        type="button"
+        onCLickFunc={playGame}
         notPriority={true}
         buttonText="Play"
+        type="button"
       />
     </SideNav>
   );

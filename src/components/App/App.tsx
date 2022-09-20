@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Leaderboard from '../../pages/Leaderboard/Leaderboard';
+import Game from '../../pages/Game/Game';
 import Sidebar from '../Sidebar/Sidebar';
 import { AppWrapper, AppWrapperContainer } from './app.styles';
 import {
   LEADERBOARD_PATH,
   FORUM_PATH,
-  FORUM_CHAT_ID_PATH
+  FORUM_CHAT_ID_PATH,
+  GAME_PATH
 } from '../../utils/constants';
 import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
@@ -43,6 +45,7 @@ function App() {
           <Route path={LEADERBOARD_PATH} element={<Leaderboard />} />
           <Route path={FORUM_PATH} element={<Forum />} />
           <Route path={FORUM_CHAT_ID_PATH} element={<ForumChat />} />
+          <Route path={GAME_PATH} element={<Game />} />
         </Routes>
 
         <Popup
@@ -53,7 +56,11 @@ function App() {
         >
           <form>
             <Field label="title" name="title" type="title" />
-            <Button onClick={() => {}} buttonText={'Create'} type={'submit'} />
+            <Button
+              onCLickFunc={() => {}}
+              buttonText={'Create'}
+              type={'submit'}
+            />
           </form>
         </Popup>
       </AppWrapperContainer>
