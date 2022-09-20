@@ -1,13 +1,13 @@
 import React from 'react';
 import { TextField } from '../../../components/TextField/index';
-import { ReactComponent as UserIcon } from '../../../assest/svg/user-icon.svg';
 import { Wrapper } from '../CommonChangeDataStyles';
 import { Button } from '../../../components/Button';
+import UserHeaderNav from '../../../components/UserHeader/UserHeaderNav';
 
 const ChangetData = () => {
   return (
     <Wrapper>
-      <UserIcon />
+      <UserHeaderNav />
       <TextField labelName={'email'} type={'email'} />
       <TextField labelName={'login'} type={'text'} />
       <TextField labelName={'first name'} type={'text'} />

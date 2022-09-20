@@ -1,4 +1,4 @@
-import { InputNames } from '../contans/constans';
+import { InputNames } from '../constans/constans';
 
 export interface ISignUpParams {
   [InputNames.firstName]: string;

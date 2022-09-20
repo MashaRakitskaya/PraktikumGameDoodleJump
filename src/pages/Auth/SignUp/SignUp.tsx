@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import { signUpSchema } from '../../../utils/validationSchema/schemaAuthPages';
 import { Button } from '../../../components/Button';
 import { useFetchSignUpMutation } from '../../../services/auth';
-import { InputLabel, InputNames, InputType } from '../../../contans/constans';
+import { InputLabel, InputNames, InputType } from '../../../constans/constans';
 import { ISignUpParams } from '../../../models/ISignUpParams';
 import Header from '../../../components/Header/Header';
 

@@ -7,11 +7,12 @@ import { signInSchema } from '../../../utils/validationSchema/schemaAuthPages';
 import { Button } from '../../../components/Button';
 import { TextField } from '../../../components/TextField/index';
 import { useFetchSignInMutation } from '../../../services/auth';
-import { InputLabel, InputNames, InputType } from '../../../contans/constans';
+import { InputLabel, InputNames, InputType } from '../../../constans/constans';
 import { ISignInParams } from '../../../models/ISignInParams';
 import Header from '../../../components/Header/Header';
+import Error from '../../Error/Error';
 
-const SugnIn = () => {
+const SignIn = () => {
   let navigate = useNavigate();
   const formik = useFormik<ISignInParams>({
     initialValues: {
@@ -23,10 +24,11 @@ const SugnIn = () => {
     validateOnBlur: true,
     onSubmit: (values) => {
       fetchLogin(values);
+      navigate(PROFILE_SETTING_PATH);
     }
   });
 
-  const [fetchLogin, { data, isSuccess }] = useFetchSignInMutation();
+  const [fetchLogin, { data, isSuccess, isError }] = useFetchSignInMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -35,6 +37,13 @@ const SugnIn = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  if (isError) {
+    return (
+      <>
+        <Error />
+      </>
+    );
+  }
   return (
     <AuthPagesWrapper>
       <form onSubmit={formik.handleSubmit}>
@@ -66,7 +75,6 @@ const SugnIn = () => {
           />
           <Button
             onClick={() => navigate(SIGNUP_PATH)}
-            // Убрать
             style={{ background: 'none', border: 'none' }}
             content={'Sign up'}
           />
@@ -76,4 +84,4 @@ const SugnIn = () => {
   );
 };
 
-export default SugnIn;
+export default SignIn;

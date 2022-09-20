@@ -3,7 +3,7 @@ import { IErrorResponse } from '../models/IErrorResponse';
 import { ISignInParams } from '../models/ISignInParams';
 import { ISignUpParams } from '../models/ISignUpParams';
 import baseApi from '../store/api/baseApi';
-import { ENDPOINTS } from '../contans/constans';
+import { ENDPOINTS } from '../constans/constans';
 
 export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth'] })
@@ -32,6 +32,8 @@ export const authAPI = baseApi
         query: (body) => ({
           url: `${ENDPOINTS.YANDEX}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNUP}`,
           method: 'POST',
+          responseHandler: (response) =>
+            response.status === 200 ? response.text() : response.json(),
           body,
           overrideExisting: false
         }),

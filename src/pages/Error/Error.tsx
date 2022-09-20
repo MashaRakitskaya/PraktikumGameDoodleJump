@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button } from '../../components/Button';
+import { ErrorWrapper } from './ErrorStyles';
 
 const Error = () => {
   return (
-    <div>
-      <aside>500</aside>
+    <ErrorWrapper>
+      <p>We are already fixing</p>
       <Button>Back</Button>
-    </div>
+    </ErrorWrapper>
   );
 };
 
