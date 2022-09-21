@@ -9,12 +9,8 @@ interface ForumMessageItemProps {
 const ForumMessageItem = ({
   messageText,
   isOtherPeopleMessages = false
-}: ForumMessageItemProps) => {
-  return (
-    <Message isOtherPeopleMessages={isOtherPeopleMessages}>
-      {messageText}
-    </Message>
-  );
-};
+}: ForumMessageItemProps) => (
+  <Message isOtherPeopleMessages={isOtherPeopleMessages}>{messageText}</Message>
+);
 
 export default ForumMessageItem;

@@ -10,8 +10,23 @@ export const GAME_PATH = '/game';
 export const ERROR404_PATH = '/404';
 export const ERROR500_PATH = '/500';
 export const ROOT_DIV = '#root';
+interface LeaderboardListProps {
+  id: string;
+  title: string;
+  points: number;
+  urlImg: string;
+}
 
-export const leaderboardList = [
+interface ForumTopicsListProps {
+  id: string;
+  title: string;
+  lastMessage: string;
+  numberMessages: number;
+  time: string;
+  urlImg: string;
+}
+
+export const leaderboardList: LeaderboardListProps[] = [
   {
     id: '1',
     title: 'Elena List',
@@ -140,7 +155,7 @@ export const leaderboardList = [
   }
 ];
 
-export const forumTopicsList = [
+export const forumTopicsList: ForumTopicsListProps[] = [
   {
     id: '23515667',
     title: 'Elena List',

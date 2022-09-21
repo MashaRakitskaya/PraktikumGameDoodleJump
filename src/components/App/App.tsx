@@ -17,7 +17,7 @@ import Popup from '../Popup/Popup';
 import Field from '../Field/Field';
 import Button from '../Button/Button';
 
-function App() {
+const App = () => {
   const [isCreateTopicPopupOpen, setCreateTopicPopupOpen] = useState(false);
 
   const closePopup = () => {
@@ -66,6 +66,6 @@ function App() {
       </AppWrapperContainer>
     </AppWrapper>
   );
-}
+};
 
 export default App;

@@ -34,15 +34,13 @@ const ForumChat = () => {
         </DeleteChatButton>
       </Header>
       <MessagesList>
-        {messagesList.map((item) => {
-          return (
-            <ForumMessageItem
-              messageText={item.messageText}
-              isOtherPeopleMessages={item.user_id === userId ? false : true}
-              key={item.id}
-            />
-          );
-        })}
+        {messagesList.map((item) => (
+          <ForumMessageItem
+            messageText={item.messageText}
+            isOtherPeopleMessages={item.user_id === userId ? false : true}
+            key={item.id}
+          />
+        ))}
       </MessagesList>
       <MessageForm>
         <Input
@@ -51,6 +49,7 @@ const ForumChat = () => {
           placeholder="Write a message..."
           autoComplete="off"
         ></Input>
+
         <SubmitButton type="submit"></SubmitButton>
       </MessageForm>
     </ForumChatContainer>

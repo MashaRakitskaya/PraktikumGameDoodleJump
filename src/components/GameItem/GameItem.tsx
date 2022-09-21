@@ -8,7 +8,7 @@ import {
   PlatformInterface
 } from './Platform/Platform';
 
-function GameItem() {
+const GameItem = () => {
   let intervalGameTimer: NodeJS.Timeout | undefined;
   useEffect(() => {
     return () => {
@@ -59,6 +59,6 @@ function GameItem() {
       />
     </GameWrapper>
   );
-}
+};
 
 export default GameItem;

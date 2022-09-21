@@ -7,7 +7,7 @@ import { ForumContainer, ForumTopicsList } from './Forum.styles';
 
 const Forum = () => {
   const [isTopicSelected, setTopicSelected] = useState(false);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <ForumContainer>
       <ForumTopicsList>
