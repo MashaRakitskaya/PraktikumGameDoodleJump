@@ -17,7 +17,7 @@ const LeaderboardItem = ({ leaderboardItem, index }: LeaderboardItemProps) => {
   return (
     <ListItem>
       <Place>{index + 1}</Place>
-      <Avatar src={urlImg}></Avatar>
+      <Avatar alt="avatar" src={urlImg}></Avatar>
       <Name>{title}</Name>
       <Points>{points}</Points>
     </ListItem>
