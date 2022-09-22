@@ -20,7 +20,7 @@ const ForumChat = () => {
   const navigate = useNavigate();
   const userId = '25784';
   return (
-    <ForumChatContainer>
+    <ForumChatContainer role="forumChat">
       <Header>
         <Back type="button" onClick={() => navigate(-1)} />
         <ImgTitleContainer>
