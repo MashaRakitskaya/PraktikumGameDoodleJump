@@ -42,9 +42,7 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
       {isButtonAddTopic && (
         <ButtonComponent
           marginTop="0px"
-          onCLickFunc={() => {
-            showPopup();
-          }}
+          onCLickFunc={showPopup}
           buttonText="Add topic"
           type="button"
         />
