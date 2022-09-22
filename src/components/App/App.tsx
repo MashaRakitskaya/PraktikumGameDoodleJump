@@ -39,7 +39,6 @@ const App = () => {
               path="/"
               element={<Navigate replace to={LEADERBOARD_PATH} />}
             />
-            <Route path="/" element={<Leaderboard />} />
             <Route path={FORUM_PATH} element={<Forum />} />
             <Route path={FORUM_CHAT_ID_PATH} element={<ForumChat />} />
             <Route path={GAME_PATH} element={<Game />} />

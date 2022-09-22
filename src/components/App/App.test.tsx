@@ -3,10 +3,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import { FORUM_PATH } from '../../utils/constants';
+import { debug } from 'console';
 
 describe('App component', () => {
   it('open Popup on click button add topic', async () => {
-    window.history.pushState({}, 'Test page', FORUM_PATH);
+    window.history.pushState({}, 'Forum page', FORUM_PATH);
     render(<App />);
 
     userEvent.click(
