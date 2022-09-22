@@ -1,9 +1,26 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
+import { FORUM_PATH } from '../../utils/constants';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App component', () => {
+  it('open Popup on click button add topic', async () => {
+    window.history.pushState({}, 'Test page', FORUM_PATH);
+    render(<App />);
+
+    userEvent.click(
+      screen.getByRole('button', {
+        name: /add topic/i
+      })
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          name: /create topic/i
+        })
+      ).toBeInTheDocument();
+    });
+  });
 });
