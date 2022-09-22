@@ -21,8 +21,8 @@ export const ModalWindowTitle = styled.h3`
   text-align: center;
   margin-bottom: 50px;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 20px;
+  line-height: 23px;
   color: var(--secondary-font-color);
 `;
 
@@ -48,8 +48,8 @@ export const ButtonClose = styled.button`
   border: none;
   cursor: pointer;
   position: absolute;
-  top: -40px;
-  right: -40px;
+  top: 20px;
+  right: 20px;
   padding: 0px;
   margin: 0px;
   transition: opacity 0.2s ease;
