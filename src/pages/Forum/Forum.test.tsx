@@ -8,9 +8,8 @@ import App from '../../components/App/App';
 
 describe('Forum component', () => {
   it('render Forum', () => {
-    const { asFragment } = render(<Forum />, { wrapper: BrowserRouter });
-    const firstRender = asFragment();
-    expect(firstRender).toMatchSnapshot();
+    render(<Forum />, { wrapper: BrowserRouter });
+    expect(screen.getByRole('forum')).toBeInTheDocument();
   });
 
   it('get ForumChat on ForumTopicItem click', async () => {
@@ -21,7 +20,7 @@ describe('Forum component', () => {
     userEvent.click(topicItem[0]);
 
     await waitFor(() => {
-      expect(screen.getByRole('forumChat')).toMatchSnapshot();
+      expect(screen.getByRole('forumChat')).toBeInTheDocument();
     });
   });
 
