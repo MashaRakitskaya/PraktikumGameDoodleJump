@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Forum from './Forum';
 import userEvent from '@testing-library/user-event';
 import { FORUM_PATH } from '../../utils/constants';
+import App from '../../components/App/App';
 
 describe('Forum component', () => {
   it('render Forum', () => {
@@ -21,6 +22,25 @@ describe('Forum component', () => {
 
     await waitFor(() => {
       expect(screen.getByRole('forumChat')).toMatchSnapshot();
+    });
+  });
+
+  it('open Popup on click button add topic', async () => {
+    window.history.pushState({}, 'Forum page', FORUM_PATH);
+    render(<App />);
+
+    userEvent.click(
+      screen.getByRole('button', {
+        name: /add topic/i
+      })
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          name: /create topic/i
+        })
+      ).toBeInTheDocument();
     });
   });
 });
