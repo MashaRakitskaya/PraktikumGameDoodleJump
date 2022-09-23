@@ -10,6 +10,7 @@ exports[`Forum component get ForumChat on ForumTopicItem click 1`] = `
   >
     <button
       class="css-1kykoac"
+      role="buttonBack"
       type="button"
     />
     <div
