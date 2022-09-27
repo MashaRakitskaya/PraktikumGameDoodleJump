@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { PROFILE_SETTING_PATH, SIGNUP_PATH } from '../../../utils/constants';
 import { useFormik } from 'formik';
 import { signInSchema } from '../../../utils/validationSchema/schemaAuthPages';
-import { Button } from '../../../components/Button';
 import { TextField } from '../../../components/TextField/index';
 import { useFetchSignInMutation } from '../../../services/auth';
 import { InputLabel, InputNames, InputType } from '../../../constans/constans';
 import { ISignInParams } from '../../../models/ISignInParams';
 import Header from '../../../components/Header/Header';
 import Error from '../../Error/Error';
+import { Button } from '../../../components/Button';
 
 const SignIn = () => {
   let navigate = useNavigate();
@@ -68,15 +68,16 @@ const SignIn = () => {
             errorText={formik.touched.password && formik.errors.password}
           />
           <Button
-            color={'#ffff'}
-            onClick={() => formik.handleSubmit()}
+            onCLickFunc={() => formik.handleSubmit()}
             type="submit"
-            content={'Sign in'}
+            marginTop={'0'}
+            buttonText={'Sign in'}
           />
           <Button
-            onClick={() => navigate(SIGNUP_PATH)}
-            style={{ background: 'none', border: 'none' }}
-            content={'Sign up'}
+            marginTop={'0'}
+            type="button"
+            onCLickFunc={() => navigate(SIGNUP_PATH)}
+            buttonText={'Sign up'}
           />
         </AuthWrapper>
       </form>

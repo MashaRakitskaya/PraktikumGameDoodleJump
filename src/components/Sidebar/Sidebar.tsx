@@ -58,7 +58,6 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
           type="button"
         />
       )}
-
       <ButtonComponent
         marginTop="0px"
         onCLickFunc={playGame}
@@ -69,8 +68,7 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
       <ButtonComponent
         marginTop="0px"
         onCLickFunc={logout}
-        notPriority={true}
-        buttonText="Play"
+        buttonText="logout"
         type="button"
       />
     </SideNav>

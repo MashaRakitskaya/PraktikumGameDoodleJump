@@ -18,7 +18,6 @@ import {
 } from '../../utils/constants';
 import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
-
 import Game from '../../pages/Game/Game';
 import { withErrorBoundary } from 'react-error-boundary';
 import ProtectedRoute from './ProtectedRoute';

@@ -12,6 +12,7 @@ const Canvas = ({ draw, height, width }: CanvasInitParam) => {
     // @ts-ignore
     const context = canvas.current.getContext('2d');
     draw(context);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // @ts-ignore

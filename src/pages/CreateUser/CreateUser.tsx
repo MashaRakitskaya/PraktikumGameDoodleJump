@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import UserHeaderNav from '../../components/UserHeader/UserHeaderNav';
 import { Wrapper } from './CreateUserStyles';
 

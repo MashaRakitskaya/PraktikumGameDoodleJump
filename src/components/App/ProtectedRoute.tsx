@@ -1,4 +1,3 @@
-import { Field } from 'formik';
 import React, { useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '../../services/auth';
@@ -6,6 +5,7 @@ import { SIGNIN_PATH } from '../../utils/constants';
 import { Button } from '../Button';
 import Popup from '../Popup/Popup';
 import Sidebar from '../Sidebar/Sidebar';
+import { TextField } from '../TextField';
 
 const ProtectedRoute = () => {
   const location = useLocation();
@@ -43,7 +43,7 @@ const ProtectedRoute = () => {
             closePopup={closePopup}
           >
             <form>
-              <Field label="title" name="title" type="title" />
+              <TextField />
               <Button
                 onCLickFunc={() => {}}
                 buttonText={'Create'}
