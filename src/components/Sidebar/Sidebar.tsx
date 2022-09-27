@@ -11,7 +11,7 @@ import {
   GAME_PATH
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
-import { SideNav, SideNavLink } from './Sidebar.styles';
+import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles';
 
 interface SidebarProps {
   showPopup: () => void;
@@ -44,10 +44,14 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
 
   return (
     <SideNav>
+      <ButtonExit type="button" onClick={logout}>
+        Exit
+      </ButtonExit>
       <SideNavLink to={PROFILE_SETTING_PATH}>User</SideNavLink>
       <SideNavLink to={FORUM_PATH}>Forum</SideNavLink>
       <SideNavLink to={LEADERBOARD_PATH}>Leaderboard</SideNavLink>
       <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
+
       {isButtonAddTopic && (
         <ButtonComponent
           marginTop="0px"
@@ -61,12 +65,6 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
         onCLickFunc={playGame}
         notPriority={true}
         buttonText="Play"
-        type="button"
-      />
-      <ButtonComponent
-        marginTop="0px"
-        onCLickFunc={logout}
-        buttonText="logout"
         type="button"
       />
     </SideNav>
