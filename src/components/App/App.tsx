@@ -1,71 +1,63 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import SignIn from '../../pages/Auth/SignIn/SignIn';
+import SignUp from '../../pages/Auth/SignUp/SignUp';
+import CreateUser from '../../pages/CreateUser/CreateUser';
 import Leaderboard from '../../pages/Leaderboard/Leaderboard';
-import Game from '../../pages/Game/Game';
-import Sidebar from '../Sidebar/Sidebar';
 import { AppWrapper, AppWrapperContainer } from './app.styles';
 import {
-  LEADERBOARD_PATH,
+  PROFILE_SETTING_PATH,
+  SIGNIN_PATH,
+  SIGNUP_PATH,
   FORUM_PATH,
   FORUM_CHAT_ID_PATH,
-  GAME_PATH
+  GAME_PATH,
+  LEADERBOARD_PATH,
+  PROFILE_PATH,
+  PASSWORD_SETTING_PATH
 } from '../../utils/constants';
 import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
-import Popup from '../Popup/Popup';
-import Field from '../Field/Field';
-import Button from '../Button/Button';
+import Game from '../../pages/Game/Game';
+import { withErrorBoundary } from 'react-error-boundary';
+import ProtectedRoute from './ProtectedRoute';
+import ChangePassword from '../../pages/ChangeData/ChangePassword/ChangePassword';
+import ChangetData from '../../pages/ChangeData/ChangePersonData/ChangetData';
 
 const App = () => {
-  const [isCreateTopicPopupOpen, setCreateTopicPopupOpen] = useState(false);
-
-  const closePopup = () => {
-    setCreateTopicPopupOpen(false);
-  };
-
-  const showPopup = () => {
-    setCreateTopicPopupOpen(true);
-  };
-
-  const closeByOverlay = (
-    event: React.MouseEvent<Element, MouseEvent>
-  ): void => {
-    const id = (event.target as HTMLDivElement).id;
-    if (id === 'popup') {
-      closePopup();
-    }
-  };
-
   return (
     <AppWrapper>
       <AppWrapperContainer>
-        <Sidebar showPopup={showPopup} />
         <Routes>
-          <Route path={LEADERBOARD_PATH} element={<Leaderboard />} />
-          <Route path={FORUM_PATH} element={<Forum />} />
-          <Route path={FORUM_CHAT_ID_PATH} element={<ForumChat />} />
-          <Route path={GAME_PATH} element={<Game />} />
+          <Route path={SIGNIN_PATH} element={<SignIn />} />
+          <Route path={SIGNUP_PATH} element={<SignUp />} />
+          <Route path={PROFILE_PATH} element={<ProtectedRoute />}>
+            <Route index element={<CreateUser />} />
+          </Route>
+          <Route path={PROFILE_SETTING_PATH} element={<ProtectedRoute />}>
+            <Route index element={<ChangetData />} />
+          </Route>
+          <Route path={PASSWORD_SETTING_PATH} element={<ProtectedRoute />}>
+            <Route index element={<ChangePassword />} />
+          </Route>
+          <Route path={LEADERBOARD_PATH} element={<ProtectedRoute />}>
+            <Route index element={<Leaderboard />} />
+          </Route>
+          <Route path={FORUM_PATH} element={<ProtectedRoute />}>
+            <Route index element={<Forum />} />
+          </Route>
+          <Route path={FORUM_CHAT_ID_PATH} element={<ProtectedRoute />}>
+            <Route index element={<ForumChat />} />
+          </Route>
+          <Route path={GAME_PATH} element={<ProtectedRoute />}>
+            <Route index element={<Game />} />
+          </Route>
+          <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
         </Routes>
-
-        <Popup
-          isOpen={isCreateTopicPopupOpen}
-          closeByOverlay={closeByOverlay}
-          title={'Create topic'}
-          closePopup={closePopup}
-        >
-          <form>
-            <Field label="title" name="title" type="title" />
-            <Button
-              onCLickFunc={() => {}}
-              buttonText={'Create'}
-              type={'submit'}
-            />
-          </form>
-        </Popup>
       </AppWrapperContainer>
     </AppWrapper>
   );
 };
-
-export default App;
+export default withErrorBoundary(App, {
+  fallback: <>Что-то пошло не так.</>
+});
