@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFetchLogoutMutation } from '../../services/auth';
 import { useLocation } from 'react-router-dom';
-
 import {
   LEADERBOARD_PATH,
   PROFILE_SETTING_PATH,
   FORUM_PATH,
   PRESENTATION_PATH,
+  SIGNUP_PATH,
   GAME_PATH
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
-
 import { SideNav, SideNavLink } from './Sidebar.styles';
 
 interface SidebarProps {
@@ -33,6 +34,14 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
     window.location.href = GAME_PATH;
   };
 
+  const [fetchLogout] = useFetchLogoutMutation();
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    await fetchLogout();
+    navigate(SIGNUP_PATH);
+  };
+
   return (
     <SideNav>
       <SideNavLink to={PROFILE_SETTING_PATH}>User</SideNavLink>
@@ -47,12 +56,17 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
           type="button"
         />
       )}
-
       <ButtonComponent
         marginTop="0px"
         onCLickFunc={playGame}
         notPriority={true}
         buttonText="Play"
+        type="button"
+      />
+      <ButtonComponent
+        marginTop="0px"
+        onCLickFunc={logout}
+        buttonText="logout"
         type="button"
       />
     </SideNav>
