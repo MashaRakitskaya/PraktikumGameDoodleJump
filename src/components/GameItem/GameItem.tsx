@@ -13,7 +13,7 @@ import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
 function GameItem() {
   let intervalGameTimer: number;
   let isGameOver = false;
-  let platformCount = 15; // Общее количество платформ на сцену
+  let platformCount = 20; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
   let speedGame = 13; // общая скорость игры
   let platforms: PlatformInterface[] = [];
@@ -34,7 +34,6 @@ function GameItem() {
   };
 
   const animation = () => {
-    console.log('Aniasd');
     contextLocal.clearRect(
       0,
       0,
@@ -67,14 +66,14 @@ function GameItem() {
       monsters.push(monsterJob);
     }
 
-    if (monsters.length > 0) {
-      moveMonsters(contextLocal, monsters, person, stepElementsDown);
-    }
     score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
-    if (checkMonsterOnPath(person, monsters)) {
-      clearAnimation();
-      person.gameOver();
+    if (monsters.length > 0) {
+      moveMonsters(contextLocal, monsters, person, stepElementsDown);
+      if (checkMonsterOnPath(person, monsters)) {
+        clearAnimation();
+        person.gameOver();
+      }
     }
   };
 
