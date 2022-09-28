@@ -2,32 +2,39 @@ import React, { useEffect } from 'react';
 import { GameWrapper } from './GameItem.styles';
 import Canvas from './Canvas/Canvas';
 import Character, { CharacterInterface } from './Character/Character';
-import { Score, ScoreInterface } from '../GameItem/utils/Score';
+import { Score, ScoreInterface } from './utils/Score';
 import {
   createPlatforms,
   movePlatforms,
   PlatformInterface
 } from './Platform/Platform';
+import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
 
 function GameItem() {
   let intervalGameTimer: number;
   let isGameOver = false;
-  let platformCount = 20; // Общее количество платформ на сцену
-  let stepPlatformsDown: number = 5; // Шаг передвижения платформ вниз (Имитация цикличности)
-  let speedGame = 10; // общая скорость игры
+  let platformCount = 15; // Общее количество платформ на сцену
+  let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
+  let speedGame = 13; // общая скорость игры
   let platforms: PlatformInterface[] = [];
   let person: CharacterInterface;
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
   let score: ScoreInterface;
+  let monsters: any[] = [];
 
   useEffect(() => {
     return () => {
-      clearInterval(intervalGameTimer);
+      cancelAnimationFrame(intervalGameTimer);
     };
   }, []);
 
+  const clearAnimation = () => {
+    cancelAnimationFrame(intervalGameTimer);
+  };
+
   const animation = () => {
+    console.log('Aniasd');
     contextLocal.clearRect(
       0,
       0,
@@ -37,14 +44,38 @@ function GameItem() {
     platforms.forEach((platform: PlatformInterface) => {
       platform.draw();
     });
+    monsters.forEach((monster) => {
+      monster.draw();
+    });
+
     person.draw();
+
     currentScroll =
       currentScroll +
-      movePlatforms(contextLocal, platforms, person, stepPlatformsDown);
+      movePlatforms(contextLocal, platforms, person, stepElementsDown);
+
     score.currentScroll = currentScroll;
     person.currentScroll = currentScroll;
+
+    if (currentScroll % 1000 === 0 && currentScroll !== 0) {
+      let monsterJob = new Monster(
+        contextLocal,
+        platforms[platformCount - 1].left,
+        platforms[platformCount - 1].bottom,
+        'monster-job.png'
+      );
+      monsters.push(monsterJob);
+    }
+
+    if (monsters.length > 0) {
+      moveMonsters(contextLocal, monsters, person, stepElementsDown);
+    }
     score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
+    if (checkMonsterOnPath(person, monsters)) {
+      clearAnimation();
+      person.gameOver();
+    }
   };
 
   const draw = (context: CanvasRenderingContext2D) => {
@@ -62,7 +93,7 @@ function GameItem() {
       score = new Score(contextLocal, 40, 40);
       animation();
 
-      person.jump(platforms);
+      person.jump(platforms, monsters);
 
       document.addEventListener('keydown', (event) => {
         person.controller(event);
@@ -74,7 +105,7 @@ function GameItem() {
       <Canvas
         draw={draw}
         height={document.documentElement.clientHeight}
-        width={document.documentElement.clientWidth - 500} //500 - пока что произвольная величина
+        width={document.documentElement.clientWidth - 300} //500 - пока что произвольная величина
       />
     </GameWrapper>
   );

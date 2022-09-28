@@ -1,6 +1,9 @@
 interface CharacterInterface {
+  gameOver: Function;
   currentScroll: number;
   ref: CanvasRenderingContext2D;
+  width: number;
+  height: number;
   posX: number;
   posY: number;
   score: number;
@@ -10,8 +13,8 @@ interface CharacterInterface {
 }
 
 class Character {
-  private width: number = 80; // Ширина персонажа
-  private height: number = 110; // Высота персонажа
+  readonly width: number = 80; // Ширина персонажа
+  readonly height: number = 110; // Высота персонажа
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
   private characterGap: number = 300; // Максимально возможная высота прыжка персонажа

@@ -1,4 +1,4 @@
-import Character, { CharacterInterface } from '../Character/Character';
+import { CharacterInterface } from '../Character/Character';
 
 interface PlatformInterface {
   bottom: number;
@@ -28,7 +28,7 @@ class Platform {
   }
 
   draw = () => {
-    this.ref.fillStyle = 'green';
+    this.ref.fillStyle = '#7D3CFF';
     this.ref.fillRect(this.left, this.bottom, this.width, this.height);
   };
 }
@@ -61,11 +61,11 @@ function movePlatforms(
   Character: CharacterInterface,
   stepDown: number
 ) {
-  const INDENTATION_NEW_PLATFORM_TOP = 50;
+  const INDENTATION_NEW_PLATFORM_TOP = 20;
   const ZERO_STEP = 0;
   //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем платформы
   if (Character.posY < context.canvas.height / 3) {
-    Character.posY += stepDown;
+    Character.posY += stepDown / 2;
     platforms.forEach((platform: PlatformInterface) => {
       platform.bottom += stepDown;
 
