@@ -14,7 +14,8 @@ import {
   GAME_PATH,
   LEADERBOARD_PATH,
   PROFILE_PATH,
-  PASSWORD_SETTING_PATH
+  PASSWORD_SETTING_PATH,
+  PRESENTATION_PATH
 } from '../../utils/constants';
 import Forum from '../../pages/Forum/Forum';
 import ForumChat from '../ForumChat/ForumChat';
@@ -23,6 +24,7 @@ import { withErrorBoundary } from 'react-error-boundary';
 import ProtectedRoute from './ProtectedRoute';
 import ChangePassword from '../../pages/ChangeData/ChangePassword/ChangePassword';
 import ChangetData from '../../pages/ChangeData/ChangePersonData/ChangetData';
+import Presentatin from '../../pages/Presentatin/Presentatin';
 
 const App = () => {
   return (
@@ -51,6 +53,9 @@ const App = () => {
           </Route>
           <Route path={GAME_PATH} element={<ProtectedRoute />}>
             <Route index element={<Game />} />
+          </Route>
+          <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
+            <Route index element={<Presentatin />} />
           </Route>
           <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
         </Routes>
