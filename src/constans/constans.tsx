@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
+  RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
 
   AUTH: {
     PATH: '/auth',
@@ -34,7 +35,7 @@ export enum InputLabel {
   secondName = 'second name',
   email = 'email',
   phone = 'phone number',
-  file = 'Файл',
+  file = 'file',
   displayName = 'display name',
   passwordAgain = 'password again'
 }

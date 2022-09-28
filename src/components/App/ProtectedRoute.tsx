@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import React, { useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '../../services/auth';
@@ -33,7 +34,7 @@ const ProtectedRoute = () => {
   if ((isSuccess && !user) || isError) return <Navigate to={SIGNIN_PATH} />;
   return (
     <>
-      {!initRoute && (
+      {!initRoute && !isEmpty(user) && (
         <>
           <Sidebar showPopup={showPopup} />
           <Popup
@@ -53,7 +54,7 @@ const ProtectedRoute = () => {
           </Popup>
         </>
       )}
-      <Outlet />
+      {!isEmpty(user) && <Outlet />}
     </>
   );
 };
