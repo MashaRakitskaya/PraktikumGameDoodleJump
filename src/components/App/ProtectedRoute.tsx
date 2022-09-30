@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import React, { useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '../../services/auth';
@@ -11,38 +12,28 @@ const ProtectedRoute = () => {
   const location = useLocation();
   const initRoute = location.pathname === '/';
   const { data: user, isSuccess, isError } = useFetchUserQuery();
-  const [isCreateTopicPopupOpen, setCreateTopicPopupOpen] = useState(false);
+  const [showPopup, togglePopup] = useState(false);
 
   const closePopup = () => {
-    setCreateTopicPopupOpen(false);
+    togglePopup(false);
   };
 
-  const showPopup = () => {
-    setCreateTopicPopupOpen(true);
+  const openPopup = () => {
+    togglePopup(!showPopup);
   };
-
-  const closeByOverlay = (
-    event: React.MouseEvent<Element, MouseEvent>
-  ): void => {
-    const id = (event.target as HTMLDivElement).id;
-    if (id === 'popup') {
-      closePopup();
-    }
-  };
-
   if ((isSuccess && !user) || isError) return <Navigate to={SIGNIN_PATH} />;
   return (
     <>
-      {!initRoute && (
+      {!initRoute && !isEmpty(user) && (
         <>
-          <Sidebar showPopup={showPopup} />
+          <Sidebar showPopup={openPopup} />
           <Popup
-            isOpen={isCreateTopicPopupOpen}
+            isOpen={showPopup}
             title={'Create topic'}
             closePopup={closePopup}
           >
             <form>
-              <TextField />
+              <TextField labelName="title" name="title" type="title" />
               <Button
                 onCLickFunc={() => {}}
                 buttonText={'Create'}
@@ -52,7 +43,7 @@ const ProtectedRoute = () => {
           </Popup>
         </>
       )}
-      <Outlet />
+      {!isEmpty(user) && <Outlet />}
     </>
   );
 };
