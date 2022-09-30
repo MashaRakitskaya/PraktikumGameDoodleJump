@@ -14,6 +14,7 @@ const GameItem = () => {
     return () => {
       clearInterval(intervalGameTimer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const draw = (context: CanvasRenderingContext2D) => {
