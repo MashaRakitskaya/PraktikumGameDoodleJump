@@ -5,6 +5,7 @@ import {
   ModalWindow,
   ButtonClose
 } from './Popup.styles';
+import ReactDOM from 'react-dom';
 
 interface PopupProps {
   isOpen: boolean;
@@ -14,7 +15,8 @@ interface PopupProps {
 }
 
 const Popup = ({ isOpen, title, children, closePopup }: PopupProps) => {
-  return isOpen ? (
+  if (!isOpen) return null;
+  return ReactDOM.createPortal(
     <ModalWindow id="popup" isOpen={isOpen} onClick={closePopup} role="popup">
       <ModalWindowContent
         onClick={(e) => {
@@ -29,8 +31,9 @@ const Popup = ({ isOpen, title, children, closePopup }: PopupProps) => {
         <ModalWindowTitle>{title}</ModalWindowTitle>
         {children}
       </ModalWindowContent>
-    </ModalWindow>
-  ) : null;
+    </ModalWindow>,
+    document.body
+  );
 };
 
 export default Popup;

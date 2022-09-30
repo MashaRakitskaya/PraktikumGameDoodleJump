@@ -12,14 +12,13 @@ import {
 } from '../../utils/constants';
 import ButtonComponent from '../Button/Button';
 import { SideNav, SideNavLink } from './Sidebar.styles';
+import Popup from '../Popup/Popup';
+import { TextField } from '../TextField';
 
-interface SidebarProps {
-  showPopup: () => void;
-}
-
-const Sidebar = ({ showPopup }: SidebarProps) => {
+const Sidebar = () => {
   const [isButtonAddTopic, setButtonAddTopic] = useState(false);
   const location = useLocation();
+  const [showPopup, togglePopup] = useState(false);
 
   const showButtonAddChat = (isPathForum: boolean) => {
     setButtonAddTopic(isPathForum);
@@ -51,11 +50,25 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
       {isButtonAddTopic && (
         <ButtonComponent
           marginTop="0px"
-          onCLickFunc={showPopup}
+          onCLickFunc={() => togglePopup(!showPopup)}
           buttonText="Add topic"
           type="button"
         />
       )}
+      <Popup
+        isOpen={showPopup}
+        title={'Create topic'}
+        closePopup={() => togglePopup(false)}
+      >
+        <form>
+          <TextField labelName="title" name="title" type="title" />
+          <ButtonComponent
+            onCLickFunc={() => {}}
+            buttonText={'Create'}
+            type={'submit'}
+          />
+        </form>
+      </Popup>
       <ButtonComponent
         marginTop="0px"
         onCLickFunc={playGame}
