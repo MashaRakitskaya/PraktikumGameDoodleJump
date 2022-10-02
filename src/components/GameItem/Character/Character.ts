@@ -102,7 +102,7 @@ class Character {
         //
         this.posY + this.height >= platform.bottom - 10 &&
         this.posY + this.height <= platform.bottom &&
-        this.posX + this.width / 3 >= platform.left &&
+        this.posX + (this.width / 3) * 2 >= platform.left &&
         this.posX + this.width / 3 <= platform.left + platform.width &&
         !this.isJumpimg
       ) {
@@ -122,7 +122,6 @@ class Character {
   gameOver = () => {
     clearInterval(this.upTime);
     clearInterval(this.downTime);
-    alert('Game Over! Congrats!');
     alert('Your score: ' + this.currentScroll);
   };
 }
