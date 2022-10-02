@@ -52,7 +52,6 @@ function moveMonsters(
 function checkMonsterOnPath(Character: CharacterInterface, monsters: any[]) {
   let isMeet = false;
   monsters.forEach((monsterItem) => {
-    //Условие для определения "Под ногами" персонажа плиты для отталкивания
     if (
       Character.posY + Character.height >= monsterItem.posY &&
       Character.posY <= monsterItem.posY + monsterItem.height &&

@@ -9,8 +9,9 @@ import {
   PlatformInterface
 } from './Platform/Platform';
 import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
+import { initFullScreenAPI } from './utils/FullScreen';
 
-function GameItem() {
+const GameItem = () => {
   let intervalGameTimer: number;
   let isGameOver = false;
   let platformCount = 20; // Общее количество платформ на сцену
@@ -35,6 +36,13 @@ function GameItem() {
 
   const animation = () => {
     contextLocal.clearRect(
+      0,
+      0,
+      contextLocal.canvas.width,
+      contextLocal.canvas.height
+    );
+    contextLocal.fillStyle = '#DFDFDF';
+    contextLocal.fillRect(
       0,
       0,
       contextLocal.canvas.width,
@@ -93,7 +101,7 @@ function GameItem() {
       animation();
 
       person.jump(platforms, monsters);
-
+      initFullScreenAPI();
       document.addEventListener('keydown', (event) => {
         person.controller(event);
       });
@@ -108,6 +116,6 @@ function GameItem() {
       />
     </GameWrapper>
   );
-}
+};
 
 export default GameItem;

@@ -15,7 +15,7 @@ const Canvas = ({ draw, height, width }: CanvasInitParam) => {
   }, []);
 
   // @ts-ignore
-  return <canvas ref={canvas} height={height} width={width}></canvas>;
+  return <canvas id="Game" ref={canvas} height={height} width={width}></canvas>;
 };
 
 export default Canvas;
