@@ -14,7 +14,7 @@ import { initFullScreenAPI } from './utils/FullScreen';
 const GameItem = () => {
   let intervalGameTimer: number;
   let isGameOver = false;
-  let platformCount = 20; // Общее количество платформ на сцену
+  let platformCount = 15; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
   let speedGame = 13; // общая скорость игры
   let platforms: PlatformInterface[] = [];
@@ -72,6 +72,15 @@ const GameItem = () => {
         'monster-job.png'
       );
       monsters.push(monsterJob);
+    }
+    if (currentScroll % 1700 === 0 && currentScroll !== 0) {
+      let monsterAkadem = new Monster(
+        contextLocal,
+        platforms[platformCount - 1].left,
+        platforms[platformCount - 1].bottom,
+        'character-bonus.png'
+      );
+      monsters.push(monsterAkadem);
     }
 
     score.draw();

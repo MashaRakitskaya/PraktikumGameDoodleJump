@@ -61,7 +61,6 @@ function movePlatforms(
   Character: CharacterInterface,
   stepDown: number
 ) {
-  const INDENTATION_NEW_PLATFORM_TOP = 20;
   const ZERO_STEP = 0;
   //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем платформы
   if (Character.posY < context.canvas.height / 3) {
@@ -75,7 +74,7 @@ function movePlatforms(
         // @ts-ignore
         let newPlatform: PlatformInterface = new Platform(
           context,
-          context.canvas.height - INDENTATION_NEW_PLATFORM_TOP
+          context.canvas.height
         );
         newPlatform.draw();
         platforms.push(newPlatform);
