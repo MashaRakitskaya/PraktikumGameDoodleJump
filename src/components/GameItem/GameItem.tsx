@@ -64,7 +64,7 @@ const GameItem = () => {
     score.currentScroll = currentScroll;
     person.currentScroll = currentScroll;
 
-    if (currentScroll % 1000 === 0 && currentScroll !== 0) {
+    if (currentScroll % 1000 === 0 && currentScroll >= 1000) {
       let monsterJob = new Monster(
         contextLocal,
         platforms[platformCount - 1].left,
@@ -73,7 +73,7 @@ const GameItem = () => {
       );
       monsters.push(monsterJob);
     }
-    if (currentScroll % 1700 === 0 && currentScroll !== 0) {
+    if (currentScroll % 1700 === 0 && currentScroll >= 2000) {
       let monsterAkadem = new Monster(
         contextLocal,
         platforms[platformCount - 1].left,
