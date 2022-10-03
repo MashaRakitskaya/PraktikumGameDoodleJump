@@ -33,10 +33,10 @@ class Platform {
   };
 }
 
-function createPlatforms(
+const createPlatforms = (
   context: CanvasRenderingContext2D,
   platformCount: number
-) {
+) => {
   let platforms: PlatformInterface[] = [];
   const MIN_INDENTATION = 250; // 250 - минимальный шаг отступа между платформами по Y
   for (let i = 0; i < platformCount; i++) {
@@ -52,15 +52,15 @@ function createPlatforms(
   }
 
   return platforms;
-}
+};
 
 //Функция вызвращает высоту сдвига платформ по Y
-function movePlatforms(
+const movePlatforms = (
   context: CanvasRenderingContext2D,
   platforms: PlatformInterface[],
   Character: CharacterInterface,
   stepDown: number
-) {
+) => {
   const ZERO_STEP = 0;
   //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем платформы
   if (Character.posY < context.canvas.height / 3) {
@@ -84,7 +84,7 @@ function movePlatforms(
   }
   //Возвращаем 0 т.к. условие сдвига не выполнилось
   return ZERO_STEP;
-}
+};
 
 export { createPlatforms, movePlatforms };
 export type { PlatformInterface };
