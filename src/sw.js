@@ -25,15 +25,18 @@ export function unregister() {
 }
 const CACHE_PREFIX = 'doodle-jump';
 const CACHE_NAME = `${CACHE_PREFIX}-cache-v3`;
-const URLS = [
-  '/',
-  '/build/static/css/*.css',
-  '/build/static/css/**/*.css',
-  '/build/static/js/*.js',
-  '/build/static/js/**/*.js',
-  '/build/media/**/*.jpg',
-  '/build/media/*.jpg'
-];
+// const URLS = [
+//   '/',
+//   '/build/static/css/*.css',
+//   '/build/static/css/**/*.css',
+//   '/build/static/js/*.js',
+//   '/build/static/js/**/*.js',
+//   '/build/media/**/*.jpg',
+//   '/build/media/*.jpg'
+// ];
+
+const URLS = [];
+
 //Стадия install выполняется всякий раз, когда новый код SW загружается в браузер
 window.addEventListener('install', (event) => {
   console.log(

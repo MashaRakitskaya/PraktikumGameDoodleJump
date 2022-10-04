@@ -4,8 +4,8 @@ import './index.css';
 import App from './components/App/App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import * as serviceWorker from './serviceWorker';
-// import * as serviceWorker from './sw';
+// import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './sw';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +18,5 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
-serviceWorker.register();
-// serviceWorker.registerServiceWorker();
+//serviceWorker.register();
+serviceWorker.registerServiceWorker();
