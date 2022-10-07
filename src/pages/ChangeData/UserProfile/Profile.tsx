@@ -15,7 +15,7 @@ import {
   useEditProfileMutation
 } from '../../../services/editUser';
 import { TextField } from '../../../components/TextField';
-import { AvatarWrapper, UserEditForm } from './ProfileStyle';
+import { AvatarWrapper, UserEditForm } from './Profile.styles';
 import UserHeaderNav from '../../../components/UserHeader/UserHeaderNav';
 
 const Profile = () => {
