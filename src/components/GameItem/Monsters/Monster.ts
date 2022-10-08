@@ -16,7 +16,7 @@ class Monster {
   ) {
     this.imgObj.src = imgUrl;
     this.posX = posX;
-    this.posY = posY - this.height - 20; // 20 - высота платформы. Пока что костыль
+    this.posY = posY - this.height;
     this.ref = context;
   }
 
@@ -37,30 +37,28 @@ function moveMonsters(
   Character: CharacterInterface,
   stepDown: number
 ) {
-  //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем платформы
-  if (Character.posY < context.canvas.height / 3) {
-    Character.posY += stepDown / 2;
     monsters.forEach((monsterItem: any) => {
       monsterItem.posY += stepDown;
       if (monsterItem.posY > context.canvas.height) {
         monsters.shift();
       }
     });
-  }
 }
 
 function checkMonsterOnPath(Character: CharacterInterface, monsters: any[]) {
   let isMeet = false;
-  monsters.forEach((monsterItem) => {
-    if (
-      Character.posY + Character.height >= monsterItem.posY &&
-      Character.posY <= monsterItem.posY + monsterItem.height &&
-      Character.posX + Character.width >= monsterItem.posX &&
-      Character.posX <= monsterItem.posX + monsterItem.width
-    ) {
-      isMeet = true;
-    }
-  });
+  if (monsters.length > 0) {
+    monsters.forEach((monsterItem) => {
+      if (
+          Character.posY + Character.height >= monsterItem.posY &&
+          Character.posY <= monsterItem.posY + monsterItem.height &&
+          Character.posX + Character.width >= monsterItem.posX &&
+          Character.posX <= monsterItem.posX + monsterItem.width
+      ) {
+        isMeet = true;
+      }
+    });
+  }
   return isMeet;
 }
 export { Monster, moveMonsters, checkMonsterOnPath };

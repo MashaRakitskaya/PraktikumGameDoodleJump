@@ -9,6 +9,7 @@ interface CharacterInterface {
   score: number;
   draw: Function;
   jump: Function;
+  stop: Function;
   controller(event: KeyboardEvent): void;
 }
 
@@ -81,9 +82,6 @@ class Character {
       this.checkPlatformsUnder(platforms);
       this.posY += this.stepY;
 
-      if (this.posY > this.ref.canvas.height) {
-        this.gameOver();
-      }
     }, this.speedGame + this.decelerationStep);
   };
 
@@ -117,6 +115,12 @@ class Character {
     } else if (event.key === 'ArrowRight') {
       this.moveRight();
     }
+  };
+
+  stop = () => {
+    console.log('STOP')
+    clearInterval(this.upTime);
+    clearInterval(this.downTime);
   };
 
   gameOver = () => {

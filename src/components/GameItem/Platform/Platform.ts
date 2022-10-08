@@ -61,10 +61,7 @@ const movePlatforms = (
   Character: CharacterInterface,
   stepDown: number
 ) => {
-  const ZERO_STEP = 0;
-  //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем платформы
-  if (Character.posY < context.canvas.height / 3) {
-    Character.posY += stepDown / 2;
+  const TOP_POINT_MAX = -200; // верняя граница, преодолевая которую, плиты удаляются
     platforms.forEach((platform: PlatformInterface) => {
       platform.bottom += stepDown;
 
@@ -79,11 +76,12 @@ const movePlatforms = (
         newPlatform.draw();
         platforms.push(newPlatform);
       }
+      if(platform.bottom < TOP_POINT_MAX) {
+        console.log(platform.bottom)
+        platforms.pop();
+      }
     });
     return stepDown;
-  }
-  //Возвращаем 0 т.к. условие сдвига не выполнилось
-  return ZERO_STEP;
 };
 
 export { createPlatforms, movePlatforms };
