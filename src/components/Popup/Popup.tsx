@@ -17,7 +17,7 @@ interface PopupProps {
 const Popup = ({ isOpen, title, children, closePopup }: PopupProps) => {
   if (!isOpen) return null;
   return ReactDOM.createPortal(
-    <ModalWindow id="popup" isOpen={isOpen} onClick={closePopup} role="popup">
+    <ModalWindow isOpen={isOpen} onClick={closePopup} role="popup">
       <ModalWindowContent
         onClick={(e) => {
           e.stopPropagation();
