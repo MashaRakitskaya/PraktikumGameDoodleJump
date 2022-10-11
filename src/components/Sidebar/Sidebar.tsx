@@ -64,8 +64,8 @@ const Sidebar = () => {
           <TextField labelName="title" name="title" type="title" />
           <ButtonComponent
             onCLickFunc={() => {}}
-            buttonText={'Create'}
-            type={'submit'}
+            buttonText="Create"
+            type="submit"
           />
         </form>
       </Popup>
