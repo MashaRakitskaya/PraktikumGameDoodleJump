@@ -13,7 +13,7 @@ const ChangetData = () => {
       <TextField labelName={'first name'} type={'text'} />
       <TextField labelName={'second name'} type={'text'} />
       <TextField labelName={'phone number'} type={'number'} />
-      <Button type="button" buttonText={'Save'} />
+      <Button type="button" buttonText="Save" />
     </Wrapper>
   );
 };

@@ -14,11 +14,7 @@ const ChangePassword = () => {
       <TextField labelName={'old password'} type={'password'} />
       <TextField labelName={'Password'} type={'password'} />
       <TextField labelName={'password (again)'} type={'password'} />
-      <Button
-        type="button"
-        buttonText={'Save'}
-        onCLickFunc={() => setOpen(true)}
-      />
+      <Button type="button" buttonText="Save" onClick={() => setOpen(true)} />
     </Wrapper>
   );
 };

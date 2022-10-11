@@ -10,7 +10,7 @@ import {
   SIGNUP_PATH,
   GAME_PATH
 } from '../../utils/constants';
-import ButtonComponent from '../Button/Button';
+import Button from '../Button/Button';
 import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles';
 
 interface SidebarProps {
@@ -53,16 +53,16 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
       <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
 
       {isButtonAddTopic && (
-        <ButtonComponent
+        <Button
           marginTop="0px"
-          onCLickFunc={showPopup}
+          onClick={showPopup}
           buttonText="Add topic"
           type="button"
         />
       )}
-      <ButtonComponent
+      <Button
         marginTop="0px"
-        onCLickFunc={playGame}
+        onClick={playGame}
         notPriority={true}
         buttonText="Play"
         type="button"

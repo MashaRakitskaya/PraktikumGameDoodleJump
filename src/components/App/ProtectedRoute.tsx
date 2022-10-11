@@ -29,16 +29,12 @@ const ProtectedRoute = () => {
           <Sidebar showPopup={openPopup} />
           <Popup
             isOpen={showPopup}
-            title={'Create topic'}
+            title="Create topic"
             closePopup={closePopup}
           >
             <form>
               <TextField labelName="title" name="title" type="title" />
-              <Button
-                onCLickFunc={() => {}}
-                buttonText={'Create'}
-                type={'submit'}
-              />
+              <Button onClick={() => {}} buttonText="Create" type="submit" />
             </form>
           </Popup>
         </>

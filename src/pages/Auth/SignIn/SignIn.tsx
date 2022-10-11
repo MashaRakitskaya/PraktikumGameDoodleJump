@@ -68,16 +68,16 @@ const SignIn = () => {
             errorText={formik.touched.password && formik.errors.password}
           />
           <Button
-            onCLickFunc={() => formik.handleSubmit()}
+            onClick={() => formik.handleSubmit()}
             type="submit"
-            marginTop={'0'}
-            buttonText={'Sign in'}
+            marginTop="0"
+            buttonText="Sign in"
           />
           <Button
-            marginTop={'0'}
+            marginTop="0"
             type="button"
-            onCLickFunc={() => navigate(SIGNUP_PATH)}
-            buttonText={'Sign up'}
+            onClick={() => navigate(SIGNUP_PATH)}
+            buttonText="Sign up"
           />
         </AuthWrapper>
       </form>

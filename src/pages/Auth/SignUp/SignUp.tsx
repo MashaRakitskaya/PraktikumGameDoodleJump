@@ -110,16 +110,16 @@ const SignUp = () => {
             }
           />
           <Button
-            onCLickFunc={() => formik.handleSubmit()}
+            onClick={() => formik.handleSubmit()}
             type="submit"
             marginTop="0px"
-            buttonText={'Create user'}
+            buttonText="Create user"
           />
           <Button
-            onCLickFunc={() => navigate(SIGNIN_PATH)}
+            onClick={() => navigate(SIGNIN_PATH)}
             type="button"
             marginTop="0px"
-            buttonText={'Sign in'}
+            buttonText="Sign in"
           />
         </AuthWrapper>
       </form>

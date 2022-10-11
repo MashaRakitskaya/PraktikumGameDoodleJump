@@ -3,7 +3,7 @@ import { Button } from './ButtonStyles';
 interface ButtonProps {
   type: 'button' | 'submit';
   buttonText: string;
-  onCLickFunc?: () => void;
+  onClick?: () => void;
   notPriority?: boolean;
   marginTop?: string;
 }
@@ -11,7 +11,7 @@ interface ButtonProps {
 const ButtonComponent = ({
   buttonText,
   notPriority = false,
-  onCLickFunc,
+  onClick,
   type,
   marginTop
 }: ButtonProps) => {
@@ -19,7 +19,7 @@ const ButtonComponent = ({
     <Button
       marginTop={marginTop}
       type={type}
-      onClick={onCLickFunc}
+      onClick={onClick}
       notPriority={notPriority}
     >
       {buttonText}
