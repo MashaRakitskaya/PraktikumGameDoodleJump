@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-export const PresentatinContainer = styled.section`
+export const PresentationContainer = styled.section`
   width: 100%;
   padding-top: 49px;
   padding-bottom: 20px;
 `;
 
-export const PresentatinList = styled.div`
+export const PresentationList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;

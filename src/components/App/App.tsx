@@ -24,7 +24,7 @@ import { withErrorBoundary } from 'react-error-boundary';
 import ProtectedRoute from './ProtectedRoute';
 import ChangePassword from '../../pages/ChangeData/ChangePassword/ChangePassword';
 import ChangetData from '../../pages/ChangeData/ChangePersonData/ChangetData';
-import Presentatin from '../../pages/Presentatin/Presentatin';
+import Presentation from '../../pages/Presentation/Presentation';
 
 const App = () => {
   return (
@@ -55,7 +55,7 @@ const App = () => {
             <Route index element={<Game />} />
           </Route>
           <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
-            <Route index element={<Presentatin />} />
+            <Route index element={<Presentation />} />
           </Route>
           <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
         </Routes>

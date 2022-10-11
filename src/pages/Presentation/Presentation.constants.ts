@@ -1,17 +1,9 @@
-import React from 'react';
-import {
-  PresentatinContainer,
-  PresentatinList,
-  Img,
-  Text,
-  Item
-} from './Presentatin.styles';
 import characterAndPlate from '../../images/characterAndPlate.svg';
 import monster from '../../images/monster.svg';
 import power from '../../images/power.svg';
 import keyboard from '../../images/keyboard.svg';
 
-const PresentatListData = [
+export const PresentationListData = [
   {
     id: '1',
     text: 'Главный персонаж это ученик Яндекс Практикума – Дудлик, плиты по которым мы прыгаем это учеба в практикуме.',
@@ -37,20 +29,3 @@ const PresentatListData = [
     altText: 'Клавиатура'
   }
 ];
-
-const Presentatin = () => {
-  return (
-    <PresentatinContainer>
-      <PresentatinList>
-        {PresentatListData.map((item) => (
-          <Item key={item.id}>
-            <Text>{item.text}</Text>
-            <Img alt={item.altText} src={item.urlImg} />
-          </Item>
-        ))}
-      </PresentatinList>
-    </PresentatinContainer>
-  );
-};
-
-export default Presentatin;
