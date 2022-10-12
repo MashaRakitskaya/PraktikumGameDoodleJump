@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../../../components/Button';
 import { TextField } from '../../../components/TextField/index';
 import UserHeaderNav from '../../../components/UserHeader/UserHeaderNav';
-import { Wrapper } from '../CommonChangeDataStyles';
+import { Wrapper } from '../CommonChangeData.styles';
 
 const ChangePassword = () => {
   return (

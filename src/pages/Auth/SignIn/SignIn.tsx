@@ -39,11 +39,7 @@ const SignIn = () => {
   }, [data]);
 
   if (isError) {
-    return (
-      <>
-        <Error />
-      </>
-    );
+    return <Error />;
   }
   return (
     <AuthPagesWrapper>

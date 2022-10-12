@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledLink } from './CommonLinkStyles';
+import { StyledLink } from './CommonLink.styles';
 
 interface ICommonLinkProps {
   linkText: string;
