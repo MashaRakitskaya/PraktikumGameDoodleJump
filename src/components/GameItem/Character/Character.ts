@@ -4,7 +4,7 @@ class Character {
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
   private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
-  private isJumpimg: boolean = true;
+  private isJumping: boolean = true;
   private stepY: number = 10; // Шаг первонажа при прыжке и падении
   private stepX: number = 10; // Шаг первонажа при перемещении влево/вправо
   private goLeftTime: NodeJS.Timer | undefined;
@@ -48,7 +48,7 @@ class Character {
 
   jump = (platforms: any[]) => {
     let currentGap = 0;
-    this.isJumpimg = true;
+    this.isJumping = true;
     clearInterval(this.downTime);
 
     this.upTime = setInterval(() => {
@@ -63,7 +63,7 @@ class Character {
   };
 
   down = (platforms: any[]) => {
-    this.isJumpimg = false;
+    this.isJumping = false;
 
     clearInterval(this.upTime);
 
@@ -102,7 +102,7 @@ class Character {
         this.posY + this.height <= platform.bottom &&
         this.posX + (this.width / 3) * 2 >= platform.left &&
         this.posX + this.width / 3 <= platform.left + platform.width &&
-        !this.isJumpimg
+        !this.isJumping
       ) {
         this.jump(platforms);
       }
