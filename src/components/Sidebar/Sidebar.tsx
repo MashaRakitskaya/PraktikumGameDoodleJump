@@ -10,8 +10,8 @@ import {
   SIGNUP_PATH,
   GAME_PATH
 } from '../../utils/constants';
-import ButtonComponent from '../Button/Button';
-import { SideNav, SideNavLink } from './Sidebar.styles';
+import Button from '../Button/Button';
+import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles';
 import Popup from '../Popup/Popup';
 import { TextField } from '../TextField';
 
@@ -43,14 +43,18 @@ const Sidebar = () => {
 
   return (
     <SideNav>
+      <ButtonExit type="button" onClick={logout}>
+        Exit
+      </ButtonExit>
       <SideNavLink to={PROFILE_SETTING_PATH}>User</SideNavLink>
       <SideNavLink to={FORUM_PATH}>Forum</SideNavLink>
       <SideNavLink to={LEADERBOARD_PATH}>Leaderboard</SideNavLink>
       <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
+
       {isButtonAddTopic && (
-        <ButtonComponent
+        <Button
           marginTop="0px"
-          onCLickFunc={() => togglePopup(!showPopup)}
+          onClick={() => togglePopup(!showPopup)}
           buttonText="Add topic"
           type="button"
         />
@@ -62,24 +66,14 @@ const Sidebar = () => {
       >
         <form>
           <TextField labelName="title" name="title" type="title" />
-          <ButtonComponent
-            onCLickFunc={() => {}}
-            buttonText="Create"
-            type="submit"
-          />
+          <Button onClick={() => {}} buttonText="Create" type="submit" />
         </form>
       </Popup>
-      <ButtonComponent
+      <Button
         marginTop="0px"
-        onCLickFunc={playGame}
+        onClick={playGame}
         notPriority={true}
         buttonText="Play"
-        type="button"
-      />
-      <ButtonComponent
-        marginTop="0px"
-        onCLickFunc={logout}
-        buttonText="logout"
         type="button"
       />
     </SideNav>

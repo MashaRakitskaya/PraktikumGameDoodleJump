@@ -18,21 +18,28 @@
       rel="stylesheet"
     />
     <title>Doodle Jump</title>
+    <link rel="stylesheet" href="offline.css" />
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <section class="offline-page">
+      <div class="offline-page__container">
+        <h1 class="offline-page__title">No internet connection</h1>
+        <p class="offline-page__text">
+          To reload the page, click the button below.
+        </p>
+        <button class="offline-page__button" type="button">Reload</button>
+      </div>
+    </section>
+
     <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register('./sw.js')
-          .then(function (reg) {
-            console.log('Registration succeeded. Scope is ' + reg.scope);
-          })
-          .catch(function (error) {
-            console.error('Trouble with sw: ', error);
-          });
-      }
+      document
+        .querySelector('.offline-page__button')
+        .addEventListener('click', () => {
+          window.location.reload();
+        });
+      window.addEventListener('online', () => {
+        window.location.reload();
+      });
     </script>
   </body>
 </html>

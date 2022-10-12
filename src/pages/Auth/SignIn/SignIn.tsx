@@ -65,14 +65,15 @@ const SignIn = () => {
             errorText={formik.touched.password && formik.errors.password}
           />
           <Button
-            onCLickFunc={() => formik.handleSubmit()}
+            onClick={() => formik.handleSubmit()}
             type="submit"
-            marginTop={'0'}
-            buttonText={'Sign in'}
+            marginTop="0"
+            buttonText="Sign in"
           />
+
           <CommonLink
             onCLick={() => navigate(SIGNUP_PATH)}
-            linkText={'Sign up'}
+            linkText="Sign up"
           />
         </AuthWrapper>
       </form>

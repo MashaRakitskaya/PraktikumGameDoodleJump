@@ -11,7 +11,7 @@ const ChangePassword = () => {
       <TextField labelName={'old password'} type={'password'} />
       <TextField labelName={'Password'} type={'password'} />
       <TextField labelName={'password (again)'} type={'password'} />
-      <Button type="button" buttonText={'Save'} />
+      <Button type="button" buttonText="Save" />
     </Wrapper>
   );
 };
