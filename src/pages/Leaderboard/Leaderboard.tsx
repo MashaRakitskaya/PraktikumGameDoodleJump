@@ -9,7 +9,7 @@ const Leaderboard = () => {
   );
 
   return (
-    <LeaderboardContainer>
+    <LeaderboardContainer role="leaderboard">
       <LeaderboardList>
         {sortLeaderboardList.map((item, index) => {
           return (
