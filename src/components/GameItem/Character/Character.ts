@@ -1,18 +1,3 @@
-interface CharacterInterface {
-  gameOver: Function;
-  currentScroll: number;
-  ref: CanvasRenderingContext2D;
-  width: number;
-  height: number;
-  posX: number;
-  posY: number;
-  score: number;
-  draw: Function;
-  jump: Function;
-  stop: Function;
-  controller(event: KeyboardEvent): void;
-}
-
 class Character {
   readonly width: number = 80; // Ширина персонажа
   readonly height: number = 110; // Высота персонажа
@@ -21,7 +6,11 @@ class Character {
   private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
   private isJumpimg: boolean = true;
   private stepY: number = 10; // Шаг первонажа при прыжке и падении
-  private stepX: number = 60; // Шаг первонажа при перемещении влево/вправо
+  private stepX: number = 10; // Шаг первонажа при перемещении влево/вправо
+  private goLeftTime: NodeJS.Timer | undefined;
+  private goRightTime: NodeJS.Timer | undefined;
+  private isGoLeft: boolean = false;
+  private isGoRight: boolean = false;
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
   private imgUrl: string = 'character.png';
   private imgObj: HTMLImageElement = new Image();
@@ -81,16 +70,27 @@ class Character {
     this.downTime = setInterval(() => {
       this.checkPlatformsUnder(platforms);
       this.posY += this.stepY;
-
     }, this.speedGame + this.decelerationStep);
   };
 
   moveLeft = () => {
-    this.posX -= this.stepX;
+    clearInterval(this.goRightTime);
+    if (!this.isGoLeft) {
+      this.goLeftTime = setInterval(() => {
+        this.posX -= this.stepX;
+      }, this.speedGame);
+      this.isGoLeft = true;
+    }
   };
 
   moveRight = () => {
-    this.posX += this.stepX;
+    clearInterval(this.goLeftTime);
+    if (!this.isGoRight) {
+      this.goRightTime = setInterval(() => {
+        this.posX += this.stepX;
+      }, this.speedGame);
+      this.isGoRight = true;
+    }
   };
 
   checkPlatformsUnder = (platforms: any[]) => {
@@ -109,7 +109,7 @@ class Character {
     });
   };
 
-  controller = (event: KeyboardEvent) => {
+  controllerStart = (event: KeyboardEvent) => {
     if (event.key === 'ArrowLeft') {
       this.moveLeft();
     } else if (event.key === 'ArrowRight') {
@@ -117,18 +117,24 @@ class Character {
     }
   };
 
+  controllerReset = (event: KeyboardEvent) => {
+    clearInterval(this.goLeftTime);
+    clearInterval(this.goRightTime);
+    this.isGoRight = false;
+    this.isGoLeft = false;
+  };
+
   stop = () => {
-    console.log('STOP')
     clearInterval(this.upTime);
     clearInterval(this.downTime);
+    clearInterval(this.goLeftTime);
+    clearInterval(this.goRightTime);
   };
 
   gameOver = () => {
-    clearInterval(this.upTime);
-    clearInterval(this.downTime);
+    this.stop();
     alert('Your score: ' + this.currentScroll);
   };
 }
 
-export default Character;
-export type { CharacterInterface };
+export { Character };

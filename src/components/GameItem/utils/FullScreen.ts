@@ -9,23 +9,6 @@ const activateFullscreen = (element: any) => {
     element.msRequestFullscreen(); // IE/Edge
   }
 };
-const deactivateFullscreen = () => {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else {
-    // @ts-ignore
-    if (document.mozCancelFullScreen) {
-      // @ts-ignore
-      document.mozCancelFullScreen();
-    } else {
-      // @ts-ignore
-      if (document.webkitExitFullscreen) {
-        // @ts-ignore
-        document.webkitExitFullscreen();
-      }
-    }
-  }
-};
 
 const initFullScreenAPI = () => {
   document.addEventListener('keydown', (event: { key: string }) => {

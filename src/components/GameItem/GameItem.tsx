@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 import { GameWrapper } from './GameItem.styles';
 import Canvas from './Canvas/Canvas';
-import Character, { CharacterInterface } from './Character/Character';
-import { Score, ScoreInterface } from './utils/Score';
-import { Backgound } from './utils/Backgound'
-import {
-  createPlatforms,
-  movePlatforms,
-  PlatformInterface
-} from './Platform/Platform';
+import { Character } from './Character/Character';
+import { Score } from './utils/Score';
+import { Background } from './utils/Background';
+import { createPlatforms, movePlatforms, Platform } from './Platform/Platform';
 import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
 import { initFullScreenAPI } from './utils/FullScreen';
 
@@ -18,12 +14,12 @@ const GameItem = () => {
   let platformCount = 15; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
   let speedGame = 13; // общая скорость игры
-  let platforms: PlatformInterface[] = [];
-  let person: CharacterInterface;
+  let platforms: Platform[] = [];
+  let person: Character;
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
-  let score: ScoreInterface;
-  let monsters: any[] = [];
+  let score: Score;
+  let monsters: Monster[] = [];
   let backgroundMatrix: any;
 
   useEffect(() => {
@@ -39,25 +35,25 @@ const GameItem = () => {
   const gameOver = () => {
     clearAnimation();
     person.gameOver();
-  }
+  };
 
   const dropPersonAnimation = () => {
     person.stop();
-    movePlatforms(contextLocal, platforms, person, -(stepElementsDown));
-    if(monsters.length > 0) {
-      moveMonsters(contextLocal, monsters, person, -(stepElementsDown));
+    movePlatforms(contextLocal, platforms, person, -stepElementsDown);
+    if (monsters.length > 0) {
+      moveMonsters(contextLocal, monsters, person, -stepElementsDown);
     }
-  }
+  };
 
   const clearAndRedrawAllObjects = () => {
     contextLocal.clearRect(
-        0,
-        0,
-        contextLocal.canvas.width,
-        contextLocal.canvas.height
+      0,
+      0,
+      contextLocal.canvas.width,
+      contextLocal.canvas.height
     );
-    backgroundMatrix.run();
-    platforms.forEach((platform: PlatformInterface) => {
+    backgroundMatrix.draw();
+    platforms.forEach((platform: Platform) => {
       platform.draw();
     });
     monsters.forEach((monster) => {
@@ -65,7 +61,7 @@ const GameItem = () => {
     });
 
     person.draw();
-  }
+  };
 
   const animation = () => {
     clearAndRedrawAllObjects();
@@ -73,8 +69,8 @@ const GameItem = () => {
     if (person.posY < contextLocal.canvas.height / 3) {
       person.posY += stepElementsDown;
       currentScroll =
-          currentScroll +
-          movePlatforms(contextLocal, platforms, person, stepElementsDown);
+        currentScroll +
+        movePlatforms(contextLocal, platforms, person, stepElementsDown);
       if (monsters.length > 0) {
         moveMonsters(contextLocal, monsters, person, stepElementsDown);
       }
@@ -110,12 +106,11 @@ const GameItem = () => {
     }
     //Если персонаж опускается за пределы нижней границы канваса - проигрваем анимацию окончания игры
     if (person.posY + person.height > contextLocal.canvas.height) {
-      if(platforms.length > 0){
-        dropPersonAnimation()
+      if (platforms.length > 0) {
+        dropPersonAnimation();
       } else {
         gameOver();
       }
-
     }
   };
 
@@ -123,7 +118,11 @@ const GameItem = () => {
     contextLocal = context;
 
     if (!isGameOver) {
-      backgroundMatrix = new Backgound(contextLocal, contextLocal.canvas.height, contextLocal.canvas.width);
+      backgroundMatrix = new Background(
+        contextLocal,
+        contextLocal.canvas.height,
+        contextLocal.canvas.width
+      );
       platforms = createPlatforms(contextLocal, platformCount);
       //Изначальная высота по x, y для персонажа берется относительно 2-ой созданной платформы
       //Обходимся без проверки т.к. платформ меньше 10 изначально быть не может
@@ -136,10 +135,13 @@ const GameItem = () => {
       score = new Score(contextLocal, 40, 40);
       animation();
 
-      person.jump(platforms, monsters);
+      person.jump(platforms);
       initFullScreenAPI();
       document.addEventListener('keydown', (event) => {
-        person.controller(event);
+        person.controllerStart(event);
+      });
+      document.addEventListener('keyup', (event) => {
+        person.controllerReset(event);
       });
     }
   };

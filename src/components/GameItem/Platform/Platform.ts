@@ -1,13 +1,4 @@
-import { CharacterInterface } from '../Character/Character';
-
-interface PlatformInterface {
-  bottom: number;
-  left: number;
-  ref: CanvasRenderingContext2D;
-  width: number;
-  height: number;
-  draw: Function;
-}
+import { Character } from '../Character/Character';
 
 class Platform {
   private width: number = 120;
@@ -37,7 +28,7 @@ const createPlatforms = (
   context: CanvasRenderingContext2D,
   platformCount: number
 ) => {
-  let platforms: PlatformInterface[] = [];
+  let platforms: Platform[] = [];
   const MIN_INDENTATION = 250; // 250 - минимальный шаг отступа между платформами по Y
   for (let i = 0; i < platformCount; i++) {
     let platformSpace = context.canvas.height / platformCount;
@@ -57,32 +48,31 @@ const createPlatforms = (
 //Функция вызвращает высоту сдвига платформ по Y
 const movePlatforms = (
   context: CanvasRenderingContext2D,
-  platforms: PlatformInterface[],
-  Character: CharacterInterface,
+  platforms: Platform[],
+  Character: Character,
   stepDown: number
 ) => {
   const TOP_POINT_MAX = -200; // верняя граница, преодолевая которую, плиты удаляются
-    platforms.forEach((platform: PlatformInterface) => {
-      platform.bottom += stepDown;
+  platforms.forEach((platform: Platform) => {
+    platform.bottom += stepDown;
 
-      if (platform.bottom > context.canvas.height) {
-        platforms.shift();
+    if (platform.bottom > context.canvas.height) {
+      platforms.shift();
 
-        // @ts-ignore
-        let newPlatform: PlatformInterface = new Platform(
-          context,
-          context.canvas.height
-        );
-        newPlatform.draw();
-        platforms.push(newPlatform);
-      }
-      if(platform.bottom < TOP_POINT_MAX) {
-        console.log(platform.bottom)
-        platforms.pop();
-      }
-    });
-    return stepDown;
+      // @ts-ignore
+      let newPlatform: PlatformInterface = new Platform(
+        context,
+        context.canvas.height
+      );
+      newPlatform.draw();
+      platforms.push(newPlatform);
+    }
+    if (platform.bottom < TOP_POINT_MAX) {
+      console.log(platform.bottom);
+      platforms.pop();
+    }
+  });
+  return stepDown;
 };
 
-export { createPlatforms, movePlatforms };
-export type { PlatformInterface };
+export { createPlatforms, movePlatforms, Platform };

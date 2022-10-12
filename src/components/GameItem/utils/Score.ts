@@ -1,11 +1,3 @@
-interface ScoreInterface {
-  currentScroll: number;
-  ref: CanvasRenderingContext2D;
-  posX: number;
-  posY: number;
-  draw(): void;
-}
-
 class Score {
   public posX: number;
   public posY: number;
@@ -20,7 +12,7 @@ class Score {
 
   draw = () => {
     this.ref.font = '20px serif';
-    this.ref.fillStyle = 'black';
+    this.ref.fillStyle = 'white';
     this.ref.fillText(
       'Ваш текущий score: ' + this.currentScroll,
       this.posX,
@@ -29,4 +21,3 @@ class Score {
   };
 }
 export { Score };
-export type { ScoreInterface };

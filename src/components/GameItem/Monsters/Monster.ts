@@ -1,4 +1,4 @@
-import { CharacterInterface } from '../Character/Character';
+import { Character } from '../Character/Character';
 
 class Monster {
   protected width: number = 120; // Ширина Монстра
@@ -34,26 +34,26 @@ class Monster {
 function moveMonsters(
   context: CanvasRenderingContext2D,
   monsters: any[],
-  Character: CharacterInterface,
+  Character: Character,
   stepDown: number
 ) {
-    monsters.forEach((monsterItem: any) => {
-      monsterItem.posY += stepDown;
-      if (monsterItem.posY > context.canvas.height) {
-        monsters.shift();
-      }
-    });
+  monsters.forEach((monsterItem: any) => {
+    monsterItem.posY += stepDown;
+    if (monsterItem.posY > context.canvas.height) {
+      monsters.shift();
+    }
+  });
 }
 
-function checkMonsterOnPath(Character: CharacterInterface, monsters: any[]) {
+function checkMonsterOnPath(Character: Character, monsters: any[]) {
   let isMeet = false;
   if (monsters.length > 0) {
     monsters.forEach((monsterItem) => {
       if (
-          Character.posY + Character.height >= monsterItem.posY &&
-          Character.posY <= monsterItem.posY + monsterItem.height &&
-          Character.posX + Character.width >= monsterItem.posX &&
-          Character.posX <= monsterItem.posX + monsterItem.width
+        Character.posY + Character.height >= monsterItem.posY &&
+        Character.posY <= monsterItem.posY + monsterItem.height &&
+        Character.posX + Character.width >= monsterItem.posX &&
+        Character.posX <= monsterItem.posX + monsterItem.width
       ) {
         isMeet = true;
       }
