@@ -1,10 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import {
   PROFILE_SETTING_PATH,
   PASSWORD_SETTING_PATH
 } from '../../utils/constants';
-import { UserHeaderNavWrapper } from './UserHeaderNav.Styles';
+import { SideNavLink } from '../Sidebar/Sidebar.styles';
+import { UserHeaderNavWrapper } from './UserHeaderNab.styles';
 
 function UserHeaderNav() {
   const settingsPath: { title: string; path: string }[] = [
@@ -14,7 +14,7 @@ function UserHeaderNav() {
   return (
     <UserHeaderNavWrapper>
       {settingsPath.map((el) => (
-        <NavLink
+        <SideNavLink
           key={el.path}
           className={({ isActive }) =>
             isActive ? 'sidenav-link-active' : 'sidenav-link'
@@ -22,7 +22,7 @@ function UserHeaderNav() {
           to={el.path}
         >
           {el.title}
-        </NavLink>
+        </SideNavLink>
       ))}
     </UserHeaderNavWrapper>
   );
