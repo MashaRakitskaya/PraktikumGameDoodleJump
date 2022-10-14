@@ -13,8 +13,8 @@ export const ERROR500_PATH = '/500';
 export const ROOT_DIV = '#root';
 interface LeaderboardListProps {
   id: string;
-  title: string;
-  points: number;
+  name: string;
+  score: number;
   urlImg: string;
 }
 
@@ -30,24 +30,10 @@ interface ForumTopicsListProps {
 export const leaderboardList: LeaderboardListProps[] = [
   {
     id: '1',
-    title: 'Elena List',
-    points: 1246434,
+    name: 'Elena List',
+    score: 1246434,
     urlImg:
-      'https://images.unsplash.com/photo-1503595855261-9418f48a991a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-  },
-  {
-    id: '2',
-    title: 'Tom Bolan',
-    points: 100460,
-    urlImg:
-      'https://images.unsplash.com/photo-1423958950820-4f2f1f44e075?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-  },
-  {
-    id: '11',
-    title: 'Dil Posan',
-    points: 123224,
-    urlImg:
-      'https://images.unsplash.com/photo-1534942642400-39e0b996f73f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
+      'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=417&q=80'
   }
 ];
 
