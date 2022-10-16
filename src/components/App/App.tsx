@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Navigate, MemoryRouter } from 'react-router-dom';
 import SignIn from '../../pages/Auth/SignIn/SignIn';
 import SignUp from '../../pages/Auth/SignUp/SignUp';
 import Leaderboard from '../../pages/Leaderboard/Leaderboard';
@@ -27,7 +27,7 @@ import Profile from '../../pages/ChangeData/UserProfile/Profile';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <AppWrapper>
         <AppWrapperContainer>
           <Routes>
@@ -58,9 +58,10 @@ const App = () => {
           </Routes>
         </AppWrapperContainer>
       </AppWrapper>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 };
+
 export default withErrorBoundary(App, {
   fallback: <>Что-то пошло не так.</>
 });
