@@ -4,6 +4,8 @@ import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
+// import { Provider } from 'react-redux';
+// import { store } from '../src/store/store';
 
 import App from '../src/components/App/App.tsx';
 
