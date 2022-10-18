@@ -1,5 +1,6 @@
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './components/App/App';
 import { Provider } from 'react-redux';
@@ -10,7 +11,9 @@ hydrateRoot(
   root,
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

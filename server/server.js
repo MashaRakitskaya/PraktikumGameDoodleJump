@@ -11,9 +11,18 @@ const PORT = 3000;
 const app = express();
 
 app.get('/*', (req, res) => {
-  const reactApp = ReactDOMServer.renderToString(<App />);
+  if (req.url === '/') {
+    return res.redirect('/signin');
+  }
+
+  const reactApp = ReactDOMServer.renderToString(
+    <StaticRouter location={req.url}>
+      <App />
+    </StaticRouter>
+  );
 
   const indexFile = path.resolve('build/index.html');
+
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
       console.error('Something went wrong:', err);
@@ -28,7 +37,6 @@ app.get('/*', (req, res) => {
 
 app.use(express.static(path.resolve(__dirname, '../build')));
 
-app.use(express.static('../build'));
 app.listen(PORT, () => {
   console.log(`Express server is running on http://localhost:${PORT}`);
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 const Home = () => (
   <>
@@ -31,13 +31,11 @@ const SecondPage = () => (
 
 function App() {
   return (
-    <MemoryRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/first-page" element={<FirstPage />} />
-        <Route path="/second-page" element={<SecondPage />} />
-      </Routes>
-    </MemoryRouter>
+    <Routes>
+      <Route path="/signin" element={<Home />} />
+      <Route path="/first-page" element={<FirstPage />} />
+      <Route path="/second-page" element={<SecondPage />} />
+    </Routes>
   );
 }
 
