@@ -68,7 +68,6 @@ const movePlatforms = (
       platforms.push(newPlatform);
     }
     if (platform.bottom < TOP_POINT_MAX) {
-      console.log(platform.bottom);
       platforms.pop();
     }
   });

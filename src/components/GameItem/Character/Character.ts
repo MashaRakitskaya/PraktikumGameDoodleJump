@@ -3,17 +3,17 @@ class Character {
   readonly height: number = 110; // Высота персонажа
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
-  private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
   private isJumping: boolean = true;
-  private stepY: number = 10; // Шаг первонажа при прыжке и падении
   private stepX: number = 10; // Шаг первонажа при перемещении влево/вправо
   private goLeftTime: NodeJS.Timer | undefined;
   private goRightTime: NodeJS.Timer | undefined;
   private isGoLeft: boolean = false;
   private isGoRight: boolean = false;
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
-  private imgUrl: string = 'character.png';
-  private imgObj: HTMLImageElement = new Image();
+  public imgObj: HTMLImageElement = new Image();
+  public stepY: number = 10; // Шаг первонажа при прыжке и падении
+  public characterGap: number = 300; // Максимально возможная высота прыжка персонажа
+  public imgUrl: string = 'character.png';
   public posX: number; // Позиция верхнего левого угла персонажа по X
   public posY: number; // Позиция верхнего левого угла персонажа по Y
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
@@ -43,8 +43,6 @@ class Character {
       this.height
     );
   };
-  private jumpAnumation = () => {};
-  private downAnumation = () => {};
 
   jump = (platforms: any[]) => {
     let currentGap = 0;
@@ -55,7 +53,8 @@ class Character {
       this.posY -= this.stepY;
 
       currentGap += this.stepY;
-
+      console.log('currentGap ', currentGap);
+      console.log('this.characterGap ', this.characterGap);
       if (this.characterGap < currentGap) {
         this.down(platforms);
       }
@@ -133,7 +132,6 @@ class Character {
 
   gameOver = () => {
     this.stop();
-    alert('Your score: ' + this.currentScroll);
   };
 }
 

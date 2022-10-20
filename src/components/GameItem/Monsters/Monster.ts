@@ -33,7 +33,7 @@ class Monster {
 
 function moveMonsters(
   context: CanvasRenderingContext2D,
-  monsters: any[],
+  monsters: Monster[],
   Character: Character,
   stepDown: number
 ) {

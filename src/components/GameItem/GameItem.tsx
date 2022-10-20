@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GameWrapper } from './GameItem.styles';
 import Canvas from './Canvas/Canvas';
 import { Character } from './Character/Character';
 import { Score } from './utils/Score';
-import { Background } from './utils/Background';
 import { createPlatforms, movePlatforms, Platform } from './Platform/Platform';
 import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
 import { initFullScreenAPI } from './utils/FullScreen';
+import Popup from '../Popup/Popup';
+import { Button } from '../Button';
+import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 
 const GameItem = () => {
   let intervalGameTimer: number;
-  let isGameOver = false;
+  let [isGameOver, setIsGameOver] = useState(false);
+  let isHaveBonus: boolean = false;
   let platformCount = 15; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
   let speedGame = 13; // общая скорость игры
@@ -20,7 +23,7 @@ const GameItem = () => {
   let currentScroll: number = 0;
   let score: Score;
   let monsters: Monster[] = [];
-  let backgroundMatrix: any;
+  let bonuses: Bonuses[] = [];
 
   useEffect(() => {
     return () => {
@@ -35,13 +38,33 @@ const GameItem = () => {
   const gameOver = () => {
     clearAnimation();
     person.gameOver();
+    showPopup();
+  };
+  const closePopup = () => {
+    setIsGameOver(false);
+  };
+
+  const showPopup = () => {
+    setIsGameOver(true);
+  };
+
+  const closeByOverlay = (
+    event: React.MouseEvent<Element, MouseEvent>
+  ): void => {
+    const id = (event.target as HTMLDivElement).id;
+    if (id === 'popup') {
+      closePopup();
+    }
   };
 
   const dropPersonAnimation = () => {
     person.stop();
-    movePlatforms(contextLocal, platforms, person, -stepElementsDown);
+    movePlatforms(contextLocal, platforms, person, -(stepElementsDown * 3));
     if (monsters.length > 0) {
-      moveMonsters(contextLocal, monsters, person, -stepElementsDown);
+      moveMonsters(contextLocal, monsters, person, -(stepElementsDown * 3));
+    }
+    if (bonuses.length > 0) {
+      moveBonuses(contextLocal, bonuses, person, -(stepElementsDown * 3));
     }
   };
 
@@ -52,12 +75,15 @@ const GameItem = () => {
       contextLocal.canvas.width,
       contextLocal.canvas.height
     );
-    backgroundMatrix.draw();
     platforms.forEach((platform: Platform) => {
       platform.draw();
     });
     monsters.forEach((monster) => {
       monster.draw();
+    });
+
+    bonuses.forEach((bonus) => {
+      bonus.draw();
     });
 
     person.draw();
@@ -73,6 +99,9 @@ const GameItem = () => {
         movePlatforms(contextLocal, platforms, person, stepElementsDown);
       if (monsters.length > 0) {
         moveMonsters(contextLocal, monsters, person, stepElementsDown);
+      }
+      if (bonuses.length > 0) {
+        moveBonuses(contextLocal, bonuses, person, stepElementsDown);
       }
     }
 
@@ -98,12 +127,36 @@ const GameItem = () => {
       monsters.push(monsterAkadem);
     }
 
+    if (currentScroll % 500 === 0 && currentScroll >= 100) {
+      let bonusesStackOverflow = new Bonuses(
+        contextLocal,
+        platforms[platformCount - 1].left,
+        platforms[platformCount - 1].bottom,
+        'bonuses-stackoverflow.png',
+        70,
+        120,
+        300,
+        person.currentScroll
+      );
+      bonuses.push(bonusesStackOverflow);
+    }
+
     score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
     // Проверка на наличие "Соприкосновения" персонажа с монстром (Если да - игра заканчивается)
     if (checkMonsterOnPath(person, monsters)) {
       gameOver();
     }
+
+    if (checkBonusesOnPath(person, bonuses)) {
+      console.log('BONSADASDASDASDASDD  ', isHaveBonus);
+      if (!isHaveBonus) {
+        stepElementsDown = stepElementsDown * 0.8;
+        bonuses[0].updateSkillCharacter(person, 'character-bonus.png');
+        isHaveBonus = true;
+      }
+    }
+
     //Если персонаж опускается за пределы нижней границы канваса - проигрваем анимацию окончания игры
     if (person.posY + person.height > contextLocal.canvas.height) {
       if (platforms.length > 0) {
@@ -118,11 +171,6 @@ const GameItem = () => {
     contextLocal = context;
 
     if (!isGameOver) {
-      backgroundMatrix = new Background(
-        contextLocal,
-        contextLocal.canvas.height,
-        contextLocal.canvas.width
-      );
       platforms = createPlatforms(contextLocal, platformCount);
       //Изначальная высота по x, y для персонажа берется относительно 2-ой созданной платформы
       //Обходимся без проверки т.к. платформ меньше 10 изначально быть не может
@@ -145,6 +193,11 @@ const GameItem = () => {
       });
     }
   };
+
+  const displayScore = () => {
+    return <div>Ваш счет: {score.currentScroll}</div>;
+  };
+
   return (
     <GameWrapper>
       <Canvas
@@ -152,6 +205,23 @@ const GameItem = () => {
         height={document.documentElement.clientHeight}
         width={document.documentElement.clientWidth - 300} //500 - пока что произвольная величина
       />
+      <Popup
+        isOpen={isGameOver}
+        closeByOverlay={closeByOverlay}
+        title={'Game over!'}
+        closePopup={closePopup}
+      >
+        <div>{displayScore}
+        <Button
+          onCLickFunc={() => {
+            console.log(score.currentScroll);
+            window.location.reload();
+          }}
+          buttonText={'New game'}
+          type={'button'}
+        />
+        </div>
+      </Popup>
     </GameWrapper>
   );
 };
