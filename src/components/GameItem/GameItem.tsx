@@ -12,9 +12,11 @@ import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 
 const GameItem = () => {
   let intervalGameTimer: number;
-  let [isGameOver, setIsGameOver] = useState(false);
+  let [isGameStop, setIsGameStop] = useState(false);
+  let [isGameInit, setIsGameInit] = useState(false);
   let [currentScore, setCurrentScore] = useState(0);
-  let isHaveBonus: boolean = false;
+  let [maxScore, setMaxScore] = useState(0);
+  let [isHaveBonus, setIsHaveBonus] = useState(false);
   let platformCount = 15; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
   let speedGame = 13; // общая скорость игры
@@ -41,12 +43,13 @@ const GameItem = () => {
     person.gameOver();
     showPopup();
   };
+
   const closePopup = () => {
-    setIsGameOver(false);
+    //setIsGameStop(false);
   };
 
   const showPopup = () => {
-    setIsGameOver(true);
+    setIsGameStop(true);
   };
 
   const closeByOverlay = (
@@ -54,7 +57,7 @@ const GameItem = () => {
   ): void => {
     const id = (event.target as HTMLDivElement).id;
     if (id === 'popup') {
-      closePopup();
+      // closePopup();
     }
   };
 
@@ -92,23 +95,32 @@ const GameItem = () => {
 
   const animation = () => {
     clearAndRedrawAllObjects();
+
     //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем все объекты вниз имитируя бесконечный спавн
     if (person.posY < contextLocal.canvas.height / 3) {
       person.posY += stepElementsDown;
-      currentScroll =
-        currentScroll +
-        movePlatforms(contextLocal, platforms, person, stepElementsDown);
+
       if (monsters.length > 0) {
         moveMonsters(contextLocal, monsters, person, stepElementsDown);
       }
       if (bonuses.length > 0) {
         moveBonuses(contextLocal, bonuses, person, stepElementsDown);
       }
+
+      //Изменение текущего score с учетом "прокрутки"
+
+      currentScroll =
+        currentScroll +
+        movePlatforms(contextLocal, platforms, person, stepElementsDown);
+
+      score.currentScroll = currentScroll;
+      person.currentScroll = currentScroll;
+      setCurrentScore(currentScroll);
     }
 
-    score.currentScroll = currentScroll;
-    person.currentScroll = currentScroll;
-    setCurrentScore(currentScroll);
+    /*
+    /Описание частоты появления сущнойстей и их инициализация
+    */
 
     if (currentScroll % 1000 === 0 && currentScroll >= 1000) {
       let monsterJob = new Monster(
@@ -129,7 +141,7 @@ const GameItem = () => {
       monsters.push(monsterAkadem);
     }
 
-    if (currentScroll % 500 === 0 && currentScroll >= 100) {
+    if (currentScroll % 800 === 0 && currentScroll >= 800) {
       let bonusesStackOverflow = new Bonuses(
         contextLocal,
         platforms[platformCount - 1].left,
@@ -149,10 +161,10 @@ const GameItem = () => {
     if (checkMonsterOnPath(person, monsters)) {
       gameOver();
     }
-
+    // Проверка на наличие "Соприкосновения" персонажа с Бонусом (Если да - происходит изменение параметров персонажа)
     if (checkBonusesOnPath(person, bonuses)) {
-      if (!isHaveBonus) {
-        stepElementsDown = stepElementsDown * 0.8;
+      if (isHaveBonus) {
+        stepElementsDown = stepElementsDown * 1.5;
         bonuses[0].updateSkillCharacter(person, 'character-bonus.png');
         isHaveBonus = true;
       }
@@ -171,8 +183,9 @@ const GameItem = () => {
   const draw = (context: CanvasRenderingContext2D) => {
     contextLocal = context;
 
-    if (!isGameOver) {
+    if (isGameInit && !isGameStop) {
       platforms = createPlatforms(contextLocal, platformCount);
+
       //Изначальная высота по x, y для персонажа берется относительно 2-ой созданной платформы
       //Обходимся без проверки т.к. платформ меньше 10 изначально быть не может
       person = new Character(
@@ -181,7 +194,9 @@ const GameItem = () => {
         speedGame,
         platforms[1].left
       );
+
       score = new Score(contextLocal, 40, 40);
+
       animation();
 
       person.jump(platforms);
@@ -203,15 +218,24 @@ const GameItem = () => {
     );
   };
 
+  const displayMaxScore = () => {
+    return (
+      <div>
+        Ваш текущий рекорд: <strong>{maxScore}</strong>
+      </div>
+    );
+  };
+
   return (
     <GameWrapper>
       <Canvas
         draw={draw}
+        play={isGameInit && !isGameStop}
         height={document.documentElement.clientHeight}
         width={document.documentElement.clientWidth - 300} //500 - пока что произвольная величина
       />
       <Popup
-        isOpen={isGameOver}
+        isOpen={isGameStop}
         closeByOverlay={closeByOverlay}
         title={'Game over!'}
         closePopup={closePopup}
@@ -220,7 +244,25 @@ const GameItem = () => {
           <ScoreWrapper>{displayScore()}</ScoreWrapper>
           <Button
             onCLickFunc={() => {
-              window.location.reload();
+              setIsGameStop(false);
+            }}
+            buttonText={'New game'}
+            type={'button'}
+          />
+        </div>
+      </Popup>
+      <Popup
+        isOpen={!isGameInit}
+        closeByOverlay={closeByOverlay}
+        title={'Doodlik init form!'}
+        closePopup={closePopup}
+      >
+        <div>
+          <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
+          <Button
+            onCLickFunc={() => {
+              setIsGameStop(false);
+              setIsGameInit(true);
             }}
             buttonText={'New game'}
             type={'button'}

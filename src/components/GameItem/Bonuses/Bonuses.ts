@@ -1,8 +1,9 @@
 import { Character } from '../Character/Character';
 
 class Bonuses {
-  private personImgObjSrc: string = '';
-  private personCharacterGap: number = 0;
+  private copyCharacterGap: number = 0;
+  private copySpeedGame: number = 0;
+  private copyStepY: number = 0;
   public width: number; // Ширина Бонуса
   public height: number; // Высота Бонуса
   protected imgObj: HTMLImageElement = new Image();
@@ -11,7 +12,6 @@ class Bonuses {
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
   public expiredFromScore: number;
   public distance: number;
-  public isActive: boolean = false;
 
   constructor(
     context: CanvasRenderingContext2D,
@@ -43,21 +43,29 @@ class Bonuses {
     );
   };
 
+  checkExpired = (currentScore: number, Character: Character) => {
+    let isExpire = false;
+    if (currentScore > this.expiredFromScore) {
+      this.resetSkillCharacter(Character);
+      isExpire = true;
+    }
+    return isExpire;
+  };
+
   updateSkillCharacter = (Character: Character, nemUrl: string) => {
-    console.log('updateSkillCsdharacter');
-    this.isActive = true;
-    this.personImgObjSrc = Character.imgObj.src;
-    this.personCharacterGap = Character.characterGap;
+    this.copyCharacterGap = Character.characterGap;
+    this.copySpeedGame = Character.speedGame;
+    this.copyStepY = Character.stepY;
     Character.imgObj.src = nemUrl;
-    Character.characterGap = Character.characterGap * 4;
+    Character.characterGap = Character.characterGap * 3;
     Character.speedGame = Character.speedGame * 0.8;
     Character.stepY = Character.stepY * 0.8;
   };
 
   resetSkillCharacter = (Character: Character) => {
-    this.isActive = false;
-    Character.imgObj.src = this.personImgObjSrc;
-    Character.characterGap = this.personCharacterGap;
+    Character.characterGap = this.copyCharacterGap;
+    Character.speedGame = this.copySpeedGame;
+    Character.stepY = this.copyStepY;
   };
 }
 

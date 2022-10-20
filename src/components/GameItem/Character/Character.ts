@@ -53,8 +53,7 @@ class Character {
       this.posY -= this.stepY;
 
       currentGap += this.stepY;
-      console.log('currentGap ', currentGap);
-      console.log('this.characterGap ', this.characterGap);
+
       if (this.characterGap < currentGap) {
         this.down(platforms);
       }
