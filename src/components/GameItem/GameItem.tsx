@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GameWrapper } from './GameItem.styles';
+import { GameWrapper, ScoreWrapper } from './GameItem.styles';
 import Canvas from './Canvas/Canvas';
 import { Character } from './Character/Character';
 import { Score } from './utils/Score';
@@ -13,6 +13,7 @@ import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 const GameItem = () => {
   let intervalGameTimer: number;
   let [isGameOver, setIsGameOver] = useState(false);
+  let [currentScore, setCurrentScore] = useState(0);
   let isHaveBonus: boolean = false;
   let platformCount = 15; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
@@ -107,6 +108,7 @@ const GameItem = () => {
 
     score.currentScroll = currentScroll;
     person.currentScroll = currentScroll;
+    setCurrentScore(currentScroll);
 
     if (currentScroll % 1000 === 0 && currentScroll >= 1000) {
       let monsterJob = new Monster(
@@ -149,7 +151,6 @@ const GameItem = () => {
     }
 
     if (checkBonusesOnPath(person, bonuses)) {
-      console.log('BONSADASDASDASDASDD  ', isHaveBonus);
       if (!isHaveBonus) {
         stepElementsDown = stepElementsDown * 0.8;
         bonuses[0].updateSkillCharacter(person, 'character-bonus.png');
@@ -195,7 +196,11 @@ const GameItem = () => {
   };
 
   const displayScore = () => {
-    return <div>Ваш счет: {score.currentScroll}</div>;
+    return (
+      <div>
+        Ваш счет: <strong>{currentScore}</strong>
+      </div>
+    );
   };
 
   return (
@@ -211,15 +216,15 @@ const GameItem = () => {
         title={'Game over!'}
         closePopup={closePopup}
       >
-        <div>{displayScore}
-        <Button
-          onCLickFunc={() => {
-            console.log(score.currentScroll);
-            window.location.reload();
-          }}
-          buttonText={'New game'}
-          type={'button'}
-        />
+        <div>
+          <ScoreWrapper>{displayScore()}</ScoreWrapper>
+          <Button
+            onCLickFunc={() => {
+              window.location.reload();
+            }}
+            buttonText={'New game'}
+            type={'button'}
+          />
         </div>
       </Popup>
     </GameWrapper>
