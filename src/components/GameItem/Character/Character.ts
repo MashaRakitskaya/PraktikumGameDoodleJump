@@ -76,6 +76,10 @@ class Character {
     if (!this.isGoLeft) {
       this.goLeftTime = setInterval(() => {
         this.posX -= this.stepX;
+        //Появление с противоположной стороны в случае захода за левый край экрана
+        if (this.posX < -(this.width / 2)) {
+          this.posX = this.posX + this.ref.canvas.width;
+        }
       }, this.speedGame);
       this.isGoLeft = true;
     }
@@ -86,6 +90,10 @@ class Character {
     if (!this.isGoRight) {
       this.goRightTime = setInterval(() => {
         this.posX += this.stepX;
+        //Появление с противоположной стороны в случае захода за правый край экрана
+        if (this.posX > this.ref.canvas.width + this.width / 2) {
+          this.posX = -(this.width / 2);
+        }
       }, this.speedGame);
       this.isGoRight = true;
     }

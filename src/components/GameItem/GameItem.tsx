@@ -20,11 +20,11 @@ const GameItem = () => {
   let platformCount = 15; // Общее количество платформ на сцену
   let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
   let speedGame = 13; // общая скорость игры
-  let platforms: Platform[] = [];
-  let person: Character;
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
   let score: Score;
+  let platforms: Platform[] = [];
+  let person: Character;
   let monsters: Monster[] = [];
   let bonuses: Bonuses[] = [];
 
@@ -175,6 +175,9 @@ const GameItem = () => {
       if (platforms.length > 0) {
         dropPersonAnimation();
       } else {
+        if (currentScroll > maxScore) {
+          setMaxScore(currentScroll);
+        }
         gameOver();
       }
     }
@@ -232,7 +235,7 @@ const GameItem = () => {
         draw={draw}
         play={isGameInit && !isGameStop}
         height={document.documentElement.clientHeight}
-        width={document.documentElement.clientWidth - 300} //500 - пока что произвольная величина
+        width={1600} //500 - пока что произвольная величина
       />
       <Popup
         isOpen={isGameStop}
