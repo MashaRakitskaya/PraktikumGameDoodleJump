@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from '../../pages/Auth/SignIn/SignIn';
 import SignUp from '../../pages/Auth/SignUp/SignUp';
 import Leaderboard from '../../pages/Leaderboard/Leaderboard';
-import { AppWrapper, AppWrapperContainer } from './app.styles';
+import { AppWrapper, AppWrapperContainer, CommonStyles } from './app.styles';
 import {
   PROFILE_SETTING_PATH,
   SIGNIN_PATH,
@@ -26,41 +26,43 @@ import Presentation from '../../pages/Presentation/Presentation';
 import Profile from '../../pages/ChangeData/UserProfile/Profile';
 import { Provider } from 'react-redux';
 import { store } from '../../store/store';
-import '../../index.css';
+// import '../../index.css';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <AppWrapper>
-        <AppWrapperContainer>
-          <Routes>
-            <Route path={SIGNIN_PATH} element={<SignIn />} />
-            <Route path={SIGNUP_PATH} element={<SignUp />} />
-            <Route path={PROFILE_SETTING_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Profile />} />
-            </Route>
-            <Route path={PASSWORD_SETTING_PATH} element={<ProtectedRoute />}>
-              <Route index element={<ChangePassword />} />
-            </Route>
-            <Route path={LEADERBOARD_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Leaderboard />} />
-            </Route>
-            <Route path={FORUM_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Forum />} />
-            </Route>
-            <Route path={FORUM_CHAT_ID_PATH} element={<ProtectedRoute />}>
-              <Route index element={<ForumChat />} />
-            </Route>
-            <Route path={GAME_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Game />} />
-            </Route>
-            <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Presentation />} />
-            </Route>
-            <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
-          </Routes>
-        </AppWrapperContainer>
-      </AppWrapper>
+      <CommonStyles>
+        <AppWrapper>
+          <AppWrapperContainer>
+            <Routes>
+              <Route path={SIGNIN_PATH} element={<SignIn />} />
+              <Route path={SIGNUP_PATH} element={<SignUp />} />
+              <Route path={PROFILE_SETTING_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Profile />} />
+              </Route>
+              <Route path={PASSWORD_SETTING_PATH} element={<ProtectedRoute />}>
+                <Route index element={<ChangePassword />} />
+              </Route>
+              <Route path={LEADERBOARD_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Leaderboard />} />
+              </Route>
+              <Route path={FORUM_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Forum />} />
+              </Route>
+              <Route path={FORUM_CHAT_ID_PATH} element={<ProtectedRoute />}>
+                <Route index element={<ForumChat />} />
+              </Route>
+              <Route path={GAME_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Game />} />
+              </Route>
+              <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Presentation />} />
+              </Route>
+              <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
+            </Routes>
+          </AppWrapperContainer>
+        </AppWrapper>
+      </CommonStyles>
     </Provider>
   );
 };

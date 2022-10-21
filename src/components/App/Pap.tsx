@@ -1,9 +1,11 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import Power from '../../images/power.svg';
 
 const Home = () => (
   <>
     <h1>Home</h1>
+    <img src={Power} alt="img" />
     <ul>
       <li key="1">
         <Link to="/first-page">First Page</Link>

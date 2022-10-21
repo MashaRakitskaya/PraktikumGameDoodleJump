@@ -7,10 +7,14 @@ import { StaticRouter } from 'react-router-dom/server';
 // import { Provider } from 'react-redux';
 // import { store } from '../src/store/store';
 
-import App from '../src/components/App/App.tsx';
+import App from '../src/components/App/Pap.tsx';
 
 const PORT = 3000;
 const app = express();
+
+// app.get('/sw.js', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../public', 'sw.js'));
+// });
 
 app.get('/*', (req, res) => {
   if (req.url === '/') {
@@ -36,7 +40,7 @@ app.get('/*', (req, res) => {
     );
   });
 });
-
+//app.use('../src/images', express.static(path.join(__dirname, '../src/images')));
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.listen(PORT, () => {
