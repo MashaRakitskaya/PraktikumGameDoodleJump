@@ -22,8 +22,6 @@ const Popup = ({
   closePopup,
   isOverlayAndCloseButton = true
 }: PopupProps) => {
-  console.log(isOverlayAndCloseButton);
-
   if (!isOpen) return null;
   return ReactDOM.createPortal(
     <ModalWindow
