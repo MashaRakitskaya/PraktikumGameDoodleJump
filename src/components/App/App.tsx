@@ -58,7 +58,8 @@ const App = () => {
               <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
                 <Route index element={<Presentation />} />
               </Route>
-              <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
+
+              {/* <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} /> */}
             </Routes>
           </AppWrapperContainer>
         </AppWrapper>

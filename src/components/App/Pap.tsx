@@ -1,21 +1,9 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import Power from '../../images/power.svg';
+import PowerImg from '../../images/PowerImg';
+import Presentation from '../../pages/Presentation/Presentation';
 
-const Home = () => (
-  <>
-    <h1>Home</h1>
-    <img src={Power} alt="img" />
-    <ul>
-      <li key="1">
-        <Link to="/first-page">First Page</Link>
-      </li>
-      <li key="2">
-        <Link to="/second-page">Second Page</Link>
-      </li>
-    </ul>
-  </>
-);
+const Home = () => <Presentation />;
 
 const FirstPage = () => (
   <>

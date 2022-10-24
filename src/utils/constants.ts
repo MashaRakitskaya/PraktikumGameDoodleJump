@@ -1,4 +1,4 @@
-export const SIGNIN_PATH = '/signin';
+export const SIGNIN_PATH = '/';
 export const SIGNUP_PATH = '/signup';
 export const PROFILE_PATH = '/profile';
 export const PROFILE_SETTING_PATH = '/profile-setting';

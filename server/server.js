@@ -4,10 +4,8 @@ import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
-// import { Provider } from 'react-redux';
-// import { store } from '../src/store/store';
 
-import App from '../src/components/App/Pap.tsx';
+import App from '../src/components/App/App.tsx';
 
 const PORT = 3000;
 const app = express();
@@ -17,10 +15,6 @@ const app = express();
 // });
 
 app.get('/*', (req, res) => {
-  if (req.url === '/') {
-    return res.redirect('/signin');
-  }
-
   const reactApp = ReactDOMServer.renderToString(
     <StaticRouter location={req.url}>
       <App />
@@ -40,7 +34,7 @@ app.get('/*', (req, res) => {
     );
   });
 });
-//app.use('../src/images', express.static(path.join(__dirname, '../src/images')));
+
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.listen(PORT, () => {

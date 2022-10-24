@@ -117,10 +117,7 @@ const SignUp = () => {
             buttonText="Create user"
           />
 
-          <CommonLink
-            onCLick={() => navigate(SIGNIN_PATH)}
-            linkText="Sign in"
-          />
+          <CommonLink to={SIGNIN_PATH} linkText="Sign in" />
         </AuthWrapper>
       </form>
     </AuthPagesWrapper>

@@ -14,13 +14,7 @@ function UserHeaderNav() {
   return (
     <UserHeaderNavWrapper>
       {settingsPath.map((el) => (
-        <SideNavLink
-          key={el.path}
-          className={({ isActive }) =>
-            isActive ? 'sidenav-link-active' : 'sidenav-link'
-          }
-          to={el.path}
-        >
+        <SideNavLink key={el.path} to={el.path}>
           {el.title}
         </SideNavLink>
       ))}

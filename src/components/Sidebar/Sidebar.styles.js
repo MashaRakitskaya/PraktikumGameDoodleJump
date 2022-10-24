@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const SideNav = styled.nav`
   display: flex;
@@ -11,7 +11,7 @@ export const SideNav = styled.nav`
   gap: 24px;
 `;
 
-export const SideNavLink = styled(NavLink)`
+export const SideNavLink = styled(Link)`
   font-weight: 400;
   font-size: 20px;
   line-height: 23px;
