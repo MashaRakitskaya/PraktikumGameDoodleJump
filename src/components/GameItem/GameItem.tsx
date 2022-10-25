@@ -9,6 +9,12 @@ import { initFullScreenAPI } from './utils/FullScreen';
 import Popup from '../Popup/Popup';
 import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
+import { AudioCustom } from './Audio/AudioCustom';
+
+interface soundPlayer {
+  madness: AudioCustom;
+  background: AudioCustom;
+}
 
 const GameItem = () => {
   let intervalGameTimer: number;
@@ -24,6 +30,11 @@ const GameItem = () => {
   let person: Character;
   let monsters: Monster[] = [];
   let bonuses: Bonuses[] = [];
+  let currentMonster: Monster | null;
+  let sound: soundPlayer = {
+    madness: new AudioCustom('madnessSound.mp3'),
+    background: new AudioCustom('backAudio.mp3')
+  };
 
   useEffect(() => {
     return () => {
@@ -38,6 +49,8 @@ const GameItem = () => {
   const gameOver = () => {
     clearAnimation();
     setIsGameOver(true);
+    sound.background.pause();
+    sound.madness.pause();
     person.gameOver();
   };
 
@@ -116,7 +129,16 @@ const GameItem = () => {
     /*
     /Описание частоты появления сущнойстей и их инициализация
     */
-
+    // if (person.isHaveBonus && !platforms[platformCount - 1]?.isHaveItem) {
+    //   let monsterJob = new Monster(
+    //     contextLocal,
+    //     platforms[platformCount - 1].left,
+    //     platforms[platformCount - 1].bottom,
+    //     'monster-job.png'
+    //   );
+    //   platforms[platformCount - 1].isHaveItem = true;
+    //   monsters.push(monsterJob);
+    // }
     if (
       currentScroll % 1000 === 0 &&
       currentScroll >= 1000 &&
@@ -130,6 +152,7 @@ const GameItem = () => {
         'monster-job.png'
       );
       platforms[platformCount - 1].isHaveItem = true;
+      monsterJob.jump();
       monsters.push(monsterJob);
     }
     if (
@@ -144,6 +167,7 @@ const GameItem = () => {
         platforms[platformCount - 1].bottom,
         'blackHole.png'
       );
+      monsterAkadem.jump();
       platforms[platformCount - 1].isHaveItem = true;
       monsters.push(monsterAkadem);
     }
@@ -160,7 +184,7 @@ const GameItem = () => {
         platforms[platformCount - 1].bottom,
         'bonuses-stackoverflow.png',
         70,
-        120,
+        150,
         3300,
         person.currentScroll
       );
@@ -171,20 +195,30 @@ const GameItem = () => {
     score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
     // Проверка на наличие "Соприкосновения" персонажа с монстром (Если да - игра заканчивается)
-    if (checkMonsterOnPath(person, monsters)) {
-      gameOver();
+    currentMonster = checkMonsterOnPath(person, monsters);
+    if (currentMonster !== null) {
+      if (!person.isJumping && !person.isGoLeft && !person.isGoRight) {
+        console.log('currentMonster ', currentMonster);
+
+      } else {
+        gameOver();
+      }
     }
     // Проверка истекания действия бонуса (Пока что пробная версия)
     if (person.isHaveBonus) {
       if (bonuses[0].checkExpired(currentScroll, person)) {
         bonuses[0].resetSkillCharacter(person);
         bonuses = [];
+        sound.background.resume();
+        sound.madness.pause();
         person.isHaveBonus = false;
       }
     }
     // Проверка на наличие "Соприкосновения" персонажа с Бонусом (Если да - происходит изменение параметров персонажа)
     if (bonuses.length > 0) {
       if (checkBonusesOnPath(person, bonuses) && !person.isHaveBonus) {
+        sound.background.pause();
+        sound.madness.play();
         bonuses[0].updateSkillCharacter(person, 'character-bonus.png');
         person.isHaveBonus = true;
       }
@@ -205,8 +239,8 @@ const GameItem = () => {
 
   const draw = (context: CanvasRenderingContext2D) => {
     contextLocal = context;
-
     if (isGameInit && !isGameOver) {
+      sound.background.play();
       platforms = createPlatforms(contextLocal, platformCount);
 
       //Изначальная высота по x, y для персонажа берется относительно 2-ой созданной платформы

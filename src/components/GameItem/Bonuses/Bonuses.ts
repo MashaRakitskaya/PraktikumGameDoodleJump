@@ -23,9 +23,9 @@ class Bonuses {
     currentScore: number
   ) {
     this.imgObj.src = imgUrl;
-    this.posX = posX;
     this.height = height;
     this.width = width;
+    this.posX = posX;
     this.posY = posY - this.height;
     this.ref = context;
     this.distance = distance;

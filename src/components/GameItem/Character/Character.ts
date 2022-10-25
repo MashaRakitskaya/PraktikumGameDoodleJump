@@ -1,17 +1,21 @@
 import { Platform } from '../Platform/Platform';
+import { AudioCustom } from '../Audio/AudioCustom';
 
 class Character {
   readonly width: number = 80; // Ширина персонажа
   readonly height: number = 110; // Высота персонажа
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
-  private isJumping: boolean = true;
   private stepX: number = 10; // Шаг первонажа при перемещении влево/вправо
   private goLeftTime: NodeJS.Timer | undefined;
   private goRightTime: NodeJS.Timer | undefined;
-  private isGoLeft: boolean = false;
-  private isGoRight: boolean = false;
+  private soundJump: AudioCustom = new AudioCustom('jump.mp3');
+  private soundGameOver: AudioCustom = new AudioCustom('gameover.mp3');
+  private soundFire: AudioCustom = new AudioCustom('fire.mp3');
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
+  public isGoLeft: boolean = false;
+  public isGoRight: boolean = false;
+  public isJumping: boolean = true;
   public speedGame: number = 15.5; // Скорость отрисовки и дествий в игре
   public imgObj: HTMLImageElement = new Image();
   public stepY: number = 10; // Шаг первонажа при прыжке и падении
@@ -44,6 +48,7 @@ class Character {
   jump = (platforms: Platform[]) => {
     let currentGap = 0;
     this.isJumping = true;
+    this.soundJump.play();
     clearInterval(this.downTime);
 
     this.upTime = setInterval(() => {
@@ -134,6 +139,7 @@ class Character {
   };
 
   gameOver = () => {
+    this.soundGameOver.play();
     this.stop();
   };
 }
