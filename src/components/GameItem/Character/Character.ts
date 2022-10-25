@@ -1,3 +1,5 @@
+import { Platform } from '../Platform/Platform';
+
 class Character {
   readonly width: number = 80; // Ширина персонажа
   readonly height: number = 110; // Высота персонажа
@@ -10,6 +12,7 @@ class Character {
   private isGoLeft: boolean = false;
   private isGoRight: boolean = false;
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
+  public speedGame: number = 15.5; // Скорость отрисовки и дествий в игре
   public imgObj: HTMLImageElement = new Image();
   public stepY: number = 10; // Шаг первонажа при прыжке и падении
   public characterGap: number = 300; // Максимально возможная высота прыжка персонажа
@@ -17,20 +20,15 @@ class Character {
   public posX: number; // Позиция верхнего левого угла персонажа по X
   public posY: number; // Позиция верхнего левого угла персонажа по Y
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
-  public speedGame: number; // Скорость отрисовки и дествий в игре
   public currentScroll: number = 0; // Текущая позиция персонажа
+  public isHaveBonus: boolean = false;
+  public updateSpeedGap: number = 2500; // каждые 1500 будет понемногу увеличиваться скорость игры
 
-  constructor(
-    context: CanvasRenderingContext2D,
-    posY: number,
-    speedGame: number,
-    posX?: number
-  ) {
+  constructor(context: CanvasRenderingContext2D, posY: number, posX?: number) {
     this.imgObj.src = this.imgUrl;
     this.posX = posX || (context.canvas.width + this.width) / 2;
     this.posY = posY;
     this.ref = context;
-    this.speedGame = speedGame;
   }
 
   draw = () => {
@@ -43,14 +41,13 @@ class Character {
     );
   };
 
-  jump = (platforms: any[]) => {
+  jump = (platforms: Platform[]) => {
     let currentGap = 0;
     this.isJumping = true;
     clearInterval(this.downTime);
 
     this.upTime = setInterval(() => {
       this.posY -= this.stepY;
-
       currentGap += this.stepY;
 
       if (this.characterGap < currentGap) {

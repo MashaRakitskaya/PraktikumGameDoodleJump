@@ -5,6 +5,7 @@ class Platform {
   private height: number = 20;
   public bottom: number;
   public left: number;
+  public isHaveItem: boolean = false;
   public ref: CanvasRenderingContext2D;
 
   constructor(context: CanvasRenderingContext2D, newPlatformBottom: number) {

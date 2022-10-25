@@ -16,10 +16,7 @@ const GameItem = () => {
   let [isGameInit, setIsGameInit] = useState(false);
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
-  let [isHaveBonus, setIsHaveBonus] = useState(false);
   let platformCount = 15; // Общее количество платформ на сцену
-  let stepElementsDown: number = 5; // Шаг передвижения элементов вниз (Имитация цикличности)
-  let speedGame = 13; // общая скорость игры
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
   let score: Score;
@@ -59,12 +56,12 @@ const GameItem = () => {
 
   const dropPersonAnimation = () => {
     person.stop();
-    movePlatforms(contextLocal, platforms, person, -(stepElementsDown * 3));
+    movePlatforms(contextLocal, platforms, person, -(person.stepY * 3));
     if (monsters.length > 0) {
-      moveMonsters(contextLocal, monsters, person, -(stepElementsDown * 3));
+      moveMonsters(contextLocal, monsters, person, -(person.stepY * 3));
     }
     if (bonuses.length > 0) {
-      moveBonuses(contextLocal, bonuses, person, -(stepElementsDown * 3));
+      moveBonuses(contextLocal, bonuses, person, -(person.stepY * 3));
     }
   };
 
@@ -91,23 +88,25 @@ const GameItem = () => {
 
   const animation = () => {
     clearAndRedrawAllObjects();
-
+    if (person.updateSpeedGap === currentScroll) {
+      person.speedGame = person.speedGame * 0.95;
+      person.updateSpeedGap += 2500;
+    }
     //Если первонаж достигает высоты более, чем 1/3 экрана, то двигаем все объекты вниз имитируя бесконечный спавн
-    if (person.posY < contextLocal.canvas.height / 3) {
-      person.posY += stepElementsDown;
-
+    while (person.posY < contextLocal.canvas.height / 3) {
+      person.posY += person.stepY;
       if (monsters.length > 0) {
-        moveMonsters(contextLocal, monsters, person, stepElementsDown);
+        moveMonsters(contextLocal, monsters, person, person.stepY);
       }
       if (bonuses.length > 0) {
-        moveBonuses(contextLocal, bonuses, person, stepElementsDown);
+        moveBonuses(contextLocal, bonuses, person, person.stepY);
       }
 
       //Изменение текущего score с учетом "прокрутки"
 
       currentScroll =
         currentScroll +
-        movePlatforms(contextLocal, platforms, person, stepElementsDown);
+        movePlatforms(contextLocal, platforms, person, person.stepY);
 
       score.currentScroll = currentScroll;
       person.currentScroll = currentScroll;
@@ -118,26 +117,43 @@ const GameItem = () => {
     /Описание частоты появления сущнойстей и их инициализация
     */
 
-    if (currentScroll % 1000 === 0 && currentScroll >= 1000) {
+    if (
+      currentScroll % 1000 === 0 &&
+      currentScroll >= 1000 &&
+      !person.isHaveBonus &&
+      !platforms[platformCount - 1]?.isHaveItem
+    ) {
       let monsterJob = new Monster(
         contextLocal,
         platforms[platformCount - 1].left,
         platforms[platformCount - 1].bottom,
         'monster-job.png'
       );
+      platforms[platformCount - 1].isHaveItem = true;
       monsters.push(monsterJob);
     }
-    if (currentScroll % 1700 === 0 && currentScroll >= 2000) {
+    if (
+      currentScroll % 1700 === 0 &&
+      currentScroll >= 2000 &&
+      !person.isHaveBonus &&
+      !platforms[platformCount - 1]?.isHaveItem
+    ) {
       let monsterAkadem = new Monster(
         contextLocal,
         platforms[platformCount - 1].left,
         platforms[platformCount - 1].bottom,
         'blackHole.png'
       );
+      platforms[platformCount - 1].isHaveItem = true;
       monsters.push(monsterAkadem);
     }
 
-    if (currentScroll % 800 === 0 && currentScroll >= 800) {
+    if (
+      currentScroll % 1800 === 0 &&
+      currentScroll >= 1800 &&
+      !person.isHaveBonus &&
+      !platforms[platformCount - 1]?.isHaveItem
+    ) {
       let bonusesStackOverflow = new Bonuses(
         contextLocal,
         platforms[platformCount - 1].left,
@@ -145,9 +161,10 @@ const GameItem = () => {
         'bonuses-stackoverflow.png',
         70,
         120,
-        300,
+        3300,
         person.currentScroll
       );
+      platforms[platformCount - 1].isHaveItem = true;
       bonuses.push(bonusesStackOverflow);
     }
 
@@ -157,12 +174,19 @@ const GameItem = () => {
     if (checkMonsterOnPath(person, monsters)) {
       gameOver();
     }
+    // Проверка истекания действия бонуса (Пока что пробная версия)
+    if (person.isHaveBonus) {
+      if (bonuses[0].checkExpired(currentScroll, person)) {
+        bonuses[0].resetSkillCharacter(person);
+        bonuses = [];
+        person.isHaveBonus = false;
+      }
+    }
     // Проверка на наличие "Соприкосновения" персонажа с Бонусом (Если да - происходит изменение параметров персонажа)
-    if (checkBonusesOnPath(person, bonuses)) {
-      if (isHaveBonus) {
-        stepElementsDown = stepElementsDown * 1.5;
+    if (bonuses.length > 0) {
+      if (checkBonusesOnPath(person, bonuses) && !person.isHaveBonus) {
         bonuses[0].updateSkillCharacter(person, 'character-bonus.png');
-        isHaveBonus = true;
+        person.isHaveBonus = true;
       }
     }
 
@@ -190,7 +214,6 @@ const GameItem = () => {
       person = new Character(
         contextLocal,
         platforms[1].bottom,
-        speedGame,
         platforms[1].left
       );
 

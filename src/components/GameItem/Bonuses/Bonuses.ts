@@ -2,8 +2,7 @@ import { Character } from '../Character/Character';
 
 class Bonuses {
   private copyCharacterGap: number = 0;
-  private copySpeedGame: number = 0;
-  private copyStepY: number = 0;
+  private copyImgUrl: string = '';
   public width: number; // Ширина Бонуса
   public height: number; // Высота Бонуса
   protected imgObj: HTMLImageElement = new Image();
@@ -54,18 +53,14 @@ class Bonuses {
 
   updateSkillCharacter = (Character: Character, nemUrl: string) => {
     this.copyCharacterGap = Character.characterGap;
-    this.copySpeedGame = Character.speedGame;
-    this.copyStepY = Character.stepY;
+    this.copyImgUrl = Character.imgObj.src;
     Character.imgObj.src = nemUrl;
     Character.characterGap = Character.characterGap * 3;
-    Character.speedGame = Character.speedGame * 0.8;
-    Character.stepY = Character.stepY * 0.8;
   };
 
   resetSkillCharacter = (Character: Character) => {
     Character.characterGap = this.copyCharacterGap;
-    Character.speedGame = this.copySpeedGame;
-    Character.stepY = this.copyStepY;
+    Character.imgObj.src = this.copyImgUrl;
   };
 }
 
@@ -77,9 +72,6 @@ const moveBonuses = (
 ) => {
   bonuses.forEach((bonusesItem: any) => {
     bonusesItem.posY += stepDown;
-    if (bonusesItem.posY > context.canvas.height) {
-      bonuses.shift();
-    }
   });
 };
 
