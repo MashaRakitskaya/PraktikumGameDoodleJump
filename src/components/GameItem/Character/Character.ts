@@ -17,7 +17,6 @@ class Character {
   public posX: number; // Позиция верхнего левого угла персонажа по X
   public posY: number; // Позиция верхнего левого угла персонажа по Y
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
-  public score: number = 0; // Текущая Score игрока
   public speedGame: number; // Скорость отрисовки и дествий в игре
   public currentScroll: number = 0; // Текущая позиция персонажа
 

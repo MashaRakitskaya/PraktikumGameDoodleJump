@@ -21,7 +21,7 @@ export const ModalWindowTitle = styled.h3`
   text-align: center;
   margin-bottom: 50px;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 30px;
   line-height: 19px;
   color: var(--secondary-font-color);
 `;

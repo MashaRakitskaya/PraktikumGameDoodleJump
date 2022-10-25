@@ -12,7 +12,7 @@ import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 
 const GameItem = () => {
   let intervalGameTimer: number;
-  let [isGameStop, setIsGameStop] = useState(false);
+  let [isGameOver, setIsGameOver] = useState(false);
   let [isGameInit, setIsGameInit] = useState(false);
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
@@ -40,16 +40,12 @@ const GameItem = () => {
 
   const gameOver = () => {
     clearAnimation();
+    setIsGameOver(true);
     person.gameOver();
-    showPopup();
   };
 
   const closePopup = () => {
     //setIsGameStop(false);
-  };
-
-  const showPopup = () => {
-    setIsGameStop(true);
   };
 
   const closeByOverlay = (
@@ -186,7 +182,7 @@ const GameItem = () => {
   const draw = (context: CanvasRenderingContext2D) => {
     contextLocal = context;
 
-    if (isGameInit && !isGameStop) {
+    if (isGameInit && !isGameOver) {
       platforms = createPlatforms(contextLocal, platformCount);
 
       //Изначальная высота по x, y для персонажа берется относительно 2-ой созданной платформы
@@ -233,12 +229,12 @@ const GameItem = () => {
     <GameWrapper>
       <Canvas
         draw={draw}
-        play={isGameInit && !isGameStop}
+        play={isGameInit && !isGameOver}
         height={document.documentElement.clientHeight}
         width={1600} //500 - пока что произвольная величина
       />
       <Popup
-        isOpen={isGameStop}
+        isOpen={isGameOver}
         closeByOverlay={closeByOverlay}
         title={'Game over!'}
         closePopup={closePopup}
@@ -247,7 +243,7 @@ const GameItem = () => {
           <ScoreWrapper>{displayScore()}</ScoreWrapper>
           <Button
             onCLickFunc={() => {
-              setIsGameStop(false);
+              setIsGameOver(false);
             }}
             buttonText={'New game'}
             type={'button'}
@@ -264,7 +260,7 @@ const GameItem = () => {
           <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
           <Button
             onCLickFunc={() => {
-              setIsGameStop(false);
+              setIsGameOver(false);
               setIsGameInit(true);
             }}
             buttonText={'New game'}
