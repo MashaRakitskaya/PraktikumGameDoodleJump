@@ -70,7 +70,7 @@ const moveBonuses = (
   Character: Character,
   stepDown: number
 ) => {
-  bonuses.forEach((bonusesItem: any) => {
+  bonuses.forEach((bonusesItem: Bonuses) => {
     bonusesItem.posY += stepDown;
   });
 };

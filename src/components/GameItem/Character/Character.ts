@@ -56,7 +56,7 @@ class Character {
     }, this.speedGame);
   };
 
-  down = (platforms: any[]) => {
+  down = (platforms: Platform[]) => {
     this.isJumping = false;
 
     clearInterval(this.upTime);
@@ -95,7 +95,7 @@ class Character {
     }
   };
 
-  checkPlatformsUnder = (platforms: any[]) => {
+  checkPlatformsUnder = (platforms: Platform[]) => {
     platforms.forEach((platform) => {
       //Условие для определения "Под ногами" персонажа плиты для отталкивания
       if (

@@ -253,7 +253,7 @@ const GameItem = () => {
       <Canvas
         draw={draw}
         play={isGameInit && !isGameOver}
-        height={document.documentElement.clientHeight}
+        height={1080}
         width={1600} //500 - пока что произвольная величина
       />
       <Popup

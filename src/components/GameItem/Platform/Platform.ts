@@ -1,8 +1,8 @@
 import { Character } from '../Character/Character';
 
 class Platform {
-  private width: number = 120;
-  private height: number = 20;
+  readonly width: number = 120;
+  readonly height: number = 20;
   public bottom: number;
   public left: number;
   public isHaveItem: boolean = false;

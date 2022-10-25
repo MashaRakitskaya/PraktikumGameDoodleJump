@@ -1,8 +1,8 @@
 import { Character } from '../Character/Character';
 
 class Monster {
-  protected width: number = 120; // Ширина Монстра
-  protected height: number = 140; // Высота Монстра
+  readonly width: number = 120; // Ширина Монстра
+  readonly height: number = 140; // Высота Монстра
   protected imgObj: HTMLImageElement = new Image();
   public posX: number; // Позиция верхнего левого угла по X
   public posY: number; // Позиция верхнего левого угла по Y
@@ -37,7 +37,7 @@ function moveMonsters(
   Character: Character,
   stepDown: number
 ) {
-  monsters.forEach((monsterItem: any) => {
+  monsters.forEach((monsterItem: Monster) => {
     monsterItem.posY += stepDown;
     if (monsterItem.posY > context.canvas.height) {
       monsters.shift();
@@ -45,7 +45,7 @@ function moveMonsters(
   });
 }
 
-function checkMonsterOnPath(Character: Character, monsters: any[]) {
+function checkMonsterOnPath(Character: Character, monsters: Monster[]) {
   let isMeet = false;
   if (monsters.length > 0) {
     monsters.forEach((monsterItem) => {
