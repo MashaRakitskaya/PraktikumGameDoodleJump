@@ -26,7 +26,6 @@ import Presentation from '../../pages/Presentation/Presentation';
 import Profile from '../../pages/ChangeData/UserProfile/Profile';
 import { Provider } from 'react-redux';
 import { store } from '../../store/store';
-// import '../../index.css';
 
 const App = () => {
   return (
