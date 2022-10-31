@@ -11,7 +11,8 @@ import {
   GAME_PATH
 } from '../../utils/constants';
 import Button from '../Button/Button';
-import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles';
+// @ts-ignore
+import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles.ts';
 import Popup from '../Popup/Popup';
 import { TextField } from '../TextField';
 
@@ -46,10 +47,27 @@ const Sidebar = () => {
       <ButtonExit type="button" onClick={logout}>
         Exit
       </ButtonExit>
-      <SideNavLink to={PROFILE_SETTING_PATH}>User</SideNavLink>
-      <SideNavLink to={FORUM_PATH}>Forum</SideNavLink>
-      <SideNavLink to={LEADERBOARD_PATH}>Leaderboard</SideNavLink>
-      <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
+      <SideNavLink
+        isActive={location.pathname === PROFILE_SETTING_PATH}
+        to={PROFILE_SETTING_PATH}
+      >
+        User
+      </SideNavLink>
+      <SideNavLink isActive={location.pathname === FORUM_PATH} to={FORUM_PATH}>
+        Forum
+      </SideNavLink>
+      <SideNavLink
+        isActive={location.pathname === LEADERBOARD_PATH}
+        to={LEADERBOARD_PATH}
+      >
+        Leaderboard
+      </SideNavLink>
+      <SideNavLink
+        isActive={location.pathname === PRESENTATION_PATH}
+        to={PRESENTATION_PATH}
+      >
+        Presentation of the game
+      </SideNavLink>
 
       {isButtonAddTopic && (
         <Button

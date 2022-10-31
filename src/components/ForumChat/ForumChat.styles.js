@@ -86,6 +86,7 @@ export const MessageForm = styled.form`
   border: var(--border);
   display: grid;
   grid-template-columns: 1fr 38px;
+  margin: 0;
 `;
 
 export const Input = styled.input`

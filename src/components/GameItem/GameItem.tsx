@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { GameWrapper } from './GameItem.styles';
+import React, { useEffect, useState } from 'react';
+import { GameWrapper } from './GameItem.styles.js';
 import Canvas from './Canvas/Canvas';
 import Character from './Character/Character';
 import {
@@ -9,13 +9,8 @@ import {
 } from './Platform/Platform';
 
 const GameItem = () => {
+  const [isDocumentLoaded, setDocumentLoaded] = useState(false);
   let intervalGameTimer: NodeJS.Timeout | undefined;
-  useEffect(() => {
-    return () => {
-      clearInterval(intervalGameTimer);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const draw = (context: CanvasRenderingContext2D) => {
     let isGameOver = false;
@@ -46,17 +41,29 @@ const GameItem = () => {
 
       person.jump(platforms);
 
-      document.addEventListener('keydown', (event) => {
-        person.controller(event);
-      });
+      if (isDocumentLoaded)
+        document.addEventListener('keydown', (event) => {
+          person.controller(event);
+        });
     }
   };
+
+  useEffect(() => {
+    setDocumentLoaded(true);
+    return () => {
+      clearInterval(intervalGameTimer);
+    };
+  }, [isDocumentLoaded]);
+
   return (
     <GameWrapper>
       <Canvas
+        isDocumentLoaded={isDocumentLoaded}
         draw={draw}
-        height={document.documentElement.clientHeight}
-        width={document.documentElement.clientWidth - 500} //500 - пока что произвольная величина
+        height={isDocumentLoaded ? document.documentElement.clientHeight : 0}
+        width={
+          isDocumentLoaded ? document.documentElement.clientWidth - 500 : 0
+        } //500 - пока что произвольная величина
       />
     </GameWrapper>
   );

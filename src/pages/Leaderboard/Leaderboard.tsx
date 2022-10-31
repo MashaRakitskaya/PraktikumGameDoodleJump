@@ -1,7 +1,7 @@
 import React from 'react';
 import LeaderboardItem from '../../components/LeaderboardItem/LeaderboardItem';
 import { leaderboardList } from '../../utils/constants';
-import { LeaderboardContainer, LeaderboardList } from './Leaderboard.styles';
+import { LeaderboardContainer, LeaderboardList } from './Leaderboard.styles.js';
 
 const Leaderboard = () => {
   const sortLeaderboardList = leaderboardList.sort(

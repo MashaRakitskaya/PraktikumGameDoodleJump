@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalDialog, ModalWrapper } from './ModalWindowError.styles';
+import { ModalDialog, ModalWrapper } from './ModalWindowError.styles.js';
 
 interface IModalProps {
   isVisible?: boolean;

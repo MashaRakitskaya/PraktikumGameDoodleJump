@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { TextField } from '../../../components/TextField/index';
-import { AuthPagesWrapper, AuthWrapper } from '../CommonAuthStyles';
+import { AuthPagesWrapper, AuthWrapper } from '../CommonAuth.styles.js';
 import { useNavigate } from 'react-router-dom';
 import { PROFILE_SETTING_PATH, SIGNIN_PATH } from '../../../utils/constants';
 import { useFormik } from 'formik';

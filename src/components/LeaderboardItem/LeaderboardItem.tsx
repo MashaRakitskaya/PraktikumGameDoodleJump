@@ -5,7 +5,7 @@ import {
   Avatar,
   Name,
   Points
-} from './LeaderboardItem.styles';
+} from './LeaderboardItem.styles.js';
 interface LeaderboardItemProps {
   leaderboardItem: { title: string; points: number; urlImg: string };
   index: number;
