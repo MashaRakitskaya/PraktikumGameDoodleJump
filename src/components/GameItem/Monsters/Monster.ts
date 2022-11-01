@@ -72,18 +72,14 @@ class Monster {
   };
 
   death = (monsters: Monster[]) => {
-    console.log('DEAD!');
     this.height = this.height / 2;
     this.downTime = setInterval(() => {
-      console.log('DOWN');
       this.posY += this.stepY * 5;
 
       if (this.ref.canvas.clientHeight < this.posY) {
-        console.log(monsters);
         monsters.filter(
           (item) => item.posX !== this.posX && item.posY !== this.posY
         );
-        console.log(monsters);
         this.intervalClear(this.downTime);
       }
     }, this.speed);

@@ -1,5 +1,5 @@
 export class AudioCustom {
-  private player: any;
+  private player: HTMLAudioElement | undefined;
   private name: string;
   private volume: number = 1;
   private isInit: boolean = false;
@@ -26,6 +26,7 @@ export class AudioCustom {
   resume = () => {
     if (this.isPause) {
       this.isPause = false;
+      // @ts-ignore
       this.player.play();
     }
   };
@@ -33,6 +34,7 @@ export class AudioCustom {
   pause = () => {
     if (!this.isPause && this.isInit) {
       this.isPause = true;
+      // @ts-ignore
       this.player.pause();
     }
   };
