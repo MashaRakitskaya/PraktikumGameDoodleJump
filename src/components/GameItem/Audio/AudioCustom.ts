@@ -1,11 +1,15 @@
 export class AudioCustom {
   private player: any;
   private name: string;
+  private volume: number = 1;
   private isInit: boolean = false;
   private isPause: boolean = false;
 
-  constructor(name: string) {
+  constructor(name: string, volume?: number) {
     this.name = name;
+    if (volume) {
+      this.volume = volume;
+    }
   }
 
   play = () => {
@@ -14,6 +18,7 @@ export class AudioCustom {
       this.resume();
     } else {
       this.player = new Audio(this.name);
+      this.player.volume = this.volume;
       this.player.play();
     }
   };

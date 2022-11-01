@@ -30,7 +30,7 @@ const GameItem = () => {
   let person: Character;
   let monsters: Monster[] = [];
   let bonuses: Bonuses[] = [];
-  let currentMonster: Monster | null;
+  let currentMonster: Monster | undefined;
   let sound: soundPlayer = {
     madness: new AudioCustom('madnessSound.mp3'),
     background: new AudioCustom('backAudio.mp3')
@@ -140,8 +140,8 @@ const GameItem = () => {
     //   monsters.push(monsterJob);
     // }
     if (
-      currentScroll % 1000 === 0 &&
-      currentScroll >= 1000 &&
+      currentScroll % 400 === 0 &&
+      currentScroll >= 400 &&
       !person.isHaveBonus &&
       !platforms[platformCount - 1]?.isHaveItem
     ) {
@@ -196,10 +196,12 @@ const GameItem = () => {
     intervalGameTimer = window.requestAnimationFrame(animation);
     // Проверка на наличие "Соприкосновения" персонажа с монстром (Если да - игра заканчивается)
     currentMonster = checkMonsterOnPath(person, monsters);
-    if (currentMonster !== null) {
-      if (!person.isJumping && !person.isGoLeft && !person.isGoRight) {
-        console.log('currentMonster ', currentMonster);
-
+    if (currentMonster && !currentMonster.isDead) {
+      if (!person.isJumping) {
+        if (!currentMonster.isDead) {
+          currentMonster.isDead = true;
+          currentMonster.death(monsters);
+        }
       } else {
         gameOver();
       }

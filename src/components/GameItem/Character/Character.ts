@@ -9,7 +9,7 @@ class Character {
   private stepX: number = 10; // Шаг первонажа при перемещении влево/вправо
   private goLeftTime: NodeJS.Timer | undefined;
   private goRightTime: NodeJS.Timer | undefined;
-  private soundJump: AudioCustom = new AudioCustom('jump.mp3');
+  private soundJump: AudioCustom = new AudioCustom('jump.mp3', 0.4);
   private soundGameOver: AudioCustom = new AudioCustom('gameover.mp3');
   private soundFire: AudioCustom = new AudioCustom('fire.mp3');
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения

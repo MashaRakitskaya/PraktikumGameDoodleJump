@@ -2,13 +2,14 @@ import { Character } from '../Character/Character';
 
 class Monster {
   readonly width: number = 120; // Ширина Монстра
-  readonly height: number = 140; // Высота Монстра
   protected imgObj: HTMLImageElement = new Image();
   private isJumping: boolean = false;
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
   private stepIntervalY: number = 10; // Шаг монстра при движении по Y
   public stepY: number = 1; // Шаг монстра при движении по Y\
+  public isDead: boolean = false;
+  public height: number = 140; // Высота Монстра
   public currentGap: number = 0;
   public posX: number; // Позиция верхнего левого угла по X
   public posY: number; // Позиция верхнего левого угла по Y
@@ -66,9 +67,26 @@ class Monster {
       }
     }, this.speed);
   };
+  intervalClear = (timeIds: NodeJS.Timer | undefined) => {
+    clearInterval(timeIds);
+  };
 
-  deathAnim = () => {
+  death = (monsters: Monster[]) => {
     console.log('DEAD!');
+    this.height = this.height / 2;
+    this.downTime = setInterval(() => {
+      console.log('DOWN');
+      this.posY += this.stepY * 5;
+
+      if (this.ref.canvas.clientHeight < this.posY) {
+        console.log(monsters);
+        monsters.filter(
+          (item) => item.posX !== this.posX && item.posY !== this.posY
+        );
+        console.log(monsters);
+        this.intervalClear(this.downTime);
+      }
+    }, this.speed);
   };
 }
 
@@ -86,8 +104,11 @@ const moveMonsters = (
   });
 };
 
-const checkMonsterOnPath = (Character: Character, monsters: Monster[]) => {
-  let isMeet = null;
+const checkMonsterOnPath = (
+  Character: Character,
+  monsters: Monster[]
+): Monster | undefined => {
+  let isMeet = undefined;
   if (monsters.length > 0) {
     monsters.forEach((monsterItem) => {
       if (
