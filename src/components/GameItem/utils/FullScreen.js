@@ -1,15 +1,14 @@
 function fullScreenInit(element) {
-  if(element.requestFullscreen) {
+  if (element.requestFullscreen) {
     element.requestFullscreen();
-  } else if(element.webkitrequestFullscreen) {
+  } else if (element.webkitrequestFullscreen) {
     element.webkitRequestFullscreen();
-  } else if(element.mozRequestFullscreen) {
+  } else if (element.mozRequestFullscreen) {
     element.mozRequestFullScreen();
   }
 }
 
 function fullScreenCancel() {
-  console.log('CANCEL')
   if (document.cancelFullScreen) {
     document.cancelFullScreen();
   } else if (document.mozCancelFullScreen) {

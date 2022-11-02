@@ -11,7 +11,6 @@ class Character {
   private goRightTime: NodeJS.Timer | undefined;
   private soundJump: AudioCustom = new AudioCustom('jump.mp3', 0.4);
   private soundGameOver: AudioCustom = new AudioCustom('gameover.mp3');
-  private soundFire: AudioCustom = new AudioCustom('fire.mp3');
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
   public isGoLeft: boolean = false;
   public isGoRight: boolean = false;
@@ -124,7 +123,7 @@ class Character {
     }
   };
 
-  controllerReset = (event: KeyboardEvent) => {
+  controllerReset = () => {
     clearInterval(this.goLeftTime);
     clearInterval(this.goRightTime);
     this.isGoRight = false;

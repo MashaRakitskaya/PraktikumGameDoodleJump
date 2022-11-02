@@ -60,7 +60,6 @@ const GameItem = () => {
     //setIsGameStop(false);
   };
 
-
   const dropPersonAnimation = () => {
     person.stop();
     movePlatforms(contextLocal, platforms, person, -(person.stepY * 3));
@@ -225,7 +224,7 @@ const GameItem = () => {
   };
 
   const draw = (context: CanvasRenderingContext2D) => {
-    elemCanvas = document.getElementById('Game')
+    elemCanvas = document.getElementById('Game');
     contextLocal = context;
     if (isGameInit && !isGameOver) {
       sound.background.play();
@@ -244,12 +243,14 @@ const GameItem = () => {
       animation();
 
       person.jump(platforms);
+
+      elemCanvas.requestPointerLock();
       fullScreenInit(elemCanvas);
       document.addEventListener('keydown', (event) => {
         person.controllerStart(event);
       });
       document.addEventListener('keyup', (event) => {
-        person.controllerReset(event);
+        person.controllerReset();
       });
     }
   };
@@ -287,7 +288,7 @@ const GameItem = () => {
         <div>
           <ScoreWrapper>{displayScore()}</ScoreWrapper>
           <Button
-              onClick={() => {
+            onClick={() => {
               setIsGameOver(false);
             }}
             buttonText={'Начать игру!'}
@@ -304,7 +305,7 @@ const GameItem = () => {
         <div>
           <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
           <Button
-              onClick={() => {
+            onClick={() => {
               setIsGameOver(false);
               setIsGameInit(true);
             }}
