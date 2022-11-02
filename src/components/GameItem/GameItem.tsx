@@ -5,7 +5,7 @@ import { Character } from './Character/Character';
 import { Score } from './utils/Score';
 import { createPlatforms, movePlatforms, Platform } from './Platform/Platform';
 import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
-import { initFullScreenAPI } from './utils/FullScreen';
+import { fullScreenInit, fullScreenCancel } from './utils/FullScreen';
 import Popup from '../Popup/Popup';
 import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
@@ -30,6 +30,7 @@ const GameItem = () => {
   let person: Character;
   let monsters: Monster[] = [];
   let bonuses: Bonuses[] = [];
+  let elemCanvas: any;
   let currentMonster: Monster | undefined;
   let sound: soundPlayer = {
     madness: new AudioCustom('madnessSound.mp3'),
@@ -52,20 +53,13 @@ const GameItem = () => {
     sound.background.pause();
     sound.madness.pause();
     person.gameOver();
+    fullScreenCancel();
   };
 
   const closePopup = () => {
     //setIsGameStop(false);
   };
 
-  const closeByOverlay = (
-    event: React.MouseEvent<Element, MouseEvent>
-  ): void => {
-    const id = (event.target as HTMLDivElement).id;
-    if (id === 'popup') {
-      // closePopup();
-    }
-  };
 
   const dropPersonAnimation = () => {
     person.stop();
@@ -129,16 +123,7 @@ const GameItem = () => {
     /*
     /Описание частоты появления сущнойстей и их инициализация
     */
-    // if (person.isHaveBonus && !platforms[platformCount - 1]?.isHaveItem) {
-    //   let monsterJob = new Monster(
-    //     contextLocal,
-    //     platforms[platformCount - 1].left,
-    //     platforms[platformCount - 1].bottom,
-    //     'monster-job.png'
-    //   );
-    //   platforms[platformCount - 1].isHaveItem = true;
-    //   monsters.push(monsterJob);
-    // }
+
     if (
       currentScroll % 400 === 0 &&
       currentScroll >= 400 &&
@@ -156,8 +141,8 @@ const GameItem = () => {
       monsters.push(monsterJob);
     }
     if (
-      currentScroll % 1700 === 0 &&
-      currentScroll >= 2000 &&
+      currentScroll % 1100 === 0 &&
+      currentScroll >= 1000 &&
       !person.isHaveBonus &&
       !platforms[platformCount - 1]?.isHaveItem
     ) {
@@ -240,6 +225,7 @@ const GameItem = () => {
   };
 
   const draw = (context: CanvasRenderingContext2D) => {
+    elemCanvas = document.getElementById('Game')
     contextLocal = context;
     if (isGameInit && !isGameOver) {
       sound.background.play();
@@ -258,7 +244,7 @@ const GameItem = () => {
       animation();
 
       person.jump(platforms);
-      initFullScreenAPI();
+      fullScreenInit(elemCanvas);
       document.addEventListener('keydown', (event) => {
         person.controllerStart(event);
       });
@@ -294,35 +280,35 @@ const GameItem = () => {
       />
       <Popup
         isOpen={isGameOver}
-        closeByOverlay={closeByOverlay}
-        title={'Game over!'}
+        title={'Конец игры!'}
         closePopup={closePopup}
+        isOverlayAndCloseButton={false}
       >
         <div>
           <ScoreWrapper>{displayScore()}</ScoreWrapper>
           <Button
-            onCLickFunc={() => {
+              onClick={() => {
               setIsGameOver(false);
             }}
-            buttonText={'New game'}
+            buttonText={'Начать игру!'}
             type={'button'}
           />
         </div>
       </Popup>
       <Popup
         isOpen={!isGameInit}
-        closeByOverlay={closeByOverlay}
-        title={'Doodlik init form!'}
+        title={'Doodlik Aka start!'}
         closePopup={closePopup}
+        isOverlayAndCloseButton={false}
       >
         <div>
           <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
           <Button
-            onCLickFunc={() => {
+              onClick={() => {
               setIsGameOver(false);
               setIsGameInit(true);
             }}
-            buttonText={'New game'}
+            buttonText={'Начать игру!'}
             type={'button'}
           />
         </div>
