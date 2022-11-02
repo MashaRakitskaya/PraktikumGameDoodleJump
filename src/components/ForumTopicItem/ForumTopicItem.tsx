@@ -27,7 +27,7 @@ const ForumTopicItem = ({
 }: ForumTopicItemProps) => {
   const { urlImg, title, lastMessage, numberMessages, time } = forumTopicsItem;
   return (
-    <TopicItem onClick={onTopicClick}>
+    <TopicItem role="topic" onClick={onTopicClick}>
       <TopicImg alt="topic img" src={urlImg}></TopicImg>
       <TitleMessageContainer>
         <Title>{title}</Title>

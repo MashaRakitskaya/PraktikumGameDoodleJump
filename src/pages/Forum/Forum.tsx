@@ -9,7 +9,7 @@ const Forum = () => {
   const [isTopicSelected, setTopicSelected] = useState(false);
   const navigate = useNavigate();
   return (
-    <ForumContainer>
+    <ForumContainer role="forum">
       <ForumTopicsList>
         {forumTopicsList.map((item) => {
           return (

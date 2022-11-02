@@ -48,8 +48,8 @@ export const ButtonClose = styled.button`
   border: none;
   cursor: pointer;
   position: absolute;
-  top: -40px;
-  right: -40px;
+  top: 20px;
+  right: 20px;
   padding: 0px;
   margin: 0px;
   transition: opacity 0.2s ease;

@@ -10,16 +10,15 @@ import {
   SIGNUP_PATH,
   GAME_PATH
 } from '../../utils/constants';
-import ButtonComponent from '../Button/Button';
-import { SideNav, SideNavLink } from './Sidebar.styles';
+import Button from '../Button/Button';
+import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles';
+import Popup from '../Popup/Popup';
+import { TextField } from '../TextField';
 
-interface SidebarProps {
-  showPopup: () => void;
-}
-
-const Sidebar = ({ showPopup }: SidebarProps) => {
+const Sidebar = () => {
   const [isButtonAddTopic, setButtonAddTopic] = useState(false);
   const location = useLocation();
+  const [showPopup, togglePopup] = useState(false);
 
   const showButtonAddChat = (isPathForum: boolean) => {
     setButtonAddTopic(isPathForum);
@@ -44,31 +43,37 @@ const Sidebar = ({ showPopup }: SidebarProps) => {
 
   return (
     <SideNav>
+      <ButtonExit type="button" onClick={logout}>
+        Exit
+      </ButtonExit>
       <SideNavLink to={PROFILE_SETTING_PATH}>User</SideNavLink>
       <SideNavLink to={FORUM_PATH}>Forum</SideNavLink>
       <SideNavLink to={LEADERBOARD_PATH}>Leaderboard</SideNavLink>
       <SideNavLink to={PRESENTATION_PATH}>Presentation of the game</SideNavLink>
+
       {isButtonAddTopic && (
-        <ButtonComponent
+        <Button
           marginTop="0px"
-          onCLickFunc={() => {
-            showPopup();
-          }}
+          onClick={() => togglePopup(!showPopup)}
           buttonText="Add topic"
           type="button"
         />
       )}
-      <ButtonComponent
+      <Popup
+        isOpen={showPopup}
+        title={'Create topic'}
+        closePopup={() => togglePopup(false)}
+      >
+        <form>
+          <TextField labelName="title" name="title" type="title" />
+          <Button onClick={() => {}} buttonText="Create" type="submit" />
+        </form>
+      </Popup>
+      <Button
         marginTop="0px"
-        onCLickFunc={playGame}
+        onClick={playGame}
         notPriority={true}
         buttonText="Play"
-        type="button"
-      />
-      <ButtonComponent
-        marginTop="0px"
-        onCLickFunc={logout}
-        buttonText="logout"
         type="button"
       />
     </SideNav>

@@ -5,34 +5,47 @@ import {
   ModalWindow,
   ButtonClose
 } from './Popup.styles';
+import ReactDOM from 'react-dom';
 
 interface PopupProps {
   isOpen: boolean;
-  closeByOverlay: (event: React.MouseEvent<Element, MouseEvent>) => void;
   closePopup: () => void;
   title: string;
   children: React.ReactNode;
+  isOverlayAndCloseButton?: boolean;
 }
 
 const Popup = ({
   isOpen,
-  closeByOverlay,
   title,
   children,
-  closePopup
+  closePopup,
+  isOverlayAndCloseButton = true
 }: PopupProps) => {
-  return (
+  if (!isOpen) return null;
+  return ReactDOM.createPortal(
     <ModalWindow
-      id="popup"
       isOpen={isOpen}
-      onClick={(event) => closeByOverlay(event)}
+      onClick={isOverlayAndCloseButton ? closePopup : undefined}
+      role="popup"
     >
-      <ModalWindowContent>
-        <ButtonClose type="button" onClick={closePopup}></ButtonClose>
+      <ModalWindowContent
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        {isOverlayAndCloseButton && (
+          <ButtonClose
+            role="close"
+            type="button"
+            onClick={closePopup}
+          ></ButtonClose>
+        )}
         <ModalWindowTitle>{title}</ModalWindowTitle>
         {children}
       </ModalWindowContent>
-    </ModalWindow>
+    </ModalWindow>,
+    document.body
   );
 };
 

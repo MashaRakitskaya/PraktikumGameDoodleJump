@@ -11,7 +11,7 @@ const Error = () => {
     <ErrorWrapper>
       <p>We are already fixing</p>
       <Button
-        onCLickFunc={() => navigate(SIGNIN_PATH)}
+        onClick={() => navigate(SIGNIN_PATH)}
         type="button"
         buttonText="Back"
       />

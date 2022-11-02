@@ -11,6 +11,7 @@ import { ISignInParams } from '../../../models/ISignInParams';
 import Header from '../../../components/Header/Header';
 import Error from '../../Error/Error';
 import { Button } from '../../../components/Button';
+import CommonLink from '../../../components/CommonLink/CommonLink';
 
 const SignIn = () => {
   let navigate = useNavigate();
@@ -38,11 +39,7 @@ const SignIn = () => {
   }, [data]);
 
   if (isError) {
-    return (
-      <>
-        <Error />
-      </>
-    );
+    return <Error />;
   }
   return (
     <AuthPagesWrapper>
@@ -68,16 +65,15 @@ const SignIn = () => {
             errorText={formik.touched.password && formik.errors.password}
           />
           <Button
-            onCLickFunc={() => formik.handleSubmit()}
+            onClick={() => formik.handleSubmit()}
             type="submit"
-            marginTop={'0'}
-            buttonText={'Sign in'}
+            marginTop="0"
+            buttonText="Sign in"
           />
-          <Button
-            marginTop={'0'}
-            type="button"
-            onCLickFunc={() => navigate(SIGNUP_PATH)}
-            buttonText={'Sign up'}
+
+          <CommonLink
+            onCLick={() => navigate(SIGNUP_PATH)}
+            linkText="Sign up"
           />
         </AuthWrapper>
       </form>

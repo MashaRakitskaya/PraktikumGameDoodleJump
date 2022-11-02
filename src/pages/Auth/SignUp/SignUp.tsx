@@ -10,6 +10,7 @@ import { useFetchSignUpMutation } from '../../../services/auth';
 import { InputLabel, InputNames, InputType } from '../../../constans/constans';
 import { ISignUpParams } from '../../../models/ISignUpParams';
 import Header from '../../../components/Header/Header';
+import CommonLink from '../../../components/CommonLink/CommonLink';
 
 const SignUp = () => {
   let navigate = useNavigate();
@@ -110,16 +111,15 @@ const SignUp = () => {
             }
           />
           <Button
-            onCLickFunc={() => formik.handleSubmit()}
+            onClick={() => formik.handleSubmit()}
             type="submit"
             marginTop="0px"
-            buttonText={'Create user'}
+            buttonText="Create user"
           />
-          <Button
-            onCLickFunc={() => navigate(SIGNIN_PATH)}
-            type="button"
-            marginTop="0px"
-            buttonText={'Sign in'}
+
+          <CommonLink
+            onCLick={() => navigate(SIGNIN_PATH)}
+            linkText="Sign in"
           />
         </AuthWrapper>
       </form>
