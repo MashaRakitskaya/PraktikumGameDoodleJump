@@ -29,7 +29,6 @@ const Sidebar = () => {
   }, [location.pathname]);
 
   const playGame = () => {
-    //в будущем сделаю анимацю сдвига сайдбара и инициалищацию игры
     window.location.href = GAME_PATH;
   };
 

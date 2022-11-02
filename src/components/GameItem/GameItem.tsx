@@ -10,6 +10,7 @@ import Popup from '../Popup/Popup';
 import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 import { AudioCustom } from './Audio/AudioCustom';
+import { LEADERBOARD_PATH } from '../../utils/constants';
 
 interface soundPlayer {
   madness: AudioCustom;
@@ -294,6 +295,13 @@ const GameItem = () => {
             buttonText={'Начать игру!'}
             type={'button'}
           />
+          <Button
+            onClick={() => {
+              document.location.href = LEADERBOARD_PATH;
+            }}
+            buttonText={'Выйти!'}
+            type={'button'}
+          />
         </div>
       </Popup>
       <Popup
@@ -310,6 +318,13 @@ const GameItem = () => {
               setIsGameInit(true);
             }}
             buttonText={'Начать игру!'}
+            type={'button'}
+          />
+          <Button
+            onClick={() => {
+              document.location.href = LEADERBOARD_PATH;
+            }}
+            buttonText={'Выйти!'}
             type={'button'}
           />
         </div>
