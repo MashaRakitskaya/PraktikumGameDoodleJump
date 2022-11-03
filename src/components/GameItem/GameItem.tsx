@@ -41,10 +41,9 @@ const GameItem = () => {
 
       person.jump(platforms);
 
-      if (isDocumentLoaded)
-        document.addEventListener('keydown', (event) => {
-          person.controller(event);
-        });
+      document.addEventListener('keydown', (event) => {
+        person.controller(event);
+      });
     }
   };
 
