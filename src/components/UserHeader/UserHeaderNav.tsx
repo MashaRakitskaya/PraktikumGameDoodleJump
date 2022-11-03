@@ -8,7 +8,7 @@ import {
 import { SideNavLink } from '../Sidebar/Sidebar.styles.ts';
 import { UserHeaderNavWrapper } from './UserHeaderNab.styles.js';
 
-function UserHeaderNav() {
+const UserHeaderNav = () => {
   const location = useLocation();
   const settingsPath: { title: string; path: string }[] = [
     { title: 'Сhange user data', path: PROFILE_SETTING_PATH },
@@ -27,5 +27,5 @@ function UserHeaderNav() {
       ))}
     </UserHeaderNavWrapper>
   );
-}
+};
 export default UserHeaderNav;

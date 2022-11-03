@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import React from "react";
-import ReactDOMServer, { renderToStaticMarkup } from "react-dom/server";
-import requireFromString from "require-from-string";
-import fs from "fs";
-import path from "path";
+import { Request, Response } from 'express';
+import React from 'react';
+import ReactDOMServer, { renderToStaticMarkup } from 'react-dom/server';
+import requireFromString from 'require-from-string';
+import fs from 'fs';
+import path from 'path';
 
-export function renderMiddleware(req: Request, res: Response) {
+export const renderMiddleware = (req: Request, res: Response) => {
   //содержание файла собранного вэбпаком для запуска клиента в ноде
   const ssrClient: string = fs
-    .readFileSync(path.join(__dirname, "ssrClient.js"))
+    .readFileSync(path.join(__dirname, 'ssrClient.js'))
     .toString();
 
   //скомпелированный index.tsx из src
@@ -48,8 +48,8 @@ export function renderMiddleware(req: Request, res: Response) {
       <body
         style={{
           margin: 0,
-          boxSizing: "border-box",
-          fontFamily: "var(--main-font-family)",
+          boxSizing: 'border-box',
+          fontFamily: 'var(--main-font-family)'
         }}
       >
         <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -57,11 +57,11 @@ export function renderMiddleware(req: Request, res: Response) {
         {/* это тот же index.tsx из src для выполнения в браузере */}
         <script src="/browserClient.js"></script>
         <script
-          dangerouslySetInnerHTML={{ __html: "ClientWebpack.Client()" }}
+          dangerouslySetInnerHTML={{ __html: 'ClientWebpack.Client()' }}
         ></script>
       </body>
     </html>
   )}`;
 
   return res.send(html);
-}
+};

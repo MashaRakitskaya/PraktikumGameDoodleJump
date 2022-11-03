@@ -32,6 +32,14 @@ module.exports = {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
         use: ['@svgr/webpack', 'file-loader']
+      },
+      {
+        test: /\.(png|woff|woff2)(\?[a-z0-9#=&.]+)?$/,
+        use: [
+          {
+            loader: 'url-loader'
+          }
+        ]
       }
     ]
   }
