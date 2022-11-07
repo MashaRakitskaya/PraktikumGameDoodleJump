@@ -1,19 +1,28 @@
 const path = require('path');
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
+const webpack = require('webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
   name: 'web',
   mode: 'development',
   target: 'web',
-  entry: './src/index.tsx',
+  entry: [
+    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+    './src/index.tsx'
+  ],
   //library: "ClientWebpack"  означает что мы сможем обратится к собранному файлу
   //"./src/index.tsx" --> "browserClient.js" как объекту и вызвать его функции
   output: {
     filename: 'browserClient.js',
     path: path.join(__dirname, '../build/public'),
+    publicPath: '/',
     libraryTarget: 'var',
     library: 'ClientWebpack'
+  },
+  devServer: {
+    hot: true
   },
   //  resolve: { modules: ["src", "node_modules"] }, искать в папках этих
   resolve: {
@@ -42,5 +51,9 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin({ overlay: false })
+  ]
 };
