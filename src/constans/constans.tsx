@@ -1,3 +1,8 @@
+export const LEADER_BOARD = {
+  TEAM_NAME: 'dudlers',
+  RATING_FIELD_NAME: 'score'
+};
+
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
@@ -14,6 +19,12 @@ export const ENDPOINTS = {
     PATH: '/user',
     PROFILE: '/profile',
     AVATAR: '/avatar'
+  },
+
+  LEADERBOARD: {
+    PATH: '/leaderboard',
+    TEAM: '/dudlers',
+    ALL: '/all'
   }
 };
 
