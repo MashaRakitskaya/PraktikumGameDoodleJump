@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SignIn from '../../pages/Auth/SignIn/SignIn';
 import SignUp from '../../pages/Auth/SignUp/SignUp';
 import Leaderboard from '../../pages/Leaderboard/Leaderboard';
-import { AppWrapper, AppWrapperContainer, CommonStyles } from './App.styles.js';
+import {
+  AppWrapper,
+  AppWrapperContainer,
+  SwitchThemeButton,
+  ThemeStyles
+} from './App.styles';
 import {
   PROFILE_SETTING_PATH,
   SIGNIN_PATH,
@@ -23,42 +28,50 @@ import ProtectedRoute from './ProtectedRoute';
 import ChangePassword from '../../pages/ChangeData/ChangePassword/ChangePassword';
 import Presentation from '../../pages/Presentation/Presentation';
 import Profile from '../../pages/ChangeData/UserProfile/Profile';
+import { ThemeContext } from '../../providers/ThemeProvider/ThemeProvider';
 
 const App = () => {
-  return (
-    <CommonStyles>
-      <AppWrapper id="app-root">
-        <AppWrapperContainer>
-          <Routes>
-            <Route path={SIGNIN_PATH} element={<SignIn />} />
-            <Route path={SIGNUP_PATH} element={<SignUp />} />
-            <Route path={PROFILE_SETTING_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Profile />} />
-            </Route>
-            <Route path={PASSWORD_SETTING_PATH} element={<ProtectedRoute />}>
-              <Route index element={<ChangePassword />} />
-            </Route>
-            <Route path={LEADERBOARD_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Leaderboard />} />
-            </Route>
-            <Route path={FORUM_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Forum />} />
-            </Route>
-            <Route path={FORUM_CHAT_ID_PATH} element={<ProtectedRoute />}>
-              <Route index element={<ForumChat />} />
-            </Route>
-            <Route path={GAME_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Game />} />
-            </Route>
-            <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
-              <Route index element={<Presentation />} />
-            </Route>
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
-            {/* <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} /> */}
-          </Routes>
-        </AppWrapperContainer>
-      </AppWrapper>
-    </CommonStyles>
+  return (
+    <div style={{ position: 'relative' }}>
+      <SwitchThemeButton onClick={toggleTheme}>{`Switch to ${
+        isDarkTheme === true ? '🌞' : '🌑'
+      }`}</SwitchThemeButton>
+      <ThemeStyles isDarkTheme={isDarkTheme}>
+        <AppWrapper id="app-root">
+          <AppWrapperContainer>
+            <Routes>
+              <Route path={SIGNIN_PATH} element={<SignIn />} />
+              <Route path={SIGNUP_PATH} element={<SignUp />} />
+              <Route path={PROFILE_SETTING_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Profile />} />
+              </Route>
+              <Route path={PASSWORD_SETTING_PATH} element={<ProtectedRoute />}>
+                <Route index element={<ChangePassword />} />
+              </Route>
+              <Route path={LEADERBOARD_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Leaderboard />} />
+              </Route>
+              <Route path={FORUM_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Forum />} />
+              </Route>
+              <Route path={FORUM_CHAT_ID_PATH} element={<ProtectedRoute />}>
+                <Route index element={<ForumChat />} />
+              </Route>
+              <Route path={GAME_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Game />} />
+              </Route>
+              <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
+                <Route index element={<Presentation />} />
+              </Route>
+
+              {/* <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} /> */}
+            </Routes>
+          </AppWrapperContainer>
+        </AppWrapper>
+      </ThemeStyles>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthPagesWrapper, AuthWrapper } from '../CommonAuth.styles.js';
 import { useNavigate } from 'react-router-dom';
 import { PROFILE_SETTING_PATH, SIGNUP_PATH } from '../../../utils/constants';
@@ -12,8 +12,17 @@ import Header from '../../../components/Header/Header';
 import Error from '../../Error/Error';
 import { Button } from '../../../components/Button';
 import CommonLink from '../../../components/CommonLink/CommonLink';
+// import {
+//   useAddToUserThemeMutation,
+//   useGetUserThemeQuery,
+//   useUpdateUserThemeMutation
+// } from '../../../services/userTheme';
+import { ThemeContext } from '../../../providers/ThemeProvider/ThemeProvider';
 
 const SignIn = () => {
+  const { isDarkTheme } = useContext(ThemeContext);
+  console.log('isDarkTheme', isDarkTheme);
+
   let navigate = useNavigate();
   const formik = useFormik<ISignInParams>({
     initialValues: {
@@ -31,8 +40,30 @@ const SignIn = () => {
 
   const [fetchLogin, { data, isSuccess, isError }] = useFetchSignInMutation();
 
+  // const addUserTheme = (data: any) => {
+  //   if (data) {
+  //     const { data: user, isSuccess } = useGetUserThemeQuery({ id: data.id });
+  //     console.log('addUserTheme', isSuccess, !user, data);
+
+  //     if (isSuccess && !user) {
+  //       const [addToUserTheme, { data: userData }] =
+  //         useAddToUserThemeMutation();
+  //       addToUserTheme({ theme: 'dark', user_id: userData.id });
+  //     } else {
+  //       const [updateUserTheme] = useUpdateUserThemeMutation();
+
+  //       updateUserTheme({
+  //         body: { theme: 'dark' },
+  //         id: user.id
+  //       });
+  //     }
+  //   }
+  // };
+  // console.log('data', data);
+
+  // addUserTheme(data);
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data) {
       navigate(PROFILE_SETTING_PATH);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

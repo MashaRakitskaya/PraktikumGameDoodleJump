@@ -44,9 +44,6 @@ const Sidebar = () => {
 
   return (
     <SideNav>
-      <ButtonExit type="button" onClick={logout}>
-        Exit
-      </ButtonExit>
       <SideNavLink
         isActive={location.pathname === PROFILE_SETTING_PATH}
         to={PROFILE_SETTING_PATH}
@@ -68,6 +65,10 @@ const Sidebar = () => {
       >
         Presentation of the game
       </SideNavLink>
+
+      <ButtonExit type="button" onClick={logout}>
+        Exit
+      </ButtonExit>
 
       {isButtonAddTopic && (
         <Button

@@ -4,8 +4,8 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import { renderMiddleware } from './renderMidlware';
 
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { User } from './models/user.model';
+// import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+// import { User } from './models/user.model';
 import router from './routes/index.js';
 import { initHot } from './hot.js';
 import { sequelize } from './sequelize';
@@ -67,6 +67,13 @@ app.use(router);
 initHot(app);
 
 app.get('/*', renderMiddleware);
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({
+    message: message
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Express server is running on http://localhost:${PORT}`);

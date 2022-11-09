@@ -1,5 +1,6 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { User } from './models/user.model';
+import { UserTheme } from './models/userTheme.model';
 
 export function sequelize() {
   const sequelizeOptions: SequelizeOptions = {
@@ -16,7 +17,7 @@ export function sequelize() {
   };
 
   const sequelize = new Sequelize(sequelizeOptions);
-  sequelize.addModels([User]);
+  sequelize.addModels([User, UserTheme]);
 
   // Create database tables
   sequelize.sync({ force: true });

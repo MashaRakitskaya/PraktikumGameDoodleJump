@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { StaticRouter } from 'react-router-dom/server';
 import { BrowserRouter } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import ThemeProvider from './providers/ThemeProvider/ThemeProvider';
 
 interface ServerProps {
   url: string;
@@ -35,7 +36,9 @@ export const Server = ({ url }: ServerProps) => {
   return (
     <Provider store={store}>
       <StaticRouter location={url}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </StaticRouter>
     </Provider>
   );
@@ -52,7 +55,9 @@ export const Client = () => {
     <React.StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     </React.StrictMode>

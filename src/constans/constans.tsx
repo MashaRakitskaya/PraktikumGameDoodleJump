@@ -1,6 +1,7 @@
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
+  LOCALHOST: 'http://localhost:3000',
 
   AUTH: {
     PATH: '/auth',
@@ -14,6 +15,10 @@ export const ENDPOINTS = {
     PATH: '/user',
     PROFILE: '/profile',
     AVATAR: '/avatar'
+  },
+
+  USERTHEME: {
+    PATH: '/user-theme'
   }
 };
 

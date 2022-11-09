@@ -3,7 +3,6 @@ import {
   AutoIncrement,
   Column,
   DataType,
-  Length,
   Model,
   PrimaryKey,
   Table
@@ -12,20 +11,19 @@ import {
 @Table({
   timestamps: false,
   paranoid: true,
-  tableName: 'users'
+  tableName: 'themes'
 })
-export class User extends Model<User> {
+export class Themes extends Model<Themes> {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
   id: number;
 
   @AllowNull(false)
-  @Column(DataType.INTEGER)
-  user_id: number;
+  @Column(DataType.STRING)
+  theme: string;
 
-  @Length({ max: 20, min: 1 })
   @AllowNull(false)
   @Column(DataType.STRING)
-  first_name: string;
+  theme_name: string;
 }
