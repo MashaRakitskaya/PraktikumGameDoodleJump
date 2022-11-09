@@ -1,11 +1,11 @@
 import { ENDPOINTS } from '../constans/constans';
 import { IErrorResponse } from '../models/IErrorResponse';
-import { IGetLeaderboardParams } from '../models/IGedLeaderBoardParams';
+import { IGetLeaderboardParams } from '../models/IGedLeaderboardParams';
 import {
   ILeaderboardAddPlayer,
   ILeaderboardItem,
   ILeaderboardItemTransformed
-} from '../models/ILeaderBoardResponse';
+} from '../models/ILeaderboardResponse';
 import baseApi from '../store/api/baseApi';
 
 export const leaderboardAPI = baseApi

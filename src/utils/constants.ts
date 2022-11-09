@@ -11,12 +11,6 @@ export const GAME_PATH = '/game';
 export const ERROR404_PATH = '/404';
 export const ERROR500_PATH = '/500';
 export const ROOT_DIV = '#root';
-interface LeaderboardListProps {
-  id: string;
-  name: string;
-  score: number;
-  urlImg: string;
-}
 
 interface ForumTopicsListProps {
   id: string;
@@ -26,16 +20,6 @@ interface ForumTopicsListProps {
   time: string;
   urlImg: string;
 }
-
-export const leaderboardList: LeaderboardListProps[] = [
-  {
-    id: '1',
-    name: 'Elena List',
-    score: 1246434,
-    urlImg:
-      'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=417&q=80'
-  }
-];
 
 export const forumTopicsList: ForumTopicsListProps[] = [
   {
