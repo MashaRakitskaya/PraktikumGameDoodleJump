@@ -5,8 +5,16 @@ import { PROFILE_SETTING_PATH, SIGNUP_PATH } from '../../../utils/constants';
 import { useFormik } from 'formik';
 import { signInSchema } from '../../../utils/validationSchema/schemaAuthPages';
 import { TextField } from '../../../components/TextField/index';
-import { useFetchSignInMutation } from '../../../services/auth';
-import { InputLabel, InputNames, InputType } from '../../../constans/constans';
+import {
+  useFetchOauthDataQuery,
+  useFetchSignInMutation
+} from '../../../services/auth';
+import {
+  ENDPOINTS,
+  InputLabel,
+  InputNames,
+  InputType
+} from '../../../constans/constans';
 import { ISignInParams } from '../../../models/ISignInParams';
 import Header from '../../../components/Header/Header';
 import Error from '../../Error/Error';
@@ -30,6 +38,12 @@ const SignIn = () => {
   });
 
   const [fetchLogin, { data, isSuccess, isError }] = useFetchSignInMutation();
+  const { data: oAuthData } = useFetchOauthDataQuery(
+    ENDPOINTS.CURRENT_HOST ?? ''
+  );
+
+  const id = oAuthData?.service_id;
+  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${id}&redirect_uri=${ENDPOINTS.CURRENT_HOST}`;
 
   useEffect(() => {
     if (isSuccess) {
@@ -75,6 +89,7 @@ const SignIn = () => {
             onCLick={() => navigate(SIGNUP_PATH)}
             linkText="Sign up"
           />
+          <a href={url}>Войти с помощью Яндекс</a>
         </AuthWrapper>
       </form>
     </AuthPagesWrapper>

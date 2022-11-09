@@ -6,13 +6,18 @@ export const LEADER_BOARD = {
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
+  OAUTH: 'https://oauth.yandex.ru',
+  CURRENT_HOST: 'http://localhost:3000',
 
   AUTH: {
     PATH: '/auth',
     USER: '/user',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    LOGOUT: '/logout'
+    LOGOUT: '/logout',
+    PATH_OAUTH: '/oauth',
+    YANDEX: '/yandex',
+    SERVICE_ID: '/service-id'
   },
 
   USER: {
