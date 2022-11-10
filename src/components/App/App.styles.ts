@@ -23,6 +23,8 @@ interface ThemeStylesProps {
 export const ThemeStyles = styled.div<ThemeStylesProps>`
   --main-font-family: 'Play', sans-serif;
   --main-bg-color: ${({ isDarkTheme }) => {
+    console.log('isDarkTheme', isDarkTheme);
+
     return isDarkTheme ? '#795548' : '#fceed1';
   }};
   --secondary-bg-color: ${({ isDarkTheme }) =>

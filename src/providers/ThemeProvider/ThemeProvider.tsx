@@ -1,4 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { useFetchUserQuery } from '../../services/auth';
+import { updateUserTheme } from '../../utils/api/api';
 
 export const ThemeContext = createContext({
   isDarkTheme: false,
@@ -11,6 +13,7 @@ interface ThemeProviderProps {
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [isDarkTheme, setDarkTheme] = useState(false);
+  const { data: user, isSuccess, isError } = useFetchUserQuery();
 
   const getCacheTheme = async () => {
     const cacheStorage = await caches.open('isDarkTheme');
@@ -38,6 +41,9 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     addDataIntoCache('isDarkTheme', 'http://localhost:3000', {
       isDarkTheme: !isDarkTheme
     });
+    if (user) {
+      updateUserTheme({ user, isDarkTheme: !isDarkTheme });
+    }
   };
 
   useEffect(() => {
