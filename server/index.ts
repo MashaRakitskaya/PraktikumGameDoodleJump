@@ -1,35 +1,27 @@
 import express from 'express';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import {
+  createProxyMiddleware,
+  responseInterceptor,
+  fixRequestBody
+} from 'http-proxy-middleware';
 import path from 'path';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { renderMiddleware } from './renderMidlware';
-
-// import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-// import { User } from './models/user.model';
-import router from './routes/index.js';
+import router from './routes/index';
 import { initHot } from './hot.js';
 import { sequelize } from './sequelize';
 
-// const sequelizeOptions: SequelizeOptions = {
-//   host: 'postgres',
-//   port: 5432,
-//   username: process.env.POSTGRES_USER,
-//   password: process.env.POSTGRES_PASSWORD,
-//   database: process.env.POSTGRES_DB,
-//   dialect: 'postgres'
-// };
-
-// const sequelize = new Sequelize(sequelizeOptions);
-// sequelize.addModels([User]);
-
-// // Create database tables
-// sequelize.sync({ force: true });
-
 sequelize();
+
 const app = express();
+const PORT = 3000;
+
+//@ts-ignore
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const PORT = 3000;
+
 app.use(
   '/yandex-api',
   createProxyMiddleware({
@@ -38,31 +30,18 @@ app.use(
     pathRewrite: {
       '^/yandex-api': ''
     },
-    logLevel: 'silent',
-    cookieDomainRewrite: ''
+    logLevel: 'info',
+    cookieDomainRewrite: '',
+    selfHandleResponse: false,
+    onProxyReq: fixRequestBody,
+    onProxyRes: () => {},
+    onError: (err: Error) => console.error(err)
   })
 );
 
 //вызывать раньше app.get
 app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(router);
-
-// app.use(
-//   webpackDevMiddleware(compiler, {
-//     publicPath: config.output?.publicPath,
-//     serverSideRender: true
-//   })
-// );
-// app.use(webpackHotMiddleware(compiler));
-
-// app.use(devMiddleware(compiler));
-// app.use(
-//   hotMiddleware(compiler, {
-//     log: console.log,
-//     path: '/__webpack_hmr',
-//     publicPath: config.output.publicPath
-//   })
-// );
 
 initHot(app);
 

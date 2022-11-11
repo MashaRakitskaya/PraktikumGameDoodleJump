@@ -10,6 +10,7 @@ import ThemeProvider from './providers/ThemeProvider/ThemeProvider';
 
 interface ServerProps {
   url: string;
+  theme: any;
 }
 
 const newReducerWithFetchUser = {
@@ -24,7 +25,7 @@ const newReducerWithFetchUser = {
   }
 };
 
-export const Server = ({ url }: ServerProps) => {
+export const Server = ({ url, theme }: ServerProps) => {
   console.log('Server');
 
   const nextReducer = () => {
@@ -37,7 +38,7 @@ export const Server = ({ url }: ServerProps) => {
     <Provider store={store}>
       <StaticRouter location={url}>
         <ThemeProvider>
-          <App />
+          <App placeRendering={'server'} serverTheme={theme?.theme} />
         </ThemeProvider>
       </StaticRouter>
     </Provider>
@@ -56,7 +57,7 @@ export const Client = () => {
       <BrowserRouter>
         <Provider store={store}>
           <ThemeProvider>
-            <App />
+            <App placeRendering={'client'} />
           </ThemeProvider>
         </Provider>
       </BrowserRouter>

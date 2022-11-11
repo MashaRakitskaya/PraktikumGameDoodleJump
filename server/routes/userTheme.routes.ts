@@ -1,13 +1,14 @@
 import {
   findOrCreateUserTheme,
-  updateUserTheme
-} from '../controllers/userTheme.controller.js';
+  updateUserTheme,
+  getUserTheme
+} from '../controllers/userTheme.controller';
 import express from 'express';
 
 const router = express.Router();
 
 router.post('/:id', findOrCreateUserTheme);
-// router.post('/', addToUserTheme);
 router.put('/:id', updateUserTheme);
+router.get('/:id', getUserTheme);
 
 export default router;

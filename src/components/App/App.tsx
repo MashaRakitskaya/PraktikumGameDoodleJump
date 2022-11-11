@@ -7,7 +7,8 @@ import {
   AppWrapper,
   AppWrapperContainer,
   SwitchThemeButton,
-  ThemeStyles
+  ThemeStyles,
+  ThemeWrapper
 } from './App.styles';
 import {
   PROFILE_SETTING_PATH,
@@ -29,16 +30,46 @@ import ChangePassword from '../../pages/ChangeData/ChangePassword/ChangePassword
 import Presentation from '../../pages/Presentation/Presentation';
 import Profile from '../../pages/ChangeData/UserProfile/Profile';
 import { ThemeContext } from '../../providers/ThemeProvider/ThemeProvider';
+import { useFetchUserQuery } from '../../services/auth';
+import { fetchFindOrCreateUserTheme } from '../../utils/api/api';
 
-const App = () => {
-  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+const App = (serverAndClientData: {
+  placeRendering: string;
+  serverTheme?: string;
+}) => {
+  const { clientTheme, toggleTheme } = useContext(ThemeContext);
+  const { data: user } = useFetchUserQuery();
+  const { placeRendering, serverTheme } = serverAndClientData;
+  const serverRenderingPlace = 'server';
+  const themeLight = 'light';
+
+  const changeTheme = () => {
+    if (placeRendering === serverRenderingPlace) {
+      if (serverTheme === themeLight) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      if (clientTheme === themeLight) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (user)
+      fetchFindOrCreateUserTheme({ userId: user.id, theme: clientTheme });
+  }, [user]);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <ThemeWrapper>
       <SwitchThemeButton onClick={toggleTheme}>{`Switch to ${
-        isDarkTheme === true ? '🌞' : '🌑'
+        clientTheme === themeLight ? '🌑' : '🌞'
       }`}</SwitchThemeButton>
-      <ThemeStyles isDarkTheme={isDarkTheme}>
+      <ThemeStyles SeverOrClientTheme={changeTheme()}>
         <AppWrapper id="app-root">
           <AppWrapperContainer>
             <Routes>
@@ -71,7 +102,7 @@ const App = () => {
           </AppWrapperContainer>
         </AppWrapper>
       </ThemeStyles>
-    </div>
+    </ThemeWrapper>
   );
 };
 

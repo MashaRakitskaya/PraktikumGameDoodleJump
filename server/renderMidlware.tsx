@@ -4,8 +4,14 @@ import ReactDOMServer, { renderToStaticMarkup } from 'react-dom/server';
 import requireFromString from 'require-from-string';
 import fs from 'fs';
 import path from 'path';
+import { fetchGetUserData } from './fetch/fetchGetUserData';
+import { fetchGetUserTheme } from './fetch/fetchGetUserTheme';
 
-export const renderMiddleware = (req: Request, res: Response) => {
+export const renderMiddleware = async (req: Request, res: Response) => {
+  const userData = await fetchGetUserData(req.cookies);
+  const userTheme = await fetchGetUserTheme(userData);
+  const defaultServerTheme = { theme: 'light' };
+
   //содержание файла собранного вэбпаком для запуска клиента в ноде
   const ssrClient: string = fs
     .readFileSync(path.join(__dirname, 'ssrClient.js'))
@@ -16,9 +22,9 @@ export const renderMiddleware = (req: Request, res: Response) => {
 
   const { Server } = module;
 
-  const { url } = req;
-
-  const reactHtml = ReactDOMServer.renderToString(Server({ url }));
+  const reactHtml = ReactDOMServer.renderToString(
+    Server({ url: req.url, theme: userTheme ? userTheme : defaultServerTheme })
+  );
 
   const html = `${renderToStaticMarkup(
     <html lang="en">

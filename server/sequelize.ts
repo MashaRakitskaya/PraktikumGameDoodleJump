@@ -1,24 +1,19 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { User } from './models/user.model';
 import { UserTheme } from './models/userTheme.model';
 
 export function sequelize() {
   const sequelizeOptions: SequelizeOptions = {
-    //host: 'postgres',
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
-    // username: process.env.POSTGRES_USER,
-    // password: process.env.POSTGRES_PASSWORD,
-    // database: process.env.POSTGRES_DB,
-    username: 'postgres',
-    password: 'newPassword',
-    database: 'my-db-name',
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
     dialect: 'postgres'
   };
 
   const sequelize = new Sequelize(sequelizeOptions);
-  sequelize.addModels([User, UserTheme]);
+  sequelize.addModels([UserTheme]);
 
-  // Create database tables
+  // Create in database empty tables { force: true }
   sequelize.sync({ force: true });
 }

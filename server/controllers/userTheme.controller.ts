@@ -1,4 +1,3 @@
-import { RequestHandler } from 'express';
 import { UserTheme } from '../models/userTheme.model';
 
 export const findOrCreateUserTheme = (req, res, next) => {
@@ -9,6 +8,7 @@ export const findOrCreateUserTheme = (req, res, next) => {
     where: {
       user_id: id
     },
+    //@ts-ignore
     defaults: { theme: theme }
   })
     .then(([userTheme]) => res.status(200).send(userTheme))
@@ -18,14 +18,22 @@ export const findOrCreateUserTheme = (req, res, next) => {
 export const updateUserTheme = (req, res, next) => {
   const { id } = req.params;
   const { theme } = req.body;
-  UserTheme.update({ theme }, { where: { id } })
-    .then(() => {
-      UserTheme.findByPk(id)
-        .then((user) => res.status(200).send(user))
-        .catch((err) => {
-          next(err);
-        });
-    })
+  UserTheme.update({ theme }, { where: { user_id: id } })
+    .then((user) => res.status(200).send(user))
+    .catch((err) => {
+      next(err);
+    });
+};
+
+export const getUserTheme = (req, res, next) => {
+  const { id } = req.params;
+
+  UserTheme.findOne({
+    where: {
+      user_id: id
+    }
+  })
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       next(err);
     });

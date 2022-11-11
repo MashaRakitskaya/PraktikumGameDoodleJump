@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useFetchUserQuery } from '../../services/auth';
-import { updateUserTheme } from '../../utils/api/api';
+import { fetchUpdateUserTheme } from '../../utils/api/api';
 
 export const ThemeContext = createContext({
-  isDarkTheme: false,
+  clientTheme: 'light',
   toggleTheme: () => {}
 });
 
@@ -12,21 +12,31 @@ interface ThemeProviderProps {
 }
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [isDarkTheme, setDarkTheme] = useState(false);
-  const { data: user, isSuccess, isError } = useFetchUserQuery();
+  const themeLight = 'light';
+  const themeDark = 'dark';
+  const [isTheme, setTheme] = useState<string>(themeLight);
+  const { data: user } = useFetchUserQuery();
 
   const getCacheTheme = async () => {
-    const cacheStorage = await caches.open('isDarkTheme');
+    const cacheStorage = await caches.open('isTheme');
 
     const cachedResponse = await cacheStorage.match('http://localhost:3000');
-    const isDarkThemeChache = await cachedResponse?.json();
+    const themeChache = await cachedResponse?.json();
 
-    if (isDarkThemeChache) {
-      setDarkTheme(isDarkThemeChache.isDarkTheme);
+    if (themeChache) {
+      setTheme(themeChache.nameTheme);
     }
   };
 
-  const addDataIntoCache = (cacheName: string, url: string, response: any) => {
+  const addThemeToCache = ({
+    cacheName,
+    url,
+    response
+  }: {
+    cacheName: string;
+    url: string;
+    response: any;
+  }) => {
     const data = new Response(JSON.stringify(response));
 
     if ('caches' in window) {
@@ -36,13 +46,22 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     }
   };
 
-  const toggleTheme = () => {
-    setDarkTheme(!isDarkTheme);
-    addDataIntoCache('isDarkTheme', 'http://localhost:3000', {
-      isDarkTheme: !isDarkTheme
+  const setThemeAndAddThemeToCache = (theme: string) => {
+    setTheme(theme);
+    addThemeToCache({
+      cacheName: 'isTheme',
+      url: 'http://localhost:3000',
+      response: { nameTheme: theme }
     });
-    if (user) {
-      updateUserTheme({ user, isDarkTheme: !isDarkTheme });
+  };
+
+  const toggleTheme = () => {
+    if (isTheme === themeLight) {
+      setThemeAndAddThemeToCache(themeDark);
+      user && fetchUpdateUserTheme({ userId: user.id, theme: themeDark });
+    } else {
+      setThemeAndAddThemeToCache(themeLight);
+      user && fetchUpdateUserTheme({ userId: user.id, theme: themeLight });
     }
   };
 
@@ -51,7 +70,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ clientTheme: isTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

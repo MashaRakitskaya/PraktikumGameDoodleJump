@@ -12,13 +12,8 @@ import Header from '../../../components/Header/Header';
 import Error from '../../Error/Error';
 import { Button } from '../../../components/Button';
 import CommonLink from '../../../components/CommonLink/CommonLink';
-import { ThemeContext } from '../../../providers/ThemeProvider/ThemeProvider';
-
-import { findOrCreateUserTheme } from '../../../utils/api/api';
 
 const SignIn = () => {
-  const { isDarkTheme } = useContext(ThemeContext);
-
   let navigate = useNavigate();
   const formik = useFormik<ISignInParams>({
     initialValues: {

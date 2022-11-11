@@ -1,47 +1,41 @@
 interface UserThemeProps {
-  user: any;
-  isDarkTheme: boolean;
+  userId: number;
+  theme: string;
 }
 
-export const findOrCreateUserTheme = ({
-  user,
-  isDarkTheme
+export const fetchFindOrCreateUserTheme = ({
+  userId,
+  theme
 }: UserThemeProps) => {
-  fetch(`http://localhost:3000/user-theme/${user.id}`, {
+  fetch(`http://localhost:3000/user-theme/${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ theme: isDarkTheme ? 'dark' : 'light' })
+    body: JSON.stringify({ theme })
   })
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-    })
-    .then((userTheme) => {
-      console.log('Success:', userTheme);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
 };
 
-export const updateUserTheme = ({ user, isDarkTheme }: UserThemeProps) => {
-  fetch(`http://localhost:3000/user-theme/${user.id}`, {
+export const fetchUpdateUserTheme = ({ userId, theme }: UserThemeProps) => {
+  fetch(`http://localhost:3000/user-theme/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ theme: isDarkTheme ? 'dark' : 'light' })
+    body: JSON.stringify({ theme })
   })
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-    })
-    .then((userTheme) => {
-      console.log('Success:', userTheme);
     })
     .catch((error) => {
       console.error('Error:', error);
