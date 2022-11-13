@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const GameWrapper = styled.div`
-  background: #000000;
+  background: var(--game-background);
   border: 1px solid black;
 `;
 

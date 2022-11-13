@@ -14,10 +14,8 @@ class Score {
   draw = () => {
     this.ref.font = '20px serif';
     this.ref.fillStyle = '#fff';
-    this.ref.fillRect(this.posX - 20, this.posY - 27, 245, 40);
-    this.ref.fillStyle = '#000';
     this.ref.fillText(
-      'Ваш текущий счёт: ' + this.currentScroll,
+      'Cчёт: ' + this.currentScroll,
       this.posX,
       this.posY,
       this.maxWidth

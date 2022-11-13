@@ -20,6 +20,8 @@ interface soundPlayer {
 const GameItem = () => {
   let intervalGameTimer: number;
   let [isGameOver, setIsGameOver] = useState(false);
+  let [gameWidth, setGameWidth] = useState(1600);
+  let [gameHeight, setGameHeight] = useState(1080);
   let [isGameInit, setIsGameInit] = useState(false);
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
@@ -182,8 +184,14 @@ const GameItem = () => {
     // Проверка на наличие "Соприкосновения" персонажа с монстром (Если да - игра заканчивается)
     currentMonster = checkMonsterOnPath(person, monsters);
     if (currentMonster && !currentMonster.isDead) {
-      if (!person.isJumping) {
+      if (
+        !person.isJumping &&
+        person.posX + person.width / 3 > currentMonster.posX &&
+        person.posX + person.width / 3 <
+          currentMonster.posX + currentMonster.width
+      ) {
         if (!currentMonster.isDead) {
+          console.log(currentMonster.isDead);
           currentMonster.isDead = true;
           currentMonster.death(monsters);
         }
@@ -277,8 +285,8 @@ const GameItem = () => {
       <Canvas
         draw={draw}
         play={isGameInit && !isGameOver}
-        height={1080}
-        width={1600} //500 - пока что произвольная величина
+        height={gameHeight}
+        width={gameWidth}
       />
       <Popup
         isOpen={isGameOver}
