@@ -7,19 +7,19 @@ import {
   Points
 } from './LeaderboardItem.styles';
 interface LeaderboardItemProps {
-  leaderboardItem: { title: string; points: number; urlImg: string };
+  leaderboardItem: { name: string; score: number; urlImg: string };
   index: number;
 }
 
 const LeaderboardItem = ({ leaderboardItem, index }: LeaderboardItemProps) => {
-  const { title, points, urlImg } = leaderboardItem;
+  const { name, score, urlImg } = leaderboardItem;
 
   return (
     <ListItem>
       <Place>{index + 1}</Place>
       <Avatar alt="avatar" src={urlImg}></Avatar>
-      <Name>{title}</Name>
-      <Points>{points}</Points>
+      <Name>{name}</Name>
+      <Points>{score}</Points>
     </ListItem>
   );
 };

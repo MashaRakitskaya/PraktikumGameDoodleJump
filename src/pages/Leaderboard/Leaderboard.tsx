@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LeaderboardItem from '../../components/LeaderboardItem/LeaderboardItem';
-import { leaderboardList } from '../../utils/constants';
+import { useFetchTeamLeaderboardMutation } from '../../services/leaderboard';
 import { LeaderboardContainer, LeaderboardList } from './Leaderboard.styles';
 
 const Leaderboard = () => {
-  const sortLeaderboardList = leaderboardList.sort(
-    (currentItem, nextItem) => nextItem.points - currentItem.points
-  );
+  const [fetchLeaderboard, { data = [] }] = useFetchTeamLeaderboardMutation();
+
+  useEffect(() => {
+    fetchLeaderboard({ ratingFieldName: 'score', cursor: 0, limit: 100 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <LeaderboardContainer role="leaderboard">
       <LeaderboardList>
-        {sortLeaderboardList.map((item, index) => {
+        {data.map((item, index) => {
           return (
             <LeaderboardItem
               key={item.id}
