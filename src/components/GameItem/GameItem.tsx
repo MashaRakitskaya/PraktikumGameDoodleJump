@@ -65,12 +65,12 @@ const GameItem = () => {
 
   const dropPersonAnimation = () => {
     person.stop();
-    movePlatforms(contextLocal, platforms, person, -(person.stepY * 3));
+    movePlatforms(contextLocal, platforms, -(person.stepY * 3));
     if (monsters.length > 0) {
-      moveMonsters(contextLocal, monsters, person, -(person.stepY * 3));
+      moveMonsters(contextLocal, monsters, -(person.stepY * 3));
     }
     if (bonuses.length > 0) {
-      moveBonuses(contextLocal, bonuses, person, -(person.stepY * 3));
+      moveBonuses(contextLocal, bonuses, -(person.stepY * 3));
     }
   };
 
@@ -105,17 +105,16 @@ const GameItem = () => {
     while (person.posY < contextLocal.canvas.height / 3) {
       person.posY += person.stepY;
       if (monsters.length > 0) {
-        moveMonsters(contextLocal, monsters, person, person.stepY);
+        moveMonsters(contextLocal, monsters, person.stepY);
       }
       if (bonuses.length > 0) {
-        moveBonuses(contextLocal, bonuses, person, person.stepY);
+        moveBonuses(contextLocal, bonuses, person.stepY);
       }
 
       //Изменение текущего score с учетом "прокрутки"
 
       currentScroll =
-        currentScroll +
-        movePlatforms(contextLocal, platforms, person, person.stepY);
+        currentScroll + movePlatforms(contextLocal, platforms, person.stepY);
 
       score.currentScroll = currentScroll;
       person.currentScroll = currentScroll;
@@ -191,7 +190,6 @@ const GameItem = () => {
           currentMonster.posX + currentMonster.width
       ) {
         if (!currentMonster.isDead) {
-          console.log(currentMonster.isDead);
           currentMonster.isDead = true;
           currentMonster.death(monsters);
         }

@@ -1,5 +1,3 @@
-import { Character } from '../Character/Character';
-
 class Platform {
   readonly width: number = 120;
   readonly height: number = 20;
@@ -50,7 +48,6 @@ const createPlatforms = (
 const movePlatforms = (
   context: CanvasRenderingContext2D,
   platforms: Platform[],
-  Character: Character,
   stepDown: number
 ) => {
   const TOP_POINT_MAX = -200; // верняя граница, преодолевая которую, плиты удаляются

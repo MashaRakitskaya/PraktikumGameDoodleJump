@@ -14,7 +14,7 @@ export class AudioCustom {
 
   play = () => {
     this.isInit = true;
-    if (this.isPause) {
+    if (this.player && this.isPause) {
       this.resume();
     } else {
       this.player = new Audio(this.name);
@@ -24,17 +24,15 @@ export class AudioCustom {
   };
 
   resume = () => {
-    if (this.isPause) {
+    if (this.player && this.isPause) {
       this.isPause = false;
-      // @ts-ignore
       this.player.play();
     }
   };
 
   pause = () => {
-    if (!this.isPause && this.isInit) {
+    if (this.player && !this.isPause && this.isInit) {
       this.isPause = true;
-      // @ts-ignore
       this.player.pause();
     }
   };

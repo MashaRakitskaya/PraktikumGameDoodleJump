@@ -89,7 +89,6 @@ class Monster {
 const moveMonsters = (
   context: CanvasRenderingContext2D,
   monsters: Monster[],
-  Character: Character,
   stepDown: number
 ) => {
   monsters.forEach((monsterItem: Monster) => {
@@ -101,17 +100,17 @@ const moveMonsters = (
 };
 
 const checkMonsterOnPath = (
-  Character: Character,
+  character: Character,
   monsters: Monster[]
 ): Monster | undefined => {
   let isMeet = undefined;
   if (monsters.length > 0) {
     monsters.forEach((monsterItem) => {
       if (
-        Character.posY + Character.height >= monsterItem.posY &&
-        Character.posY <= monsterItem.posY + monsterItem.height &&
-        Character.posX + Character.width >= monsterItem.posX &&
-        Character.posX <= monsterItem.posX + monsterItem.width
+        character.posY + character.height >= monsterItem.posY &&
+        character.posY <= monsterItem.posY + monsterItem.height &&
+        character.posX + character.width >= monsterItem.posX &&
+        character.posX <= monsterItem.posX + monsterItem.width
       ) {
         isMeet = monsterItem;
       }

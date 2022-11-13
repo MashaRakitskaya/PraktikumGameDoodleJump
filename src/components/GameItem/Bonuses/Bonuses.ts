@@ -42,32 +42,31 @@ class Bonuses {
     );
   };
 
-  checkExpired = (currentScore: number, Character: Character) => {
+  checkExpired = (currentScore: number, character: Character) => {
     let isExpire = false;
     if (currentScore > this.expiredFromScore) {
-      this.resetSkillCharacter(Character);
+      this.resetSkillCharacter(character);
       isExpire = true;
     }
     return isExpire;
   };
 
-  updateSkillCharacter = (Character: Character, nemUrl: string) => {
-    this.copyCharacterGap = Character.characterGap;
-    this.copyImgUrl = Character.imgObj.src;
-    Character.imgObj.src = nemUrl;
-    Character.characterGap = Character.characterGap * 3;
+  updateSkillCharacter = (character: Character, nemUrl: string) => {
+    this.copyCharacterGap = character.characterGap;
+    this.copyImgUrl = character.imgObj.src;
+    character.imgObj.src = nemUrl;
+    character.characterGap = character.characterGap * 3;
   };
 
-  resetSkillCharacter = (Character: Character) => {
-    Character.characterGap = this.copyCharacterGap;
-    Character.imgObj.src = this.copyImgUrl;
+  resetSkillCharacter = (character: Character) => {
+    character.characterGap = this.copyCharacterGap;
+    character.imgObj.src = this.copyImgUrl;
   };
 }
 
 const moveBonuses = (
   context: CanvasRenderingContext2D,
   bonuses: Bonuses[],
-  Character: Character,
   stepDown: number
 ) => {
   bonuses.forEach((bonusesItem: Bonuses) => {
@@ -75,15 +74,15 @@ const moveBonuses = (
   });
 };
 
-const checkBonusesOnPath = (Character: Character, bonuses: Bonuses[]) => {
+const checkBonusesOnPath = (character: Character, bonuses: Bonuses[]) => {
   let isMeet = false;
   if (bonuses.length > 0) {
     bonuses.forEach((bonusesItem) => {
       if (
-        Character.posY + Character.height >= bonusesItem.posY &&
-        Character.posY <= bonusesItem.posY + bonusesItem.height &&
-        Character.posX + Character.width >= bonusesItem.posX &&
-        Character.posX <= bonusesItem.posX + bonusesItem.width
+        character.posY + character.height >= bonusesItem.posY &&
+        character.posY <= bonusesItem.posY + bonusesItem.height &&
+        character.posX + character.width >= bonusesItem.posX &&
+        character.posX <= bonusesItem.posX + bonusesItem.width
       ) {
         isMeet = true;
       }
