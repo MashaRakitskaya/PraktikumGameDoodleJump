@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useFetchUserQuery } from '../../services/auth';
-import { fetchUpdateUserTheme } from '../../utils/api/api';
+import { fetchUpdateUserTheme } from '../../utils/api/theme.api';
 
 export const ThemeContext = createContext({
   clientTheme: 'light',

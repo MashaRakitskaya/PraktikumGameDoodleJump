@@ -31,7 +31,7 @@ import Presentation from '../../pages/Presentation/Presentation';
 import Profile from '../../pages/ChangeData/UserProfile/Profile';
 import { ThemeContext } from '../../providers/ThemeProvider/ThemeProvider';
 import { useFetchUserQuery } from '../../services/auth';
-import { fetchFindOrCreateUserTheme } from '../../utils/api/api';
+import { fetchFindOrCreateUserTheme } from '../../utils/api/theme.api';
 
 const App = (serverAndClientData: {
   placeRendering: string;
