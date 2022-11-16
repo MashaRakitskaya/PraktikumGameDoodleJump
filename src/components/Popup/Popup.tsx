@@ -12,22 +12,35 @@ interface PopupProps {
   closePopup: () => void;
   title: string;
   children: React.ReactNode;
+  isOverlayAndCloseButton?: boolean;
 }
 
-const Popup = ({ isOpen, title, children, closePopup }: PopupProps) => {
+const Popup = ({
+  isOpen,
+  title,
+  children,
+  closePopup,
+  isOverlayAndCloseButton = true
+}: PopupProps) => {
   if (!isOpen) return null;
   return ReactDOM.createPortal(
-    <ModalWindow isOpen={isOpen} onClick={closePopup} role="popup">
+    <ModalWindow
+      isOpen={isOpen}
+      onClick={isOverlayAndCloseButton ? closePopup : undefined}
+      role="popup"
+    >
       <ModalWindowContent
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <ButtonClose
-          role="close"
-          type="button"
-          onClick={closePopup}
-        ></ButtonClose>
+        {isOverlayAndCloseButton && (
+          <ButtonClose
+            role="close"
+            type="button"
+            onClick={closePopup}
+          ></ButtonClose>
+        )}
         <ModalWindowTitle>{title}</ModalWindowTitle>
         {children}
       </ModalWindowContent>

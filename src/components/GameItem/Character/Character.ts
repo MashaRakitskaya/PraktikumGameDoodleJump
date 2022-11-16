@@ -1,33 +1,37 @@
+import { Platform } from '../Platform/Platform';
+import { AudioCustom } from '../Audio/AudioCustom';
+
 class Character {
-  private width: number = 80; // Ширина персонажа
-  private height: number = 110; // Высота персонажа
+  readonly width: number = 80; // Ширина персонажа
+  readonly height: number = 110; // Высота персонажа
   private upTime: NodeJS.Timer | undefined; // id счетчика setInterval при Jump
   private downTime: NodeJS.Timer | undefined; // id счетчика setInterval при Down
-  private characterGap: number = 300; // Максимально возможная высота прыжка персонажа
-  private currentPosition: number = 0; // Текущая позиция персонажа
-  private isJumpimg: boolean = true;
-  private stepY: number = 10; // Шаг первонажа при прыжке и падении
-  private stepX: number = 40; // Шаг первонажа при перемещении влево/вправо
+  private stepX: number = 10; // Шаг первонажа при перемещении влево/вправо
+  private goLeftTime: NodeJS.Timer | undefined;
+  private goRightTime: NodeJS.Timer | undefined;
+  private soundJump: AudioCustom = new AudioCustom('jump.mp3', 0.4);
+  private soundGameOver: AudioCustom = new AudioCustom('gameover.mp3');
   private decelerationStep: number = 15; //Шаг замедления. Использутеся для уменьшения скорости падения
-  private imgUrl: string = 'character.png';
-  private imgObj: HTMLImageElement = new Image();
+  public isGoLeft: boolean = false;
+  public isGoRight: boolean = false;
+  public isJumping: boolean = true;
+  public speedGame: number = 15.5; // Скорость отрисовки и дествий в игре
+  public imgObj: HTMLImageElement = new Image();
+  public stepY: number = 10; // Шаг первонажа при прыжке и падении
+  public characterGap: number = 300; // Максимально возможная высота прыжка персонажа
+  public imgUrl: string = 'character.png';
   public posX: number; // Позиция верхнего левого угла персонажа по X
   public posY: number; // Позиция верхнего левого угла персонажа по Y
   public ref: CanvasRenderingContext2D; // локальный контекст канваса для отрисовки
-  public score: number = 0; // Текущая Score игрока
-  public speedGame: number; // Скорость отрисовки и дествий в игре
+  public currentScroll: number = 0; // Текущая позиция персонажа
+  public isHaveBonus: boolean = false;
+  public updateSpeedGap: number = 2500; // каждые 1500 будет понемногу увеличиваться скорость игры
 
-  constructor(
-    context: CanvasRenderingContext2D,
-    posY: number,
-    speedGame: number,
-    posX?: number
-  ) {
+  constructor(context: CanvasRenderingContext2D, posY: number, posX?: number) {
     this.imgObj.src = this.imgUrl;
     this.posX = posX || (context.canvas.width + this.width) / 2;
     this.posY = posY;
     this.ref = context;
-    this.speedGame = speedGame;
   }
 
   draw = () => {
@@ -40,15 +44,14 @@ class Character {
     );
   };
 
-  jump = (platforms: any[]) => {
+  jump = (platforms: Platform[]) => {
     let currentGap = 0;
-    this.isJumpimg = true;
-
+    this.isJumping = true;
+    this.soundJump.play();
     clearInterval(this.downTime);
 
     this.upTime = setInterval(() => {
       this.posY -= this.stepY;
-
       currentGap += this.stepY;
 
       if (this.characterGap < currentGap) {
@@ -57,47 +60,62 @@ class Character {
     }, this.speedGame);
   };
 
-  down = (platforms: any[]) => {
-    this.isJumpimg = false;
+  down = (platforms: Platform[]) => {
+    this.isJumping = false;
 
     clearInterval(this.upTime);
 
     this.downTime = setInterval(() => {
       this.checkPlatformsUnder(platforms);
       this.posY += this.stepY;
-
-      if (this.posY > this.ref.canvas.height) {
-        this.gameOver();
-      }
     }, this.speedGame + this.decelerationStep);
   };
 
   moveLeft = () => {
-    this.posX -= this.stepX;
+    clearInterval(this.goRightTime);
+    if (!this.isGoLeft) {
+      this.goLeftTime = setInterval(() => {
+        this.posX -= this.stepX;
+        //Появление с противоположной стороны в случае захода за левый край экрана
+        if (this.posX < -(this.width / 2)) {
+          this.posX = this.posX + this.ref.canvas.width;
+        }
+      }, this.speedGame);
+      this.isGoLeft = true;
+    }
   };
 
   moveRight = () => {
-    this.posX += this.stepX;
+    clearInterval(this.goLeftTime);
+    if (!this.isGoRight) {
+      this.goRightTime = setInterval(() => {
+        this.posX += this.stepX;
+        //Появление с противоположной стороны в случае захода за правый край экрана
+        if (this.posX > this.ref.canvas.width + this.width / 2) {
+          this.posX = -(this.width / 2);
+        }
+      }, this.speedGame);
+      this.isGoRight = true;
+    }
   };
 
-  checkPlatformsUnder = (platforms: any[]) => {
+  checkPlatformsUnder = (platforms: Platform[]) => {
     platforms.forEach((platform) => {
       //Условие для определения "Под ногами" персонажа плиты для отталкивания
       if (
         //
         this.posY + this.height >= platform.bottom - 10 &&
         this.posY + this.height <= platform.bottom &&
-        this.posX + this.width / 3 >= platform.left &&
+        this.posX + (this.width / 3) * 2 >= platform.left &&
         this.posX + this.width / 3 <= platform.left + platform.width &&
-        !this.isJumpimg
+        !this.isJumping
       ) {
         this.jump(platforms);
-        this.score = this.currentPosition;
       }
     });
   };
 
-  controller = (event: KeyboardEvent) => {
+  controllerStart = (event: KeyboardEvent) => {
     if (event.key === 'ArrowLeft') {
       this.moveLeft();
     } else if (event.key === 'ArrowRight') {
@@ -105,12 +123,24 @@ class Character {
     }
   };
 
-  gameOver = () => {
+  controllerReset = () => {
+    clearInterval(this.goLeftTime);
+    clearInterval(this.goRightTime);
+    this.isGoRight = false;
+    this.isGoLeft = false;
+  };
+
+  stop = () => {
     clearInterval(this.upTime);
     clearInterval(this.downTime);
-    alert('Game Over! Congrats!');
-    alert('Your score: ' + this.score);
+    clearInterval(this.goLeftTime);
+    clearInterval(this.goRightTime);
+  };
+
+  gameOver = () => {
+    this.soundGameOver.play();
+    this.stop();
   };
 }
 
-export default Character;
+export { Character };

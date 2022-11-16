@@ -6,7 +6,7 @@ module.exports = {
     jest: true,
     node: true
   },
-  extends: ['react-app', 'plugin:react/recommended', 'eslint-config-prettier'],
+  extends: ['react-app', 'eslint-config-prettier'],
   plugins: ['@emotion', 'prettier', '@typescript-eslint'],
   rules: {
     'prettier/prettier': 'error',
