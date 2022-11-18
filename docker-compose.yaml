@@ -1,20 +1,20 @@
 version: '3'
 
 services:
-  server-app:
-    # Этим ключом мы скажем docker-compose, чтобы он собирал Dockerfile, который
-    # находится в папке рядом с docker-compose.yaml
-    build:
-      context: .
-    depends_on:
-      - postgres
-    env_file:
-      - ./.env
-    # Проброс порта так же, как в командной строке — на какой порт хоста какой порт контейнера
-    ports:
-      - '3000:3000'
-    networks:
-      - awesome
+  # server-app:
+  #   # Этим ключом мы скажем docker-compose, чтобы он собирал Dockerfile, который
+  #   # находится в папке рядом с docker-compose.yaml
+  #   build:
+  #     context: .
+  #   depends_on:
+  #     - postgres
+  #   env_file:
+  #     - ./.env
+  #   # Проброс порта так же, как в командной строке — на какой порт хоста какой порт контейнера
+  #   ports:
+  #     - '3000:3000'
+  #   networks:
+  #     - awesome
   postgres:
     image: postgres:12
     ports:

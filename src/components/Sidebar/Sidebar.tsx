@@ -13,8 +13,7 @@ import {
 import Button from '../Button/Button';
 // @ts-ignore
 import { SideNav, SideNavLink, ButtonExit } from './Sidebar.styles.ts';
-import Popup from '../Popup/Popup';
-import { TextField } from '../TextField';
+import TopicPopup from '../Popup/types/TopicPopup';
 
 const Sidebar = () => {
   const [isButtonAddTopic, setButtonAddTopic] = useState(false);
@@ -78,16 +77,8 @@ const Sidebar = () => {
           type="button"
         />
       )}
-      <Popup
-        isOpen={showPopup}
-        title={'Create topic'}
-        closePopup={() => togglePopup(false)}
-      >
-        <form>
-          <TextField labelName="title" name="title" type="title" />
-          <Button onClick={() => {}} buttonText="Create" type="submit" />
-        </form>
-      </Popup>
+      <TopicPopup showPopup={showPopup} togglePopup={togglePopup} />
+
       <Button
         marginTop="0px"
         onClick={playGame}

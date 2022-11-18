@@ -1,42 +1,33 @@
 import React from 'react';
+import { convertDateToLocaleString } from '../../utils/utils.ts';
 import {
   TopicItem,
-  TopicImg,
-  TitleMessageContainer,
-  Title,
   Message,
-  TimeNumberMessagesContainer,
-  Time,
-  NumberMessages
+  DateStyle,
+  Сreator,
+  DateAndСreatorContainer
 } from './ForumTopicItem.styles.js';
 
 interface ForumTopicItemProps {
-  forumTopicsItem: {
-    title: string;
-    lastMessage: string;
-    numberMessages: number;
-    time: string;
-    urlImg: string;
-  };
+  topic: string;
+  createdAt: string;
+  creator: string;
   onTopicClick: () => void;
 }
 
 const ForumTopicItem = ({
-  forumTopicsItem,
-  onTopicClick
+  onTopicClick,
+  topic,
+  createdAt,
+  creator
 }: ForumTopicItemProps) => {
-  const { urlImg, title, lastMessage, numberMessages, time } = forumTopicsItem;
   return (
     <TopicItem role="topic" onClick={onTopicClick}>
-      <TopicImg alt="topic img" src={urlImg}></TopicImg>
-      <TitleMessageContainer>
-        <Title>{title}</Title>
-        <Message>{lastMessage}</Message>
-      </TitleMessageContainer>
-      <TimeNumberMessagesContainer>
-        <Time>{time}</Time>
-        <NumberMessages>{numberMessages}</NumberMessages>
-      </TimeNumberMessagesContainer>
+      <Message>{topic}</Message>
+      <DateAndСreatorContainer>
+        <Сreator>{creator}</Сreator>
+        <DateStyle>{convertDateToLocaleString(createdAt)}</DateStyle>
+      </DateAndСreatorContainer>
     </TopicItem>
   );
 };

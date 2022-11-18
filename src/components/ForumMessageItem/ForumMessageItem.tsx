@@ -1,16 +1,41 @@
 import React from 'react';
-import { Message } from './ForumMessageItem.styles.ts';
+import {
+  MessageContainer,
+  Text,
+  Date,
+  Сreator,
+  TextDateСreatorContainer,
+  DateСreatorContainer
+} from './ForumMessageItem.styles';
 
 interface ForumMessageItemProps {
   messageText: string;
-  isOtherPeopleMessages?: boolean;
+  isThemeСreator: boolean;
+  creationDate: string;
+  creator: string;
+  children?: React.ReactNode;
 }
 
 const ForumMessageItem = ({
   messageText,
-  isOtherPeopleMessages = false
-}: ForumMessageItemProps) => (
-  <Message isOtherPeopleMessages={isOtherPeopleMessages}>{messageText}</Message>
-);
+  isThemeСreator = false,
+  creationDate,
+  children,
+  creator
+}: ForumMessageItemProps) => {
+  return (
+    <MessageContainer isThemeСreator={isThemeСreator}>
+      <TextDateСreatorContainer>
+        <Text>{messageText}</Text>
+        <DateСreatorContainer>
+          <Date>{creationDate}</Date>
+          <Сreator>{creator}</Сreator>
+        </DateСreatorContainer>
+      </TextDateСreatorContainer>
+
+      {children}
+    </MessageContainer>
+  );
+};
 
 export default ForumMessageItem;
