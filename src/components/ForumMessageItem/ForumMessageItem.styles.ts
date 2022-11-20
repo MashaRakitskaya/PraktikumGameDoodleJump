@@ -1,9 +1,20 @@
 import styled from '@emotion/styled';
+import like from '../../images/like.svg';
+import dislike from '../../images/dislike.svg';
+import dislikePressed from '../../images/dislikePressed.svg';
+import likePressed from '../../images/likePressed.svg';
 
 interface LiProps {
   isThemeСreator: boolean;
 }
 
+interface LikeProps {
+  isLiked?: boolean;
+}
+
+interface DislikeProps {
+  isDisliked?: boolean;
+}
 export const MessageContainer = styled.div<LiProps>`
   width: 100%;
   background-color: ${(props) =>
@@ -17,8 +28,7 @@ export const MessageContainer = styled.div<LiProps>`
   text-align: right;
   color: var(--secondary-font-color);
   margin-bottom: 20px;
-  align-self: ${(props) =>
-    props.isThemeСreator ? 'flex-end' : 'flex-start'}; ;
+  align-self: ${(props) => (props.isThemeСreator ? 'flex-end' : 'flex-start')};
 `;
 
 export const TextDateСreatorContainer = styled.div`
@@ -59,4 +69,58 @@ export const Сreator = styled.p`
   color: var(--secondary-font-color);
   margin: 0px;
   margin-top: 5px;
+`;
+
+export const EmotionsOfComment = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Like = styled.button<LikeProps>`
+  background: ${({ isLiked }) =>
+    isLiked ? `url(${likePressed}) no-repeat` : `url(${like}) no-repeat`};
+  cursor: pointer;
+  border: none;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  padding: 0;
+  margin: 5px;
+
+  &:hover {
+    opacity: var(--main-opacity);
+  }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Count = styled.p`
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: var(--secondary-font-color);
+  margin: 0px;
+  text-align: start;
+`;
+
+export const Dislike = styled.button<DislikeProps>`
+  background: ${({ isDisliked }) =>
+    isDisliked
+      ? `url(${dislikePressed}) no-repeat`
+      : `url(${dislike}) no-repeat`};
+  cursor: pointer;
+  border: none;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  padding: 0;
+  margin: 5px;
+
+  &:hover {
+    opacity: var(--main-opacity);
+  }
 `;

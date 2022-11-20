@@ -5,7 +5,12 @@ import {
   Date,
   Сreator,
   TextDateСreatorContainer,
-  DateСreatorContainer
+  DateСreatorContainer,
+  EmotionsOfComment,
+  Like,
+  Dislike,
+  Count,
+  Container
 } from './ForumMessageItem.styles';
 
 interface ForumMessageItemProps {
@@ -14,6 +19,11 @@ interface ForumMessageItemProps {
   creationDate: string;
   creator: string;
   children?: React.ReactNode;
+  onLikeClick: () => void;
+  onDislikeClick?: () => void;
+  isLiked: boolean;
+  topicData?: any;
+  isDisliked: boolean;
 }
 
 const ForumMessageItem = ({
@@ -21,11 +31,30 @@ const ForumMessageItem = ({
   isThemeСreator = false,
   creationDate,
   children,
-  creator
+  creator,
+  onLikeClick,
+  onDislikeClick,
+  isLiked,
+  topicData,
+  isDisliked
 }: ForumMessageItemProps) => {
   return (
     <MessageContainer isThemeСreator={isThemeСreator}>
       <TextDateСreatorContainer>
+        <EmotionsOfComment>
+          <Container>
+            <Like isLiked={isLiked} onClick={onLikeClick} type="button"></Like>
+            <Count>{topicData?.likes?.length}</Count>
+          </Container>
+          <Container>
+            <Dislike
+              isDisliked={isDisliked}
+              onClick={onDislikeClick}
+              type="button"
+            ></Dislike>
+            <Count>{topicData?.dislikes?.length}</Count>
+          </Container>
+        </EmotionsOfComment>
         <Text>{messageText}</Text>
         <DateСreatorContainer>
           <Date>{creationDate}</Date>

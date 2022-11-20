@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   Table
 } from 'sequelize-typescript';
+import { Dislikes, Likes } from './emotionsOfComments.model';
 import { TopicComment } from './topicComment.model';
 
 @Table({
@@ -36,4 +37,10 @@ export class Topic extends Model {
 
   @HasMany(() => TopicComment)
   comments: TopicComment[];
+
+  @HasMany(() => Likes)
+  likes: Likes[];
+
+  @HasMany(() => Dislikes)
+  dislikes: Dislikes[];
 }

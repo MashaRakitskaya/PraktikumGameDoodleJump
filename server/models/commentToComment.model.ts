@@ -5,10 +5,12 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table
 } from 'sequelize-typescript';
+import { Dislikes, Likes } from './emotionsOfComments.model';
 import { TopicComment } from './topicComment.model';
 
 @Table({
@@ -41,4 +43,10 @@ export class СommentToComment extends Model {
 
   @BelongsTo(() => TopicComment)
   topic_comment: TopicComment;
+
+  @HasMany(() => Likes)
+  likes: Likes[];
+
+  @HasMany(() => Dislikes)
+  dislikes: Dislikes[];
 }

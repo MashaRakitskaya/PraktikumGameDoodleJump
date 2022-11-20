@@ -5,6 +5,10 @@ import {
   IGetTopicResponse,
   ITopicCommentResponse
 } from '../../../models/IForum';
+import {
+  useFetchDeleteLikeTopicMutation,
+  useFetchPutLikeTopicMutation
+} from '../../../services/forum';
 import { convertDateToLocaleString } from '../../../utils/utils';
 import { topicCommentSchema } from '../../../utils/validationSchema/schemaTopic';
 import ForumMessageItem from '../../ForumMessageItem/ForumMessageItem';
@@ -17,14 +21,73 @@ interface ForumChatCommentsProps {
   topicData: IGetTopicResponse;
   userId: number;
   userSecondName: string;
+  fetchPutLikeTopic: Function;
+  fetchDeleteLikeTopic: Function;
+  fetchPutDislikeTopic: Function;
+  fetchDeleteDislikeTopic: Function;
 }
 
 const ForumChatComments = ({
   fetchPostCommentToComments,
   topicData,
   userId,
-  userSecondName
+  userSecondName,
+  fetchPutLikeTopic,
+  fetchDeleteLikeTopic,
+  fetchPutDislikeTopic,
+  fetchDeleteDislikeTopic
 }: ForumChatCommentsProps) => {
+  const isLiked = topicData?.likes.some(({ user_id }) => user_id === userId);
+  const isDisliked = topicData?.dislikes.some(
+    ({ user_id }) => user_id === userId
+  );
+
+  //@ts-ignore
+  const getLikeId = (topicData) => {
+    if (topicData && topicData.likes) {
+      return topicData?.likes.find(
+        (like: { user_id: number }) => like.user_id === userId
+      )?.id;
+    }
+  };
+
+  //@ts-ignore
+  const getDislikeId = (topicData) => {
+    if (topicData && topicData.dislikes) {
+      return topicData?.dislikes.find(
+        (dislike: { user_id: number }) => dislike.user_id === userId
+      )?.id;
+    }
+  };
+
+  const handleTopicLike = (
+    isLiked: boolean,
+    topicData: { id: number },
+    userId: number
+  ) => {
+    if (topicData && userId) {
+      isLiked
+        ? fetchDeleteLikeTopic({
+            id: getLikeId(topicData)
+          })
+        : fetchPutLikeTopic({ id: topicData.id, user_id: userId });
+    }
+  };
+
+  const handleTopicDislike = (
+    isDisliked: boolean,
+    topicData: { id: number },
+    userId: number
+  ) => {
+    if (topicData && userId) {
+      isDisliked
+        ? fetchDeleteDislikeTopic({
+            id: getDislikeId(topicData)
+          })
+        : fetchPutDislikeTopic({ id: topicData.id, user_id: userId });
+    }
+  };
+
   return (
     <MessagesList>
       {topicData && (
@@ -35,6 +98,13 @@ const ForumChatComments = ({
           //@ts-ignore
           creationDate={convertDateToLocaleString(topicData.createdAt)}
           creator={topicData.user_second_name}
+          onLikeClick={() => handleTopicLike(isLiked, topicData, userId)}
+          isLiked={isLiked}
+          topicData={topicData}
+          onDislikeClick={() =>
+            handleTopicDislike(isDisliked, topicData, userId)
+          }
+          isDisliked={isDisliked}
         />
       )}
       {topicData?.comments.map((item: ITopicCommentResponse) => (

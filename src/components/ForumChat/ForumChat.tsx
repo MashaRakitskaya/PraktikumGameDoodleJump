@@ -5,7 +5,13 @@ import { InputNames, InputType } from '../../constans/constans';
 import { IPostTopicCommentParams } from '../../models/IForum';
 import { useFetchUserQuery } from '../../services/auth';
 import { useFetchPostCommentToCommentsMutation } from '../../services/commentToComments';
-import { useFetchGetTopicMutation } from '../../services/forum';
+import {
+  useFetchDeleteDislikeTopicMutation,
+  useFetchDeleteLikeTopicMutation,
+  useFetchGetTopicMutation,
+  useFetchPutDislikeTopicMutation,
+  useFetchPutLikeTopicMutation
+} from '../../services/forum';
 import { useFetchPostTopicCommentMutation } from '../../services/topicComment';
 
 import { topicCommentSchema } from '../../utils/validationSchema/schemaTopic';
@@ -33,6 +39,16 @@ const ForumChat = () => {
     { isSuccess: isSuccessPostCommentToComments }
   ] = useFetchPostCommentToCommentsMutation();
 
+  const [fetchPutLikeTopic, { isSuccess: isSuccessPutLikeTopic }] =
+    useFetchPutLikeTopicMutation();
+  const [fetchDeleteLikeTopic, { isSuccess: isSuccessDeleteLikeTopic }] =
+    useFetchDeleteLikeTopicMutation();
+
+  const [fetchDeleteDislikeTopic, { isSuccess: isSuccessPutDislikeTopic }] =
+    useFetchDeleteDislikeTopicMutation();
+  const [fetchPutDislikeTopic, { isSuccess: isSuccessDeleteDislikeTopic }] =
+    useFetchPutDislikeTopicMutation();
+
   const formik = useFormik<IPostTopicCommentParams>({
     initialValues: {
       user_id: userId,
@@ -52,7 +68,14 @@ const ForumChat = () => {
 
   useEffect(() => {
     fetchGetTopic({ id: Number(topicId) });
-  }, [isSuccessPostTopic, isSuccessPostCommentToComments]);
+  }, [
+    isSuccessPostTopic,
+    isSuccessPostCommentToComments,
+    isSuccessPutLikeTopic,
+    isSuccessDeleteLikeTopic,
+    isSuccessPutDislikeTopic,
+    isSuccessDeleteDislikeTopic
+  ]);
 
   return (
     <ForumChatContainer role="forumChat">
@@ -66,6 +89,10 @@ const ForumChat = () => {
         userId={userId}
         //@ts-ignore
         userSecondName={userSecondName}
+        fetchPutLikeTopic={fetchPutLikeTopic}
+        fetchDeleteLikeTopic={fetchDeleteLikeTopic}
+        fetchPutDislikeTopic={fetchPutDislikeTopic}
+        fetchDeleteDislikeTopic={fetchDeleteDislikeTopic}
       />
       <MessageForm
         formik={formik}

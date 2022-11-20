@@ -11,6 +11,7 @@ import {
   Table
 } from 'sequelize-typescript';
 import { СommentToComment } from './commentToComment.model';
+import { Dislikes, Likes } from './emotionsOfComments.model';
 import { Topic } from './topic.model';
 
 @Table({
@@ -46,4 +47,10 @@ export class TopicComment extends Model {
 
   @HasMany(() => СommentToComment)
   comments: СommentToComment[];
+
+  @HasMany(() => Likes)
+  likes: Likes[];
+
+  @HasMany(() => Dislikes)
+  dislikes: Dislikes[];
 }

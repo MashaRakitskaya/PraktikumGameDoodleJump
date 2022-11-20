@@ -27,6 +27,14 @@ export const ENDPOINTS = {
     PATH: '/topics'
   },
 
+  LIKES: {
+    PATH: '/likes'
+  },
+
+  DISLIKES: {
+    PATH: '/dislikes'
+  },
+
   TOPICCOMMENT: {
     PATH: '/topic-comments'
   },
