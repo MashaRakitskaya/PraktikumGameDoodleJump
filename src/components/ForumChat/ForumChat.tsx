@@ -1,57 +1,137 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { messagesList } from '../../utils/constants';
-import ForumMessageItem from '../ForumMessageItem/ForumMessageItem';
+import { useFormik } from 'formik';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { InputNames, InputType } from '../../constans/constans';
+import { IPostTopicCommentParams } from '../../models/IForum';
+import { useFetchUserQuery } from '../../services/auth';
+import { useFetchPostCommentToCommentsMutation } from '../../services/commentToComments';
 import {
-  Back,
-  DeleteChatButton,
-  ForumChatContainer,
-  Header,
-  Img,
-  ImgTitleContainer,
-  Input,
-  MessageForm,
-  MessagesList,
-  SubmitButton,
-  Title
-} from './ForumChat.styles.js';
+  useFetchDeleteDislikeTopicMutation,
+  useFetchDeleteLikeTopicMutation,
+  useFetchGetTopicMutation,
+  useFetchPutDislikeTopicMutation,
+  useFetchPutLikeTopicMutation
+} from '../../services/forum';
+import {
+  useFetchDeleteDislikeTopicCommentMutation,
+  useFetchDeleteLikeTopicCommentMutation,
+  useFetchPostTopicCommentMutation,
+  useFetchPutDislikeTopicCommentMutation,
+  useFetchPutLikeTopicCommentMutation
+} from '../../services/topicComment';
+
+import { topicCommentSchema } from '../../utils/validationSchema/schemaTopic';
+import MessageForm from '../MessageForm/MessageForm';
+import { Back, ForumChatContainer, Header } from './ForumChat.styles.js';
+import ForumChatComments from './ForumChatComments/ForumChatComments';
 
 const ForumChat = () => {
   const navigate = useNavigate();
-  const userId = '25784';
+
+  const params = useParams();
+  const topicId = params.forumChatId;
+
+  const [fetchGetTopic, { data: topicData }] = useFetchGetTopicMutation();
+
+  const { data: user } = useFetchUserQuery();
+  const userId = user?.id;
+  const userSecondName = user?.second_name;
+
+  const [fetchPostTopicComment, { isSuccess: isSuccessPostTopic }] =
+    useFetchPostTopicCommentMutation();
+
+  const [
+    fetchPostCommentToComments,
+    { isSuccess: isSuccessPostCommentToComments }
+  ] = useFetchPostCommentToCommentsMutation();
+
+  const [fetchPutLikeTopic, { isSuccess: isSuccessPutLikeTopic }] =
+    useFetchPutLikeTopicMutation();
+  const [fetchDeleteLikeTopic, { isSuccess: isSuccessDeleteLikeTopic }] =
+    useFetchDeleteLikeTopicMutation();
+
+  const [fetchDeleteDislikeTopic, { isSuccess: isSuccessPutDislikeTopic }] =
+    useFetchDeleteDislikeTopicMutation();
+  const [fetchPutDislikeTopic, { isSuccess: isSuccessDeleteDislikeTopic }] =
+    useFetchPutDislikeTopicMutation();
+
+  const [
+    fetchDeleteDislikeTopicComment,
+    { isSuccess: isSuccessDeleteDislikeTopicComment }
+  ] = useFetchDeleteDislikeTopicCommentMutation();
+  const [
+    fetchDeleteLikeTopicComment,
+    { isSuccess: isSuccessDeleteLikeTopicComment }
+  ] = useFetchDeleteLikeTopicCommentMutation();
+  const [
+    fetchPutDislikeTopicComment,
+    { isSuccess: isSuccessPutDislikeTopicComment }
+  ] = useFetchPutDislikeTopicCommentMutation();
+
+  const [
+    fetchPutLikeTopicComment,
+    { isSuccess: isSuccessPutLikeTopicComment }
+  ] = useFetchPutLikeTopicCommentMutation();
+
+  const formik = useFormik<IPostTopicCommentParams>({
+    initialValues: {
+      user_id: userId,
+      comment: '',
+      topic_id: Number(topicId),
+      //@ts-ignore
+      user_second_name: userSecondName
+    },
+    validationSchema: topicCommentSchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: (values, { resetForm }) => {
+      fetchPostTopicComment(values);
+      resetForm();
+    }
+  });
+
+  useEffect(() => {
+    fetchGetTopic({ id: Number(topicId) });
+  }, [
+    isSuccessPostTopic,
+    isSuccessPostCommentToComments,
+    isSuccessPutLikeTopic,
+    isSuccessDeleteLikeTopic,
+    isSuccessPutDislikeTopic,
+    isSuccessDeleteDislikeTopic,
+    isSuccessDeleteDislikeTopicComment,
+    isSuccessDeleteLikeTopicComment,
+    isSuccessPutDislikeTopicComment,
+    isSuccessPutLikeTopicComment
+  ]);
+
   return (
     <ForumChatContainer role="forumChat">
       <Header>
         <Back type="button" onClick={() => navigate(-1)} role="buttonBack" />
-        <ImgTitleContainer>
-          <Img src="https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"></Img>
-          <Title>Elena List</Title>
-        </ImgTitleContainer>
-        <DeleteChatButton
-          onClick={() => window.confirm('Do you want to delete the topic?')}
-        >
-          delete chat
-        </DeleteChatButton>
       </Header>
-      <MessagesList>
-        {messagesList.map((item) => (
-          <ForumMessageItem
-            messageText={item.messageText}
-            isOtherPeopleMessages={item.user_id === userId ? false : true}
-            key={item.id}
-          />
-        ))}
-      </MessagesList>
-      <MessageForm>
-        <Input
-          name="message"
-          type="text"
-          placeholder="Write a message..."
-          autoComplete="off"
-        ></Input>
-
-        <SubmitButton type="submit"></SubmitButton>
-      </MessageForm>
+      <ForumChatComments
+        fetchPostCommentToComments={fetchPostCommentToComments}
+        //@ts-ignore
+        topicData={topicData}
+        userId={userId}
+        //@ts-ignore
+        userSecondName={userSecondName}
+        fetchPutLikeTopic={fetchPutLikeTopic}
+        fetchDeleteLikeTopic={fetchDeleteLikeTopic}
+        fetchPutDislikeTopic={fetchPutDislikeTopic}
+        fetchDeleteDislikeTopic={fetchDeleteDislikeTopic}
+        fetchDeleteDislikeTopicComment={fetchDeleteDislikeTopicComment}
+        fetchDeleteLikeTopicComment={fetchDeleteLikeTopicComment}
+        fetchPutDislikeTopicComment={fetchPutDislikeTopicComment}
+        fetchPutLikeTopicComment={fetchPutLikeTopicComment}
+      />
+      <MessageForm
+        formik={formik}
+        inputName={InputNames.comment}
+        inputType={InputType.text}
+        inputValue={formik.values.comment}
+      />
     </ForumChatContainer>
   );
 };

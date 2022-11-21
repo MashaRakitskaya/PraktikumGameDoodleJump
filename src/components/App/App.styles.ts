@@ -55,7 +55,9 @@ export const ThemeStyles = styled.div<ThemeStylesProps>`
   --border: ${({ SeverOrClientTheme }) =>
     SeverOrClientTheme ? ' 1px solid #212121' : '1px solid #000'};
   --border-focus: ${({ SeverOrClientTheme }) =>
-    SeverOrClientTheme ? '2px solid #212121' : '2px solid #000'};
+    SeverOrClientTheme
+      ? '1px solid rgba(33, 33, 33, 0.4)'
+      : '1px solid rgba(0, 0, 0, 0.4)'};
   --main-opacity: 0.8;
   --bg-opacity: rgb(0 0 0 / 50%);
 `;

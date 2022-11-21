@@ -1,78 +1,45 @@
 import styled from '@emotion/styled';
 
 export const TopicItem = styled.article`
-  height: 50px;
+  padding: 20px 20px 20px 30px;
   display: flex;
   flex-direction: row;
   background: transparent;
   align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
   &:hover {
     background: var(--secondary-bg-color);
     cursor: pointer;
   }
 `;
 
-export const TopicImg = styled.img`
-  width: 48px;
-  height: 50px;
-  border: 0;
-  border-radius: 2px;
-  border-color: transparent;
-  object-fit: cover;
+export const Message = styled.p`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--secondary-font-color);
+  margin: 0px;
+  margin-right: 5px;
+`;
+export const DateAndСreatorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  margin-left: auto;
+`;
+export const DateStyle = styled.time`
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: var(--secondary-font-color);
+  margin: 0px;
 `;
 
-export const TitleMessageContainer = styled.div`
-  margin-left: 14px;
-  margin-right: 15px;
-  width: 226px;
-  height: 34px;
-`;
-
-export const Title = styled.h3`
+export const Сreator = styled.p`
   font-weight: 700;
   font-size: 13px;
   line-height: 15px;
   color: var(--secondary-font-color);
   margin: 0px;
-  margin-bottom: 3px;
-`;
-
-export const Message = styled.p`
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
-  color: var(--secondary-font-color);
-  margin: 0px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-`;
-
-export const TimeNumberMessagesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: 20px;
-`;
-
-export const Time = styled.time`
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 10px;
-  color: var(--secondary-font-color);
-  margin: 0px;
-`;
-
-export const NumberMessages = styled.p`
-  font-weight: 400;
-  font-size: 8px;
-  line-height: 8px;
-  color: var(--secondary-font-color);
-  margin: 0px;
-  padding: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  background-color: var(--main-bg-color);
 `;

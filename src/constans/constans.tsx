@@ -31,6 +31,26 @@ export const ENDPOINTS = {
 
   USERTHEME: {
     PATH: '/user-theme'
+  },
+
+  TOPIC: {
+    PATH: '/topics'
+  },
+
+  LIKES: {
+    PATH: '/likes'
+  },
+
+  DISLIKES: {
+    PATH: '/dislikes'
+  },
+
+  TOPICCOMMENT: {
+    PATH: '/topic-comments'
+  },
+
+  COMMENTTOCOMMENTS: {
+    PATH: '/comment-to-comments'
   }
 };
 
@@ -44,7 +64,9 @@ export enum InputNames {
   firstName = 'first_name',
   secondName = 'second_name',
   email = 'email',
-  phone = 'phone'
+  phone = 'phone',
+  topic = 'topic',
+  comment = 'comment'
 }
 
 export enum InputLabel {
@@ -58,7 +80,9 @@ export enum InputLabel {
   displayName = 'display name',
   passwordAgain = 'password again',
   oldPassword = 'old Password',
-  newPassword = 'new Password'
+  newPassword = 'new Password',
+  topic = 'topic',
+  comment = 'comment'
 }
 
 export enum InputType {
