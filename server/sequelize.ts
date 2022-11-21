@@ -6,21 +6,12 @@ import { СommentToComment } from './models/commentToComment.model';
 import { Dislikes, Likes } from './models/emotionsOfComments.model';
 
 export function sequelize() {
-  // const sequelizeOptions: SequelizeOptions = {
-  //   host: 'postgres',
-  //   port: 5432,
-  //   username: process.env.POSTGRES_USER,
-  //   password: process.env.POSTGRES_PASSWORD,
-  //   database: process.env.POSTGRES_DB,
-  //   dialect: 'postgres'
-  // };
-
   const sequelizeOptions: SequelizeOptions = {
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
-    username: 'postgres',
-    password: 'newPassword',
-    database: 'my-db-name',
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
     dialect: 'postgres'
   };
 
