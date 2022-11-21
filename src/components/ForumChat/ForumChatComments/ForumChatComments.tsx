@@ -2,13 +2,17 @@ import { Formik } from 'formik';
 import React from 'react';
 import { InputNames, InputType } from '../../../constans/constans';
 import {
+  IDeleteDislikeTopicCommentParams,
+  IDeleteDislikeTopicParams,
+  IDeleteLikeTopicCommentParams,
+  IDeleteLikeTopicParams,
   IGetTopicResponse,
-  ITopicCommentResponse
+  IPostCommentToCommentsParams,
+  IPutDislikeTopicCommentParams,
+  IPutDislikeTopicParams,
+  IPutLikeTopicCommentParams,
+  IPutLikeTopicParams
 } from '../../../models/IForum';
-import {
-  useFetchDeleteLikeTopicMutation,
-  useFetchPutLikeTopicMutation
-} from '../../../services/forum';
 import { convertDateToLocaleString } from '../../../utils/utils';
 import { topicCommentSchema } from '../../../utils/validationSchema/schemaTopic';
 import ForumMessageItem from '../../ForumMessageItem/ForumMessageItem';
@@ -17,14 +21,20 @@ import { MessagesList } from '../ForumChat.styles.js';
 import ForumChatCommentToComments from '../ForumChatCommentToComments/ForumChatCommentToComments';
 
 interface ForumChatCommentsProps {
-  fetchPostCommentToComments: Function;
+  fetchPostCommentToComments: (arg: IPostCommentToCommentsParams) => void;
   topicData: IGetTopicResponse;
   userId: number;
   userSecondName: string;
-  fetchPutLikeTopic: Function;
-  fetchDeleteLikeTopic: Function;
-  fetchPutDislikeTopic: Function;
-  fetchDeleteDislikeTopic: Function;
+  fetchPutLikeTopic: (arg: IPutLikeTopicParams) => void;
+  fetchDeleteLikeTopic: (arg: IDeleteLikeTopicParams) => void;
+  fetchPutDislikeTopic: (arg: IPutDislikeTopicParams) => void;
+  fetchDeleteDislikeTopic: (arg: IDeleteDislikeTopicParams) => void;
+  fetchDeleteDislikeTopicComment: (
+    arg: IDeleteDislikeTopicCommentParams
+  ) => void;
+  fetchDeleteLikeTopicComment: (arg: IDeleteLikeTopicCommentParams) => void;
+  fetchPutDislikeTopicComment: (arg: IPutDislikeTopicCommentParams) => void;
+  fetchPutLikeTopicComment: (arg: IPutLikeTopicCommentParams) => void;
 }
 
 const ForumChatComments = ({
@@ -35,56 +45,67 @@ const ForumChatComments = ({
   fetchPutLikeTopic,
   fetchDeleteLikeTopic,
   fetchPutDislikeTopic,
-  fetchDeleteDislikeTopic
+  fetchDeleteDislikeTopic,
+  fetchDeleteDislikeTopicComment,
+  fetchDeleteLikeTopicComment,
+  fetchPutDislikeTopicComment,
+  fetchPutLikeTopicComment
 }: ForumChatCommentsProps) => {
-  const isLiked = topicData?.likes.some(({ user_id }) => user_id === userId);
-  const isDisliked = topicData?.dislikes.some(
-    ({ user_id }) => user_id === userId
-  );
+  const isLiked = (likes: { user_id: number }[]) => {
+    return likes.some(({ user_id }) => user_id === userId);
+  };
+
+  const isDisliked = (dislikes: { user_id: number }[]) => {
+    return dislikes.some(({ user_id }) => user_id === userId);
+  };
 
   //@ts-ignore
-  const getLikeId = (topicData) => {
-    if (topicData && topicData.likes) {
-      return topicData?.likes.find(
+  const getLikeId = (data) => {
+    if (data && data.likes) {
+      return data?.likes.find(
         (like: { user_id: number }) => like.user_id === userId
       )?.id;
     }
   };
 
   //@ts-ignore
-  const getDislikeId = (topicData) => {
-    if (topicData && topicData.dislikes) {
-      return topicData?.dislikes.find(
+  const getDislikeId = (data) => {
+    if (data && data.dislikes) {
+      return data?.dislikes.find(
         (dislike: { user_id: number }) => dislike.user_id === userId
       )?.id;
     }
   };
 
-  const handleTopicLike = (
+  const handleLike = (
     isLiked: boolean,
-    topicData: { id: number },
-    userId: number
+    data: { id: number },
+    userId: number,
+    fetchDeleteLike: (arg: { id: number }) => void,
+    fetchPutLike: (arg: { id: number; user_id: number }) => void
   ) => {
-    if (topicData && userId) {
+    if (data && userId) {
       isLiked
-        ? fetchDeleteLikeTopic({
-            id: getLikeId(topicData)
+        ? fetchDeleteLike({
+            id: getLikeId(data)
           })
-        : fetchPutLikeTopic({ id: topicData.id, user_id: userId });
+        : fetchPutLike({ id: data.id, user_id: userId });
     }
   };
 
-  const handleTopicDislike = (
+  const handleDislike = (
     isDisliked: boolean,
-    topicData: { id: number },
-    userId: number
+    data: { id: number },
+    userId: number,
+    fetchDeleteDislik: (arg: { id: number }) => void,
+    fetchPutDislike: (arg: { id: number; user_id: number }) => void
   ) => {
-    if (topicData && userId) {
+    if (data && userId) {
       isDisliked
-        ? fetchDeleteDislikeTopic({
-            id: getDislikeId(topicData)
+        ? fetchDeleteDislik({
+            id: getDislikeId(data)
           })
-        : fetchPutDislikeTopic({ id: topicData.id, user_id: userId });
+        : fetchPutDislike({ id: data.id, user_id: userId });
     }
   };
 
@@ -98,16 +119,34 @@ const ForumChatComments = ({
           //@ts-ignore
           creationDate={convertDateToLocaleString(topicData.createdAt)}
           creator={topicData.user_second_name}
-          onLikeClick={() => handleTopicLike(isLiked, topicData, userId)}
-          isLiked={isLiked}
-          topicData={topicData}
-          onDislikeClick={() =>
-            handleTopicDislike(isDisliked, topicData, userId)
+          onLikeClick={() =>
+            handleLike(
+              isLiked(topicData?.likes),
+              topicData,
+              userId,
+              //@ts-ignore
+              fetchDeleteLikeTopic,
+              fetchPutLikeTopic
+            )
           }
-          isDisliked={isDisliked}
+          isLiked={isLiked(topicData?.likes)}
+          likes={topicData.likes}
+          dislikes={topicData.dislikes}
+          onDislikeClick={() =>
+            handleDislike(
+              isDisliked(topicData?.dislikes),
+              topicData,
+              userId,
+              //@ts-ignore
+              fetchDeleteDislikeTopic,
+              fetchPutDislikeTopic
+            )
+          }
+          isDisliked={isDisliked(topicData?.dislikes)}
         />
       )}
-      {topicData?.comments.map((item: ITopicCommentResponse) => (
+
+      {topicData?.comments.map((item: any) => (
         <ForumMessageItem
           messageText={item.comment}
           isThemeСreator={false}
@@ -116,6 +155,28 @@ const ForumChatComments = ({
           key={item.id}
           isCommentator={true}
           creator={item.user_second_name}
+          onLikeClick={() =>
+            handleLike(
+              isLiked(item?.likes),
+              item,
+              userId,
+              fetchDeleteLikeTopicComment,
+              fetchPutLikeTopicComment
+            )
+          }
+          isLiked={isLiked(item?.likes)}
+          likes={item.likes}
+          dislikes={item.dislikes}
+          onDislikeClick={() =>
+            handleDislike(
+              isDisliked(item?.dislikes),
+              item,
+              userId,
+              fetchDeleteDislikeTopicComment,
+              fetchPutDislikeTopicComment
+            )
+          }
+          isDisliked={isDisliked(item?.dislikes)}
         >
           {
             <>

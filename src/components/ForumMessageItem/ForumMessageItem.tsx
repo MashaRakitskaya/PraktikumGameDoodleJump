@@ -22,8 +22,21 @@ interface ForumMessageItemProps {
   onLikeClick: () => void;
   onDislikeClick?: () => void;
   isLiked: boolean;
-  topicData?: any;
   isDisliked: boolean;
+  likes: {
+    comment_to_comment_id: number | null;
+    id: number;
+    topic_comment_id: number | null;
+    topic_id: number | null;
+    user_id: number;
+  }[];
+  dislikes: {
+    comment_to_comment_id: number | null;
+    id: number;
+    topic_comment_id: number | null;
+    topic_id: number | null;
+    user_id: number;
+  }[];
 }
 
 const ForumMessageItem = ({
@@ -35,7 +48,8 @@ const ForumMessageItem = ({
   onLikeClick,
   onDislikeClick,
   isLiked,
-  topicData,
+  likes,
+  dislikes,
   isDisliked
 }: ForumMessageItemProps) => {
   return (
@@ -44,7 +58,7 @@ const ForumMessageItem = ({
         <EmotionsOfComment>
           <Container>
             <Like isLiked={isLiked} onClick={onLikeClick} type="button"></Like>
-            <Count>{topicData?.likes?.length}</Count>
+            <Count>{likes?.length}</Count>
           </Container>
           <Container>
             <Dislike
@@ -52,7 +66,7 @@ const ForumMessageItem = ({
               onClick={onDislikeClick}
               type="button"
             ></Dislike>
-            <Count>{topicData?.dislikes?.length}</Count>
+            <Count>{dislikes?.length}</Count>
           </Container>
         </EmotionsOfComment>
         <Text>{messageText}</Text>
