@@ -1,9 +1,10 @@
 import fetch from 'node-fetch';
+import { ENDPOINTS } from '../constants';
 
 export const fetchGetUserTheme = async (user) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/user-theme/${user.id}`,
+      `${ENDPOINTS.LOCALHOST}${ENDPOINTS.USERTHEME.PATH}/${user.id}`,
       {
         method: 'GET',
         headers: {

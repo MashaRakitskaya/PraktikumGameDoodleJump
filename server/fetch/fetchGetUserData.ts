@@ -1,13 +1,17 @@
 import fetch from 'node-fetch';
+import { ENDPOINTS } from '../constants';
 
 export const fetchGetUserData = async (cookies) => {
   try {
-    const response = await fetch(`https://ya-praktikum.tech/api/v2/auth/user`, {
-      method: 'GET',
-      headers: {
-        Cookie: `authCookie=${cookies.authCookie}; uuid=${cookies.uuid}`
+    const response = await fetch(
+      `${ENDPOINTS.YANDEX}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
+      {
+        method: 'GET',
+        headers: {
+          Cookie: `authCookie=${cookies.authCookie}; uuid=${cookies.uuid}`
+        }
       }
-    });
+    );
     if (!response.ok) {
       const message = `An error ${response}`;
       throw new Error(message);

@@ -1,9 +1,5 @@
 import express from 'express';
-import {
-  createProxyMiddleware,
-  responseInterceptor,
-  fixRequestBody
-} from 'http-proxy-middleware';
+import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -11,11 +7,12 @@ import { renderMiddleware } from './renderMidlware';
 import router from './routes/index';
 import { initHot } from './hot.js';
 import { sequelize } from './sequelize';
+import { ENDPOINTS } from './constants';
 
 sequelize();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 //@ts-ignore
 app.use(cookieParser());
@@ -23,9 +20,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
-  '/yandex-api',
+  `${ENDPOINTS.YANDEXAPI.PATH}`,
   createProxyMiddleware({
-    target: 'https://ya-praktikum.tech/api/v2',
+    target: `${ENDPOINTS.YANDEX}`,
     changeOrigin: true,
     pathRewrite: {
       '^/yandex-api': ''

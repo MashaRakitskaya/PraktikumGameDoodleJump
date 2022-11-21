@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { ENDPOINTS } from '../../constans/constans';
 import { useFetchUserQuery } from '../../services/auth';
 import { fetchUpdateUserTheme } from '../../utils/api/theme.api';
 
@@ -50,7 +51,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     setTheme(theme);
     addThemeToCache({
       cacheName: 'isTheme',
-      url: 'http://localhost:3000',
+      url: `${ENDPOINTS.LOCALHOST}`,
       response: { nameTheme: theme }
     });
   };

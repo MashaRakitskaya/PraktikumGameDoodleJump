@@ -1,7 +1,5 @@
 export const ENDPOINTS = {
-  // YANDEX: 'https://ya-praktikum.tech/api/v2',
   YANDEX: 'http://localhost:3000/yandex-api',
-  // RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   RESOURCES: 'http://localhost:3000/yandex-api/resources',
   LOCALHOST: 'http://localhost:3000',
 

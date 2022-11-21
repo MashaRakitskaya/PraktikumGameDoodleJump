@@ -1,3 +1,5 @@
+import { ENDPOINTS } from '../../constans/constans';
+
 interface UserThemeProps {
   userId: number;
   theme: string;
@@ -7,7 +9,7 @@ export const fetchFindOrCreateUserTheme = ({
   userId,
   theme
 }: UserThemeProps) => {
-  fetch(`http://localhost:3000/user-theme/${userId}`, {
+  fetch(`${ENDPOINTS.LOCALHOST}${ENDPOINTS.USERTHEME.PATH}/${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -25,7 +27,7 @@ export const fetchFindOrCreateUserTheme = ({
 };
 
 export const fetchUpdateUserTheme = ({ userId, theme }: UserThemeProps) => {
-  fetch(`http://localhost:3000/user-theme/${userId}`, {
+  fetch(`${ENDPOINTS.LOCALHOST}${ENDPOINTS.USERTHEME.PATH}/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'

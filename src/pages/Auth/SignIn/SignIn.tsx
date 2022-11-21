@@ -37,9 +37,9 @@ const SignIn = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  if (isError) {
-    return <Error />;
-  }
+  // if (isError) {
+  //   return <Error />;
+  // }
   return (
     <AuthPagesWrapper>
       <form onSubmit={formik.handleSubmit}>
