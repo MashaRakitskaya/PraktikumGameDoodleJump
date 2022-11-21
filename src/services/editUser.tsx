@@ -1,5 +1,7 @@
 import { ENDPOINTS } from '../constans/constans';
 import {
+  IEditUserPasswordParams,
+  IEditUserPasswordResponse,
   IEditUserProfileParams,
   IEditUserProfileParamsResponse
 } from '../models/IUser';
@@ -20,6 +22,17 @@ export const userAPI = baseApi
         }),
         invalidatesTags: ['User']
       }),
+      editPassword: build.mutation<
+        IEditUserPasswordResponse,
+        IEditUserPasswordParams
+      >({
+        query: (body) => ({
+          url: `${ENDPOINTS.YANDEX}${ENDPOINTS.USER.PATH}${ENDPOINTS.USER.PASSWORD}`,
+          method: 'PUT',
+          body
+        }),
+        invalidatesTags: ['User']
+      }),
       editAvatar: build.mutation<IEditUserProfileParamsResponse, FormData>({
         query: (body) => ({
           url: `${ENDPOINTS.YANDEX}${ENDPOINTS.USER.PATH}${ENDPOINTS.USER.PROFILE}${ENDPOINTS.USER.AVATAR}`,
@@ -31,4 +44,8 @@ export const userAPI = baseApi
     })
   });
 
-export const { useEditProfileMutation, useEditAvatarMutation } = userAPI;
+export const {
+  useEditProfileMutation,
+  useEditPasswordMutation,
+  useEditAvatarMutation
+} = userAPI;

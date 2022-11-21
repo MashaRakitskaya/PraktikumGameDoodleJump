@@ -19,7 +19,8 @@ export const ENDPOINTS = {
   USER: {
     PATH: '/user',
     PROFILE: '/profile',
-    AVATAR: '/avatar'
+    AVATAR: '/avatar',
+    PASSWORD: '/password'
   },
 
   LEADERBOARD: {
@@ -36,6 +37,8 @@ export const ENDPOINTS = {
 export enum InputNames {
   login = 'login',
   password = 'password',
+  oldPassword = 'oldPassword',
+  newPassword = 'newPassword',
   passwordAgain = 'password_again',
   displayName = 'display_name',
   firstName = 'first_name',
@@ -53,7 +56,9 @@ export enum InputLabel {
   phone = 'phone number',
   file = 'file',
   displayName = 'display name',
-  passwordAgain = 'password again'
+  passwordAgain = 'password again',
+  oldPassword = 'old Password',
+  newPassword = 'new Password'
 }
 
 export enum InputType {

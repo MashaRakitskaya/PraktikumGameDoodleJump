@@ -5,12 +5,6 @@ interface IEditUserProfileGeneralParams {
   [InputNames.secondName]: string;
   [InputNames.displayName]: string;
 }
-export interface IEditUserProfileForumParams
-  extends Partial<IEditUserProfileGeneralParams> {
-  id: number;
-  score?: number;
-  theme?: string;
-}
 
 export interface IEditUserProfileParams extends IEditUserProfileGeneralParams {
   [InputNames.login]: string;
@@ -21,4 +15,13 @@ export interface IEditUserProfileParams extends IEditUserProfileGeneralParams {
 export interface IEditUserProfileParamsResponse extends IEditUserProfileParams {
   id?: number;
   avatar?: string;
+}
+
+export interface IEditUserPasswordParams {
+  [InputNames.oldPassword]: string;
+  [InputNames.newPassword]: string;
+}
+export interface IEditUserPasswordResponse {
+  oldPassword?: string;
+  newPassword?: string;
 }
