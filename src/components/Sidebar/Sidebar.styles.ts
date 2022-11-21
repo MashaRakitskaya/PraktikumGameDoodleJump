@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+interface SideNavLinkProps {
+  isActive: boolean;
+}
 
 export const SideNav = styled.nav`
   display: flex;
@@ -11,16 +15,12 @@ export const SideNav = styled.nav`
   gap: 24px;
 `;
 
-export const SideNavLink = styled(NavLink)`
-  font-weight: 400;
+export const SideNavLink = styled(Link)<SideNavLinkProps>`
+  font-weight: ${(props) => (props.isActive ? '700' : '400')};
   font-size: 20px;
   line-height: 23px;
-  text-decoration: none;
   color: var(--main-font-color);
-  &.active {
-    font-weight: 700;
-    text-decoration: underline;
-  }
+  text-decoration: ${(props) => (props.isActive ? 'underline' : 'none')};
   &:hover {
     opacity: var(--main-opacity);
     cursor: pointer;

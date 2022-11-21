@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import LeaderboardItem from '../../components/LeaderboardItem/LeaderboardItem';
 import { useFetchTeamLeaderboardMutation } from '../../services/leaderboard';
-import { LeaderboardContainer, LeaderboardList } from './Leaderboard.styles';
+import { LeaderboardContainer, LeaderboardList } from './Leaderboard.styles.js';
 
 const Leaderboard = () => {
   const [fetchLeaderboard, { data = [] }] = useFetchTeamLeaderboardMutation();

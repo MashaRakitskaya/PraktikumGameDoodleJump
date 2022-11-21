@@ -1,5 +1,5 @@
 import React from 'react';
-import { Message } from './ForumMessageItem.styles';
+import { Message } from './ForumMessageItem.styles.ts';
 
 interface ForumMessageItemProps {
   messageText: string;

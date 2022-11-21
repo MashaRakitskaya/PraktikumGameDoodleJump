@@ -14,7 +14,7 @@ import {
   MessagesList,
   SubmitButton,
   Title
-} from './ForumChat.styles';
+} from './ForumChat.styles.js';
 
 const ForumChat = () => {
   const navigate = useNavigate();

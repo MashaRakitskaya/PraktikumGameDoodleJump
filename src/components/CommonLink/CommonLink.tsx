@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyledLink } from './CommonLink.styles';
+import { StyledLink } from './CommonLink.styles.tsx';
 
 interface ICommonLinkProps {
   linkText: string;
-  onCLick?: () => void;
+  to: string;
 }
-const CommonLink = ({ linkText, onCLick }: ICommonLinkProps) => {
-  return <StyledLink onClick={onCLick}>{linkText}</StyledLink>;
+const CommonLink = ({ linkText, to }: ICommonLinkProps) => {
+  return <StyledLink to={to}>{linkText}</StyledLink>;
 };
 
 export default CommonLink;

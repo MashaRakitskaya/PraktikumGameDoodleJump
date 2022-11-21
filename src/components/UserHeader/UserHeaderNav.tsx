@@ -1,12 +1,15 @@
 import React from 'react';
+import { useLocation } from 'react-router';
 import {
   PROFILE_SETTING_PATH,
   PASSWORD_SETTING_PATH
 } from '../../utils/constants';
-import { SideNavLink } from '../Sidebar/Sidebar.styles';
-import { UserHeaderNavWrapper } from './UserHeaderNab.styles';
+// @ts-ignore
+import { SideNavLink } from '../Sidebar/Sidebar.styles.ts';
+import { UserHeaderNavWrapper } from './UserHeaderNab.styles.js';
 
-function UserHeaderNav() {
+const UserHeaderNav = () => {
+  const location = useLocation();
   const settingsPath: { title: string; path: string }[] = [
     { title: 'Сhange user data', path: PROFILE_SETTING_PATH },
     { title: 'Change password', path: PASSWORD_SETTING_PATH }
@@ -15,10 +18,8 @@ function UserHeaderNav() {
     <UserHeaderNavWrapper>
       {settingsPath.map((el) => (
         <SideNavLink
+          isActive={location.pathname === el.path}
           key={el.path}
-          className={({ isActive }) =>
-            isActive ? 'sidenav-link-active' : 'sidenav-link'
-          }
           to={el.path}
         >
           {el.title}
@@ -26,5 +27,5 @@ function UserHeaderNav() {
       ))}
     </UserHeaderNavWrapper>
   );
-}
+};
 export default UserHeaderNav;

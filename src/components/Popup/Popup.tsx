@@ -45,7 +45,7 @@ const Popup = ({
         {children}
       </ModalWindowContent>
     </ModalWindow>,
-    document.body
+    document.getElementById('app-root') as HTMLElement
   );
 };
 

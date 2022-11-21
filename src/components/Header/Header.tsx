@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledHeader } from './HeaderStyles';
+import { StyledHeader } from './Header.styles.js';
 
 interface IHeaderProps {
   title: string;

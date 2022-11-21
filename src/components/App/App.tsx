@@ -1,9 +1,9 @@
 import React from 'react';
-import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import SignIn from '../../pages/Auth/SignIn/SignIn';
 import SignUp from '../../pages/Auth/SignUp/SignUp';
 import Leaderboard from '../../pages/Leaderboard/Leaderboard';
-import { AppWrapper, AppWrapperContainer } from './app.styles';
+import { AppWrapper, AppWrapperContainer, CommonStyles } from './App.styles.js';
 import {
   PROFILE_SETTING_PATH,
   SIGNIN_PATH,
@@ -22,13 +22,12 @@ import { withErrorBoundary } from 'react-error-boundary';
 import ProtectedRoute from './ProtectedRoute';
 import ChangePassword from '../../pages/ChangeData/ChangePassword/ChangePassword';
 import Presentation from '../../pages/Presentation/Presentation';
-
 import Profile from '../../pages/ChangeData/UserProfile/Profile';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <AppWrapper>
+    <CommonStyles>
+      <AppWrapper id="app-root">
         <AppWrapperContainer>
           <Routes>
             <Route path={SIGNIN_PATH} element={<SignIn />} />
@@ -54,13 +53,15 @@ const App = () => {
             <Route path={PRESENTATION_PATH} element={<ProtectedRoute />}>
               <Route index element={<Presentation />} />
             </Route>
-            <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} />
+
+            {/* <Route path="*" element={<Navigate to={SIGNIN_PATH} replace />} /> */}
           </Routes>
         </AppWrapperContainer>
       </AppWrapper>
-    </BrowserRouter>
+    </CommonStyles>
   );
 };
+
 export default withErrorBoundary(App, {
   fallback: <>Что-то пошло не так.</>
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Label, Span } from './Field.styles';
+import { Input, Label, Span } from './Field.styles.js';
 
 interface InputProps {
   name: string;

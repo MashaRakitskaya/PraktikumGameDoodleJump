@@ -1,20 +1,27 @@
 import React from 'react';
 
 interface CanvasInitParam {
+  isDocumentLoaded: boolean;
   draw: Function;
   height: number;
   width: number;
   play: boolean;
 }
 
-const Canvas = ({ draw, play, height, width }: CanvasInitParam) => {
+const Canvas = ({
+  isDocumentLoaded,
+  draw,
+  height,
+  width,
+  play
+}: CanvasInitParam) => {
   const canvas = React.useRef();
   React.useEffect(() => {
     // @ts-ignore
     const context = canvas.current.getContext('2d');
-    draw(context);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [play]);
+
+    if (isDocumentLoaded) draw(context);
+  }, [isDocumentLoaded, play]);
 
   // @ts-ignore
   return <canvas id="Game" ref={canvas} height={height} width={width}></canvas>;

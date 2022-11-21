@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { GameWrapper, ScoreWrapper } from './GameItem.styles';
+import { GameWrapper, ScoreWrapper } from './GameItem.styles.js';
 import Canvas from './Canvas/Canvas';
 import { Character } from './Character/Character';
 import { Score } from './utils/Score';
 import { createPlatforms, movePlatforms, Platform } from './Platform/Platform';
 import { Monster, moveMonsters, checkMonsterOnPath } from './Monsters/Monster';
-import { fullScreenInit, fullScreenCancel } from './utils/FullScreen';
+import { fullScreenInit, fullScreenCancel } from './utils/FullScreen.js';
 import Popup from '../Popup/Popup';
 import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
@@ -25,6 +25,7 @@ const GameItem = () => {
   let [isGameInit, setIsGameInit] = useState(false);
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
+  const [isDocumentLoaded, setDocumentLoaded] = useState(false);
   let platformCount = 15; // Общее количество платформ на сцену
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
@@ -41,10 +42,11 @@ const GameItem = () => {
   };
 
   useEffect(() => {
+    setDocumentLoaded(true);
     return () => {
       cancelAnimationFrame(intervalGameTimer);
     };
-  }, []);
+  }, [isDocumentLoaded]);
 
   const clearAnimation = () => {
     cancelAnimationFrame(intervalGameTimer);
@@ -281,60 +283,66 @@ const GameItem = () => {
   return (
     <GameWrapper>
       <Canvas
+        isDocumentLoaded={isDocumentLoaded}
         draw={draw}
         play={isGameInit && !isGameOver}
-        height={gameHeight}
-        width={gameWidth}
+        height={isDocumentLoaded ? gameHeight : 0}
+        width={isDocumentLoaded ? gameWidth : 0} //500 - пока что произвольная величина
       />
-      <Popup
-        isOpen={isGameOver}
-        title={'Конец игры!'}
-        closePopup={closePopup}
-        isOverlayAndCloseButton={false}
-      >
-        <div>
-          <ScoreWrapper>{displayScore()}</ScoreWrapper>
-          <Button
-            onClick={() => {
-              setIsGameOver(false);
-            }}
-            buttonText={'Начать игру!'}
-            type={'button'}
-          />
-          <Button
-            onClick={() => {
-              document.location.href = LEADERBOARD_PATH;
-            }}
-            buttonText={'Выйти!'}
-            type={'button'}
-          />
-        </div>
-      </Popup>
-      <Popup
-        isOpen={!isGameInit}
-        title={'Doodlik Aka start!'}
-        closePopup={closePopup}
-        isOverlayAndCloseButton={false}
-      >
-        <div>
-          <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
-          <Button
-            onClick={() => {
-              setIsGameOver(false);
-              setIsGameInit(true);
-            }}
-            buttonText={'Начать игру!'}
-            type={'button'}
-          />
-          <Button
-            onClick={() => {
-              document.location.href = LEADERBOARD_PATH;
-            }}
-            buttonText={'Выйти!'}
-            type={'button'}
-          />
-        </div>
-      </Popup>
+
+      {isDocumentLoaded && (
+        <>
+          <Popup
+            isOpen={isGameOver}
+            title={'Конец игры!'}
+            closePopup={closePopup}
+            isOverlayAndCloseButton={false}
+          >
+            <div>
+              <ScoreWrapper>{displayScore()}</ScoreWrapper>
+              <Button
+                onClick={() => {
+                  setIsGameOver(false);
+                }}
+                buttonText={'Начать игру!'}
+                type={'button'}
+              />
+              <Button
+                onClick={() => {
+                  document.location.href = LEADERBOARD_PATH;
+                }}
+                buttonText={'Выйти!'}
+                type={'button'}
+              />
+            </div>
+          </Popup>
+          <Popup
+            isOpen={!isGameInit}
+            title={'Doodlik Aka start!'}
+            closePopup={closePopup}
+            isOverlayAndCloseButton={false}
+          >
+            <div>
+              <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
+              <Button
+                onClick={() => {
+                  setIsGameOver(false);
+                  setIsGameInit(true);
+                }}
+                buttonText={'Начать игру!'}
+                type={'button'}
+              />
+              <Button
+                onClick={() => {
+                  document.location.href = LEADERBOARD_PATH;
+                }}
+                buttonText={'Выйти!'}
+                type={'button'}
+              />
+            </div>
+          </Popup>
+        </>
+      )}
     </GameWrapper>
   );
 };

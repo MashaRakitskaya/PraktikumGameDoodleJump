@@ -1,4 +1,5 @@
-export const SIGNIN_PATH = '/signin';
+import dogImg from '../images/photoDog.png';
+export const SIGNIN_PATH = '/';
 export const SIGNUP_PATH = '/signup';
 export const PROFILE_PATH = '/profile';
 export const PROFILE_SETTING_PATH = '/profile-setting';

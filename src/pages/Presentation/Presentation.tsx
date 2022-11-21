@@ -6,7 +6,7 @@ import {
   Img,
   Text,
   Item
-} from './Presentation.styles';
+} from './Presentation.styles.js';
 
 const Presentation = () => {
   return (

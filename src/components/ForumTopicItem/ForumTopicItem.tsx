@@ -8,7 +8,7 @@ import {
   TimeNumberMessagesContainer,
   Time,
   NumberMessages
-} from './ForumTopicItem.styles';
+} from './ForumTopicItem.styles.js';
 
 interface ForumTopicItemProps {
   forumTopicsItem: {
