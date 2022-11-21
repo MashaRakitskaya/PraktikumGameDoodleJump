@@ -14,7 +14,6 @@ module.exports = {
     path: path.join(__dirname, '../build'),
     libraryTarget: 'commonjs2'
   },
-  //  externalsPresets: { node: true },
   //externals: [webpackNodeExternals()],  запрещают вэбпаку лезть в нодмодули и компилировать их
   externalsPresets: { node: true },
   externals: [webpackNodeExternals()],

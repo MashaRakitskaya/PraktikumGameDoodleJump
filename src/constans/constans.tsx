@@ -4,8 +4,9 @@ export const LEADER_BOARD = {
 };
 
 export const ENDPOINTS = {
-  YANDEX: 'https://ya-praktikum.tech/api/v2',
-  RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
+  YANDEX: 'http://localhost:3000/yandex-api',
+  RESOURCES: 'http://localhost:3000/yandex-api/resources',
+  LOCALHOST: 'http://localhost:3000',
 
   AUTH: {
     PATH: '/auth',
@@ -25,6 +26,10 @@ export const ENDPOINTS = {
     PATH: '/leaderboard',
     TEAM: '/dudlers',
     ALL: '/all'
+  },
+
+  USERTHEME: {
+    PATH: '/user-theme'
   }
 };
 

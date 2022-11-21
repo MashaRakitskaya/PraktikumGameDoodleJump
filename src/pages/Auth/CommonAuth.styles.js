@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const AuthPagesWrapper = styled.div`
-  background: #fceed1;
+  background: var(--main-bg-color);
   width: 100vw;
   height: 100vh;
   display: flex;

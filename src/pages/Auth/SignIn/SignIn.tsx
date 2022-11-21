@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthPagesWrapper, AuthWrapper } from '../CommonAuth.styles.js';
 import { useNavigate } from 'react-router-dom';
 import { PROFILE_SETTING_PATH, SIGNUP_PATH } from '../../../utils/constants';
@@ -25,7 +25,6 @@ const SignIn = () => {
     validateOnBlur: true,
     onSubmit: (values) => {
       fetchLogin(values);
-      navigate(PROFILE_SETTING_PATH);
     }
   });
 
@@ -38,9 +37,9 @@ const SignIn = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  if (isError) {
-    return <Error />;
-  }
+  // if (isError) {
+  //   return <Error />;
+  // }
   return (
     <AuthPagesWrapper>
       <form onSubmit={formik.handleSubmit}>

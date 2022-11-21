@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { StaticRouter } from 'react-router-dom/server';
 import { BrowserRouter } from 'react-router-dom';
@@ -6,9 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import ThemeProvider from './providers/ThemeProvider/ThemeProvider';
 
 interface ServerProps {
   url: string;
+  theme: any;
 }
 
 const newReducerWithFetchUser = {
@@ -23,7 +25,7 @@ const newReducerWithFetchUser = {
   }
 };
 
-export const Server = ({ url }: ServerProps) => {
+export const Server = ({ url, theme }: ServerProps) => {
   console.log('Server');
 
   const nextReducer = () => {
@@ -35,7 +37,9 @@ export const Server = ({ url }: ServerProps) => {
   return (
     <Provider store={store}>
       <StaticRouter location={url}>
-        <App />
+        <ThemeProvider>
+          <App placeRendering={'server'} serverTheme={theme?.theme} />
+        </ThemeProvider>
       </StaticRouter>
     </Provider>
   );
@@ -52,7 +56,9 @@ export const Client = () => {
     <React.StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App placeRendering={'client'} />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     </React.StrictMode>
