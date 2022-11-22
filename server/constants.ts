@@ -1,6 +1,8 @@
+const BASE_URL = 'http://51.250.96.39:3000';
+
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
-  LOCALHOST: `${process.env.BASE_URL}`,
+  LOCALHOST: BASE_URL,
 
   AUTH: {
     PATH: '/auth',

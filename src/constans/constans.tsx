@@ -3,10 +3,12 @@ export const LEADER_BOARD = {
   RATING_FIELD_NAME: 'score'
 };
 
+export const BASE_URL = 'http://51.250.96.39:3000';
+
 export const ENDPOINTS = {
-  YANDEX: `${process.env.BASE_URL}/yandex-api`,
-  RESOURCES: `${process.env.BASE_URL}/yandex-api/resources`,
-  LOCALHOST: `${process.env.BASE_URL}`,
+  YANDEX: `${BASE_URL}/yandex-api`,
+  RESOURCES: `${BASE_URL}/yandex-api/resources`,
+  LOCALHOST: `${BASE_URL}`,
 
   AUTH: {
     PATH: '/auth',
