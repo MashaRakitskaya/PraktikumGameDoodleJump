@@ -21,7 +21,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const getCacheTheme = async () => {
     const cacheStorage = await caches.open('isTheme');
 
-    const cachedResponse = await cacheStorage.match('http://localhost:3000');
+    const cachedResponse = await cacheStorage.match(`${process.env.BASE_URL}`);
     const themeChache = await cachedResponse?.json();
 
     if (themeChache) {

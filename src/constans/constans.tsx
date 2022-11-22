@@ -4,9 +4,9 @@ export const LEADER_BOARD = {
 };
 
 export const ENDPOINTS = {
-  YANDEX: 'http://localhost:3000/yandex-api',
-  RESOURCES: 'http://localhost:3000/yandex-api/resources',
-  LOCALHOST: 'http://localhost:3000',
+  YANDEX: `${process.env.BASE_URL}/yandex-api`,
+  RESOURCES: `${process.env.BASE_URL}/yandex-api/resources`,
+  LOCALHOST: `${process.env.BASE_URL}`,
 
   AUTH: {
     PATH: '/auth',

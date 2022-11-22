@@ -9,7 +9,7 @@ module.exports = {
   mode: 'development',
   target: 'web',
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+    `webpack-hot-middleware/client?path=${process.env.BASE_URL}/__webpack_hmr`,
     './src/index.tsx'
   ],
   //library: "ClientWebpack"  означает что мы сможем обратится к собранному файлу
