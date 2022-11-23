@@ -3,7 +3,7 @@ const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const BASE_URL = 'http://doodlers-doodlejump-17.ya-praktikum.tech:3000';
+const BASE_URL = 'https://doodlers-doodlejump-17.ya-praktikum.tech:3000';
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
