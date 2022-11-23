@@ -3,7 +3,7 @@ export const LEADER_BOARD = {
   RATING_FIELD_NAME: 'score'
 };
 
-export const BASE_URL = 'http://doodlers-doodlejump-17.ya-praktikum.tech:3000';
+export const BASE_URL = 'doodlers-doodlejump-17.ya-praktikum.tech:3000';
 
 export const ENDPOINTS = {
   YANDEX: `${BASE_URL}/yandex-api`,
