@@ -12,7 +12,7 @@ services:
       - ./.env
     # Проброс порта так же, как в командной строке — на какой порт хоста какой порт контейнера
     ports:
-      - '3000:3000'
+      - '3000:443'
     networks:
       - awesome
   postgres:
@@ -34,7 +34,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - '8080:80'
+      - '8080:8080'
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:

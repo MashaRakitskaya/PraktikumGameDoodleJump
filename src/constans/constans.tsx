@@ -3,7 +3,7 @@ export const LEADER_BOARD = {
   RATING_FIELD_NAME: 'score'
 };
 
-export const BASE_URL = '51.250.96.39:3000';
+export const BASE_URL = 'http://localhost:3000';
 
 export const ENDPOINTS = {
   YANDEX: `${BASE_URL}/yandex-api`,
