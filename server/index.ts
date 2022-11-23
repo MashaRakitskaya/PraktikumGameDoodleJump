@@ -8,6 +8,7 @@ import router from './routes/index';
 import { initHot } from './hot.js';
 import { sequelize } from './sequelize';
 import { ENDPOINTS } from './constants';
+import helmet from 'helmet';
 
 sequelize();
 
@@ -18,7 +19,15 @@ const PORT = process.env.PORT;
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: false,
+    directives: {
+      'default-src': helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
+      'script-src': ["'self'"]
+    }
+  })
+);
 app.use(
   `${ENDPOINTS.YANDEXAPI.PATH}`,
   createProxyMiddleware({
