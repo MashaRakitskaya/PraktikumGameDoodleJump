@@ -3,13 +3,15 @@ const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
+const BASE_URL = 'https://doodlers-doodlejump-17.ya-praktikum.tech';
+
 /** @type {import('webpack').Configuration} */
 module.exports = {
   name: 'web',
   mode: 'development',
   target: 'web',
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+    `webpack-hot-middleware/client?path=${BASE_URL}/__webpack_hmr`,
     './src/index.tsx'
   ],
   //library: "ClientWebpack"  означает что мы сможем обратится к собранному файлу

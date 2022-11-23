@@ -3,10 +3,12 @@ export const LEADER_BOARD = {
   RATING_FIELD_NAME: 'score'
 };
 
+export const BASE_URL = 'https://doodlers-doodlejump-17.ya-praktikum.tech';
+
 export const ENDPOINTS = {
-  YANDEX: 'http://localhost:3000/yandex-api',
-  RESOURCES: 'http://localhost:3000/yandex-api/resources',
-  LOCALHOST: 'http://localhost:3000',
+  YANDEX: `${BASE_URL}/yandex-api`,
+  RESOURCES: `${BASE_URL}/yandex-api/resources`,
+  LOCALHOST: `${BASE_URL}`,
 
   AUTH: {
     PATH: '/auth',
