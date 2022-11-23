@@ -1,4 +1,4 @@
-const BASE_URL = 'https://doodlers-doodlejump-17.ya-praktikum.tech:3000';
+const BASE_URL = 'http://doodlers-doodlejump-17.ya-praktikum.tech:3000';
 
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
