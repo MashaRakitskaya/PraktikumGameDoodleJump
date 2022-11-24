@@ -11,9 +11,9 @@ import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 import { AudioCustom } from './Audio/AudioCustom';
 import { LEADERBOARD_PATH } from '../../utils/constants';
-import { useFetchTeamLeaderboardMutation } from '../../services/leaderboard';
+import {useAddPlayerToLeaderboardMutation} from '../../services/leaderboard';
 import {LEADER_BOARD} from "../../constans/constans";
-import {fetchGetUserData} from "../../../server/fetch/fetchGetUserData";
+import {useFetchUserQuery} from "../../services/auth";
 
 interface soundPlayer {
   madness: AudioCustom;
@@ -29,7 +29,10 @@ const GameItem = () => {
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
   const [isDocumentLoaded, setDocumentLoaded] = useState(false);
-  const [fetchLeaderboard] = useFetchTeamLeaderboardMutation();
+  const [addPlayerToLeaderBoard] = useAddPlayerToLeaderboardMutation();
+  const { data: user } = useFetchUserQuery();
+  const userName = user?.first_name;
+  const userAvatar = user?.avatar;
   let platformCount = 15; // Общее количество платформ на сцену
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
@@ -55,12 +58,13 @@ const GameItem = () => {
   const clearAnimation = () => {
     cancelAnimationFrame(intervalGameTimer);
   };
-  const updateLeaderBoardResult = async () => {
-
-    const name = 'sdsd';
-    const urlImg = 'sdsd';
-    await fetchLeaderboard({
-      data: { maxScore, name, urlImg},
+  const updateLeaderBoardResult = () => {
+    addPlayerToLeaderBoard({
+      data: {
+        score: currentScroll,
+        name: userName,
+        urlImg: 'https://ya-praktikum.tech/api/v2/resources' + userAvatar
+      },
       ratingFieldName: LEADER_BOARD.RATING_FIELD_NAME,
       teamName: LEADER_BOARD.TEAM_NAME
     })
@@ -72,7 +76,7 @@ const GameItem = () => {
     sound.background.pause();
     sound.madness.pause();
     person.gameOver();
-    updateLeaderBoardResult().then(r => console.log(r));
+    updateLeaderBoardResult();
     fullScreenCancel();
   };
 
@@ -333,7 +337,7 @@ const GameItem = () => {
           </Popup>
           <Popup
             isOpen={!isGameInit}
-            title={'Doodlik Aka start!'}
+            title={'Doodlik start!'}
             closePopup={closePopup}
             isOverlayAndCloseButton={false}
           >
