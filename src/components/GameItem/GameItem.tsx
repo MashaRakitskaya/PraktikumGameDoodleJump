@@ -11,6 +11,9 @@ import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 import { AudioCustom } from './Audio/AudioCustom';
 import { LEADERBOARD_PATH } from '../../utils/constants';
+import { useFetchTeamLeaderboardMutation } from '../../services/leaderboard';
+import {LEADER_BOARD} from "../../constans/constans";
+import {fetchGetUserData} from "../../../server/fetch/fetchGetUserData";
 
 interface soundPlayer {
   madness: AudioCustom;
@@ -26,6 +29,7 @@ const GameItem = () => {
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
   const [isDocumentLoaded, setDocumentLoaded] = useState(false);
+  const [fetchLeaderboard] = useFetchTeamLeaderboardMutation();
   let platformCount = 15; // Общее количество платформ на сцену
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
@@ -51,6 +55,16 @@ const GameItem = () => {
   const clearAnimation = () => {
     cancelAnimationFrame(intervalGameTimer);
   };
+  const updateLeaderBoardResult = async () => {
+
+    const name = 'sdsd';
+    const urlImg = 'sdsd';
+    await fetchLeaderboard({
+      data: { maxScore, name, urlImg},
+      ratingFieldName: LEADER_BOARD.RATING_FIELD_NAME,
+      teamName: LEADER_BOARD.TEAM_NAME
+    })
+  }
 
   const gameOver = () => {
     clearAnimation();
@@ -58,6 +72,7 @@ const GameItem = () => {
     sound.background.pause();
     sound.madness.pause();
     person.gameOver();
+    updateLeaderBoardResult().then(r => console.log(r));
     fullScreenCancel();
   };
 
