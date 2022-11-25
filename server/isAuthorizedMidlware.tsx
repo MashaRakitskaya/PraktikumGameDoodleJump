@@ -9,7 +9,7 @@ export const isAuthorizedMidlware = (req, res, next) => {
   if (!req.cookies.authCookie && !req.cookies.uuid && isAllowedUrl(req)) {
     return res.send(
       getHtml({
-        dataInsideDody: (
+        dataInsideBody: (
           <>
             <section
               style={{

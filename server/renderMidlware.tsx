@@ -30,7 +30,7 @@ export const renderMiddleware = async (req: Request, res: Response) => {
 
   return res.send(
     getHtml({
-      dataInsideDody: (
+      dataInsideBody: (
         <>
           <div dangerouslySetInnerHTML={{ __html: reactHtml }} id="root"></div>
           {/* это тот же index.tsx из src для выполнения в браузере */}

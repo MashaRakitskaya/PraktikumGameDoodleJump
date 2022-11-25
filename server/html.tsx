@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-export const getHtml = ({ dataInsideDody }) =>
+export const getHtml = ({ dataInsideBody }) =>
   `${renderToStaticMarkup(
     <html lang="en">
       <head>
@@ -35,7 +35,7 @@ export const getHtml = ({ dataInsideDody }) =>
         }}
       >
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        {dataInsideDody}
+        {dataInsideBody}
       </body>
     </html>
   )}`;
