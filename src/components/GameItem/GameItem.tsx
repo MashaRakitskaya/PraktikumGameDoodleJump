@@ -22,6 +22,7 @@ interface soundPlayer {
 
 const GameItem = () => {
   let intervalGameTimer: number;
+  let [intervalGameTimerState, setIntervalGameTimer] = useState(0);
   let [isGameOver, setIsGameOver] = useState(false);
   let [gameWidth, setGameWidth] = useState(1600);
   let [gameHeight, setGameHeight] = useState(1080);
@@ -51,7 +52,7 @@ const GameItem = () => {
   useEffect(() => {
     setDocumentLoaded(true);
     return () => {
-      cancelAnimationFrame(intervalGameTimer);
+      cancelAnimationFrame(intervalGameTimerState);
     };
   }, [isDocumentLoaded]);
 
@@ -63,7 +64,7 @@ const GameItem = () => {
       data: {
         score: currentScroll,
         name: userName,
-        urlImg: 'https://ya-praktikum.tech/api/v2/resources' + userAvatar
+        urlImg: userAvatar
       },
       ratingFieldName: LEADER_BOARD.RATING_FIELD_NAME,
       teamName: LEADER_BOARD.TEAM_NAME
@@ -117,7 +118,9 @@ const GameItem = () => {
   };
 
   const animation = () => {
+
     clearAndRedrawAllObjects();
+
     if (person.updateSpeedGap === currentScroll) {
       person.speedGame = person.speedGame * 0.95;
       person.updateSpeedGap += 2500;
@@ -131,8 +134,6 @@ const GameItem = () => {
       if (bonuses.length > 0) {
         moveBonuses(contextLocal, bonuses, person.stepY);
       }
-
-      //Изменение текущего score с учетом "прокрутки"
 
       currentScroll =
         currentScroll + movePlatforms(contextLocal, platforms, person.stepY);
@@ -201,6 +202,7 @@ const GameItem = () => {
 
     score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
+    setIntervalGameTimer(intervalGameTimer);
     // Проверка на наличие "Соприкосновения" персонажа с монстром (Если да - игра заканчивается)
     currentMonster = checkMonsterOnPath(person, monsters);
     if (currentMonster && !currentMonster.isDead) {
@@ -274,12 +276,17 @@ const GameItem = () => {
 
       elemCanvas.requestPointerLock();
       fullScreenInit(elemCanvas);
-      document.addEventListener('keydown', (event) => {
+      document.addEventListener('keydown', function keydownEvent(event){
         person.controllerStart(event);
       });
-      document.addEventListener('keyup', (event) => {
+      document.addEventListener('keyup', function keyupEvent(event) {
         person.controllerReset();
       });
+      document.addEventListener('visibilitychange', function visibilitychangeEvent () {
+        if (document.visibilityState !== 'visible') {
+          gameOver()
+        }
+      }, { once: true })
     }
   };
 
@@ -294,7 +301,7 @@ const GameItem = () => {
   const displayMaxScore = () => {
     return (
       <div>
-        Ваш текущий рекорд: <strong>{maxScore}</strong>
+        {/*Ваш текущий рекорд: <strong>{maxScore}</strong>*/}
       </div>
     );
   };
@@ -306,7 +313,7 @@ const GameItem = () => {
         draw={draw}
         play={isGameInit && !isGameOver}
         height={isDocumentLoaded ? gameHeight : 0}
-        width={isDocumentLoaded ? gameWidth : 0} //500 - пока что произвольная величина
+        width={isDocumentLoaded ? gameWidth : 0}
       />
 
       {isDocumentLoaded && (

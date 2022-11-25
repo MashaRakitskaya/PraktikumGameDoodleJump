@@ -17,7 +17,7 @@ const LeaderboardItem = ({ leaderboardItem, index }: LeaderboardItemProps) => {
   return (
     <ListItem>
       <Place>{index + 1}</Place>
-      <Avatar alt="avatar" src={urlImg[0] === '/' ? 'https://ya-praktikum.tech/api/v2/resources' + urlImg : urlImg}></Avatar>
+      <Avatar alt="avatar" src={urlImg?.[0] === '/' ? 'https://ya-praktikum.tech/api/v2/resources' + urlImg : urlImg}></Avatar>
       <Name>{name}</Name>
       <Points>{score}</Points>
     </ListItem>
