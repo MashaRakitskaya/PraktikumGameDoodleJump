@@ -20,7 +20,8 @@ export const ENDPOINTS = {
     PATH: '/user',
     PROFILE: '/profile',
     AVATAR: '/avatar',
-    PASSWORD: '/password'
+    PASSWORD: '/password',
+    DEFAULT_AVATAR: './holder.png'
   },
 
   LEADERBOARD: {
