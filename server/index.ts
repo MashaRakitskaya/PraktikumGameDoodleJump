@@ -5,14 +5,13 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { renderMiddleware } from './renderMidlware';
 import router from './routes/index';
-import { initHot } from './hot.js';
 import { sequelize } from './sequelize';
 import { ENDPOINTS } from './constants';
 
 sequelize();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 3000;
 
 //@ts-ignore
 app.use(cookieParser());
@@ -38,9 +37,8 @@ app.use(
 
 //вызывать раньше app.get
 app.use(express.static(path.resolve(__dirname, 'public')));
-app.use(router);
 
-initHot(app);
+app.use(router);
 
 app.get('/*', renderMiddleware);
 

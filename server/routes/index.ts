@@ -4,9 +4,12 @@ import topicComments from './topicComments.routes';
 import commentToComments from './commentToComments.routes';
 import likes from './likes.routes';
 import dislikes from './dislikes.routes';
+import allowAfterRegistering from './allowAfterRegistering.routes';
 import express from 'express';
 
 const router = express.Router();
+
+router.use('', allowAfterRegistering);
 
 router.use('/user-theme', userTheme);
 router.use('/topics', topic);
