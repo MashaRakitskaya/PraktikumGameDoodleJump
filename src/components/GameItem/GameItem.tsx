@@ -11,6 +11,9 @@ import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 import { AudioCustom } from './Audio/AudioCustom';
 import { LEADERBOARD_PATH } from '../../utils/constants';
+import { useAddPlayerToLeaderboardMutation } from '../../services/leaderboard';
+import { LEADER_BOARD } from "../../constans/constans";
+import { useFetchUserQuery } from "../../services/auth";
 
 interface soundPlayer {
   madness: AudioCustom;
@@ -19,6 +22,7 @@ interface soundPlayer {
 
 const GameItem = () => {
   let intervalGameTimer: number;
+  let [intervalGameTimerState, setIntervalGameTimer] = useState(0);
   let [isGameOver, setIsGameOver] = useState(false);
   let [gameWidth, setGameWidth] = useState(1600);
   let [gameHeight, setGameHeight] = useState(1080);
@@ -26,6 +30,10 @@ const GameItem = () => {
   let [currentScore, setCurrentScore] = useState(0);
   let [maxScore, setMaxScore] = useState(0);
   const [isDocumentLoaded, setDocumentLoaded] = useState(false);
+  const [addPlayerToLeaderBoard] = useAddPlayerToLeaderboardMutation();
+  const { data: user } = useFetchUserQuery();
+  const userName = user?.first_name;
+  const userAvatar = user?.avatar;
   let platformCount = 15; // Общее количество платформ на сцену
   let contextLocal: CanvasRenderingContext2D;
   let currentScroll: number = 0;
@@ -44,13 +52,24 @@ const GameItem = () => {
   useEffect(() => {
     setDocumentLoaded(true);
     return () => {
-      cancelAnimationFrame(intervalGameTimer);
+      cancelAnimationFrame(intervalGameTimerState);
     };
   }, [isDocumentLoaded]);
 
   const clearAnimation = () => {
     cancelAnimationFrame(intervalGameTimer);
   };
+  const updateLeaderBoardResult = () => {
+    addPlayerToLeaderBoard({
+      data: {
+        score: currentScroll,
+        name: userName,
+        urlImg: userAvatar
+      },
+      ratingFieldName: LEADER_BOARD.RATING_FIELD_NAME,
+      teamName: LEADER_BOARD.TEAM_NAME
+    })
+  }
 
   const gameOver = () => {
     clearAnimation();
@@ -58,6 +77,7 @@ const GameItem = () => {
     sound.background.pause();
     sound.madness.pause();
     person.gameOver();
+    updateLeaderBoardResult();
     fullScreenCancel();
   };
 
@@ -98,7 +118,9 @@ const GameItem = () => {
   };
 
   const animation = () => {
+
     clearAndRedrawAllObjects();
+
     if (person.updateSpeedGap === currentScroll) {
       person.speedGame = person.speedGame * 0.95;
       person.updateSpeedGap += 2500;
@@ -112,8 +134,6 @@ const GameItem = () => {
       if (bonuses.length > 0) {
         moveBonuses(contextLocal, bonuses, person.stepY);
       }
-
-      //Изменение текущего score с учетом "прокрутки"
 
       currentScroll =
         currentScroll + movePlatforms(contextLocal, platforms, person.stepY);
@@ -182,6 +202,7 @@ const GameItem = () => {
 
     score.draw();
     intervalGameTimer = window.requestAnimationFrame(animation);
+    setIntervalGameTimer(intervalGameTimer);
     // Проверка на наличие "Соприкосновения" персонажа с монстром (Если да - игра заканчивается)
     currentMonster = checkMonsterOnPath(person, monsters);
     if (currentMonster && !currentMonster.isDead) {
@@ -255,12 +276,17 @@ const GameItem = () => {
 
       elemCanvas.requestPointerLock();
       fullScreenInit(elemCanvas);
-      document.addEventListener('keydown', (event) => {
+      document.addEventListener('keydown',(event) =>{
         person.controllerStart(event);
       });
-      document.addEventListener('keyup', (event) => {
+      document.addEventListener('keyup', (event) =>{
         person.controllerReset();
       });
+      document.addEventListener('visibilitychange', () =>{
+        if (document.visibilityState !== 'visible') {
+          gameOver()
+        }
+      }, { once: true })
     }
   };
 
@@ -272,14 +298,6 @@ const GameItem = () => {
     );
   };
 
-  const displayMaxScore = () => {
-    return (
-      <div>
-        Ваш текущий рекорд: <strong>{maxScore}</strong>
-      </div>
-    );
-  };
-
   return (
     <GameWrapper>
       <Canvas
@@ -287,7 +305,7 @@ const GameItem = () => {
         draw={draw}
         play={isGameInit && !isGameOver}
         height={isDocumentLoaded ? gameHeight : 0}
-        width={isDocumentLoaded ? gameWidth : 0} //500 - пока что произвольная величина
+        width={isDocumentLoaded ? gameWidth : 0}
       />
 
       {isDocumentLoaded && (
@@ -318,12 +336,11 @@ const GameItem = () => {
           </Popup>
           <Popup
             isOpen={!isGameInit}
-            title={'Doodlik Aka start!'}
+            title={'Doodlik start!'}
             closePopup={closePopup}
             isOverlayAndCloseButton={false}
           >
             <div>
-              <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
               <Button
                 onClick={() => {
                   setIsGameOver(false);

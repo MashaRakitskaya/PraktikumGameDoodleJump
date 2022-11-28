@@ -1,4 +1,5 @@
 import React from 'react';
+import { ENDPOINTS } from "../../constans/constans";
 import {
   ListItem,
   Place,
@@ -12,12 +13,19 @@ interface LeaderboardItemProps {
 }
 
 const LeaderboardItem = ({ leaderboardItem, index }: LeaderboardItemProps) => {
-  const { name, score, urlImg } = leaderboardItem;
+  let { name, score, urlImg } = leaderboardItem;
+
+  if(!urlImg){
+      urlImg = ENDPOINTS.USER.DEFAULT_AVATAR
+  }
 
   return (
     <ListItem>
       <Place>{index + 1}</Place>
-      <Avatar alt="avatar" src={urlImg}></Avatar>
+      <Avatar
+          alt="avatar"
+          src={urlImg?.[0] === '/' ? ENDPOINTS.RESOURCES + urlImg : urlImg}
+      ></Avatar>
       <Name>{name}</Name>
       <Points>{score}</Points>
     </ListItem>
