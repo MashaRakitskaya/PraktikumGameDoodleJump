@@ -12,7 +12,8 @@ import { IEditUserProfileParamsResponse } from '../../../models/IUser';
 import { useFetchUserQuery } from '../../../services/auth';
 import {
   useEditAvatarMutation,
-  useEditProfileMutation
+  useEditProfileMutation,
+  useGetAvatarQuery
 } from '../../../services/editUser';
 import { TextField } from '../../../components/TextField';
 import { AvatarWrapper, UserEditForm } from './Profile.styles.js';
@@ -57,7 +58,11 @@ const Profile = () => {
       const image = payload && payload[0];
       const formData = new FormData();
       formData.append('avatar', image!);
-      await editAvatar(formData);
+      await editAvatar(formData).then(()=>{
+        useGetAvatarQuery().then((response: { avatar: string | null; }) => {
+          user.avatar = response.avatar
+        })
+      });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
