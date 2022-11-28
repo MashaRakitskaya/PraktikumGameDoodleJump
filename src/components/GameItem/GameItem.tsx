@@ -11,9 +11,9 @@ import { Button } from '../Button';
 import { Bonuses, checkBonusesOnPath, moveBonuses } from './Bonuses/Bonuses';
 import { AudioCustom } from './Audio/AudioCustom';
 import { LEADERBOARD_PATH } from '../../utils/constants';
-import {useAddPlayerToLeaderboardMutation} from '../../services/leaderboard';
-import {LEADER_BOARD} from "../../constans/constans";
-import {useFetchUserQuery} from "../../services/auth";
+import { useAddPlayerToLeaderboardMutation } from '../../services/leaderboard';
+import { LEADER_BOARD } from "../../constans/constans";
+import { useFetchUserQuery } from "../../services/auth";
 
 interface soundPlayer {
   madness: AudioCustom;
@@ -276,13 +276,13 @@ const GameItem = () => {
 
       elemCanvas.requestPointerLock();
       fullScreenInit(elemCanvas);
-      document.addEventListener('keydown', function keydownEvent(event){
+      document.addEventListener('keydown',(event) =>{
         person.controllerStart(event);
       });
-      document.addEventListener('keyup', function keyupEvent(event) {
+      document.addEventListener('keyup', (event) =>{
         person.controllerReset();
       });
-      document.addEventListener('visibilitychange', function visibilitychangeEvent () {
+      document.addEventListener('visibilitychange', () =>{
         if (document.visibilityState !== 'visible') {
           gameOver()
         }
@@ -294,14 +294,6 @@ const GameItem = () => {
     return (
       <div>
         Ваш счет: <strong>{currentScore}</strong>
-      </div>
-    );
-  };
-
-  const displayMaxScore = () => {
-    return (
-      <div>
-        {/*Ваш текущий рекорд: <strong>{maxScore}</strong>*/}
       </div>
     );
   };
@@ -349,7 +341,6 @@ const GameItem = () => {
             isOverlayAndCloseButton={false}
           >
             <div>
-              <ScoreWrapper>{displayMaxScore()}</ScoreWrapper>
               <Button
                 onClick={() => {
                   setIsGameOver(false);
