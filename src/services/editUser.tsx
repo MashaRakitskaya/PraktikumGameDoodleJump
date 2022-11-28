@@ -6,6 +6,7 @@ import {
   IEditUserProfileParamsResponse
 } from '../models/IUser';
 import baseApi from '../store/api/baseApi';
+import { IUserAvatarResponse } from "../models/IUserAvatarResponse";
 
 export const userAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['User'] })
@@ -40,6 +41,13 @@ export const userAPI = baseApi
           body
         }),
         invalidatesTags: ['User']
+      }),
+      getAvatar: build.mutation<IUserAvatarResponse, FormData>({
+        query: (body) => ({
+          url: `${ENDPOINTS.YANDEX}${ENDPOINTS.USER.PATH}${ENDPOINTS.USER.PROFILE}${ENDPOINTS.USER.AVATAR}`,
+          method: 'GET'
+        }),
+        invalidatesTags: ['User']
       })
     })
   });
@@ -47,5 +55,6 @@ export const userAPI = baseApi
 export const {
   useEditProfileMutation,
   useEditPasswordMutation,
-  useEditAvatarMutation
+  useEditAvatarMutation,
+  useGetAvatarQuery
 } = userAPI;
