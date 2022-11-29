@@ -11,6 +11,7 @@
     "@emotion/is-prop-valid": "^1.2.0",
     "@emotion/styled": "^11.10.4",
     "@mui/material": "^5.10.7",
+    "@playwright/test": "^1.28.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -88,7 +89,8 @@
     "webpack-node-externals": "^3.0.0"
   },
   "scripts": {
-    "start": "npx webpack build && node build/server"
+    "start": "npx webpack build && node build/server",
+    "test": "npx playwright test --headed"
   },
   "eslintConfig": {
     "extends": [
