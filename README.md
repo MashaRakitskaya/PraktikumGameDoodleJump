@@ -26,15 +26,15 @@
 
 ### `Starting the container`
 
-- install [https://www.docker.com/products/docker-desktop/](docker-desktop)
-- execute in the terminal `docker-compose up` will be run server-app, pgadmin and postgres
-- open the app on [http://localhost:3000/](http://localhost:3000/)
+- Install [https://www.docker.com/products/docker-desktop/](docker-desktop)
+- Run in terminal `docker-compose up`, this will start server-app, pgadmin and postgres containers.
+- Open the app on [http://localhost:3000/](http://localhost:3000/)
 
 ### `Development mode`
 
-- install [https://www.docker.com/products/docker-desktop/](docker-desktop)
-- in the docker-compose.yaml comment out everything related to server-app(lines 4-17)
-- in server\sequelize.ts replace host: 'localhost', username: '', password: '', database: '' (get from .env file)
-- execute in the terminal `docker-compose up` will be run pgadmin and postgres
-- developer mode `npm run start`
-- open the app on [http://localhost:3000/](http://localhost:3000/)
+- Install [https://www.docker.com/products/docker-desktop/](docker-desktop)
+- In the docker-compose.yaml file comment out everything related to server-app(lines 4-17)
+- In server\sequelize.ts file replace host: 'localhost', username: '', password: '', database: '' (get from .env file)
+- Run in terminal `docker-compose up` this will start pgadmin and postgres containers.
+- Run application in developer mode `npm run start`
+- Open the app on [http://localhost:3000/](http://localhost:3000/)
