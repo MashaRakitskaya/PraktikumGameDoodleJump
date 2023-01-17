@@ -1,23 +1,40 @@
-# PraktikumGameDoodleJump
+# Game Doodle Jump praktikum yandex
 
-### `Запуск контейнера`
+- [Figma Layout](https://www.figma.com/file/saOUFFjSZQTrIX21oUR5Nh/doodle-jump?node-id=4%3A3028&t=pT8uRZtOqVk4DvJo-1)
 
-- установить [https://www.docker.com/products/docker-desktop/](docker-desktop)
-- выполнить в терминале `docker-compose up` запустит server-app, pgadmin и postgres
-- открыть приложение на [http://localhost:3000/](http://localhost:3000/)
+### Technologies:
 
-### `Запуск в режиме разработки`
+- React, CSR, SSR
+- TypeScript
+- canvas
+- @emotion/styled
+- Webpack, Parcel
+- NodeJS, Express.js, Sequelize, PostgreSQL
+- Docker, Docker Compose
 
-- установить [https://www.docker.com/products/docker-desktop/](docker-desktop)
-- в файле docker-compose.yaml закоментировать все что относится к server-app(4-17 строки)
-- в server\sequelize.ts заменить host: 'localhost', username: '', password: '', database: '' (смотреть в .env)
-- выполнить в терминале `docker-compose up` запустит pgadmin и postgres
-- режим разработчика `npm run start`
-- открыть приложение на [http://localhost:3000/](http://localhost:3000/)
+### Functionality:
 
-### `Про уязвимости`
+- Sign up, sign in, exit
+- Editing password and user information
+- Validation of forms
+- Switching themes
+- Сreating topics for the forum
+- Adding a message to the forum chat
+- Presentation of the game
+- Beginning and end of the game with the addition of points to the leaderboard
+- Game
 
-Проведен аудит по всему проекту на наличии уязвимостей + утечки памяти.
-На проекте установлена защита на сервервере CSP типа,
-так же, на самом фронтальном приложении у нас присутствует защита от XSS
-так как мы не используем "коварные ссылки" и используем актуальный стек технологий который предоставляет дополнительную защиту прямо из коробки
+### `Starting the container`
+
+- install [https://www.docker.com/products/docker-desktop/](docker-desktop)
+- execute in the terminal `docker-compose up` will be run server-app, pgadmin and postgres
+- open the app on [http://localhost:3000/](http://localhost:3000/)
+
+### `Development mode`
+
+- install [https://www.docker.com/products/docker-desktop/](docker-desktop)
+- in the docker-compose.yaml comment out everything related to server-app(lines 4-17)
+- in server\sequelize.ts replace host: 'localhost', username: '', password: '', database: '' (get from .env file)
+- execute in the terminal `docker-compose up` will be run pgadmin and postgres
+- developer mode `npm run start`
+- open the app on [http://localhost:3000/](http://localhost:3000/)
