@@ -6,6 +6,7 @@
 
 - React, CSR, SSR
 - TypeScript
+- Redux Toolkit
 - canvas
 - @emotion/styled
 - Webpack
