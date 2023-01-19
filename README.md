@@ -8,7 +8,7 @@
 - TypeScript
 - canvas
 - @emotion/styled
-- Webpack, Parcel
+- Webpack
 - NodeJS, Express.js, Sequelize, PostgreSQL
 - Docker, Docker Compose
 
