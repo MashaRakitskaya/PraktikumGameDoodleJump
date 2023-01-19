@@ -19,7 +19,8 @@
 - Validation of forms
 - Switching themes
 - Сreating topics for the forum
-- Adding a message to the forum chat
+- Adding nested messages to the forum chat
+- Reactions to messages
 - Presentation of the game
 - Beginning and end of the game with the addition of points to the leaderboard
 - Game
